@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://lyblog2022.github.io/note/2022/06/04/study/Spring/</loc>
+    
+    <lastmod>2022-06-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://lyblog2022.github.io/note/2022/06/04/study/Servlet/</loc>
     
     <lastmod>2022-06-04</lastmod>
@@ -12,15 +21,6 @@
   
   <url>
     <loc>https://lyblog2022.github.io/note/2022/06/04/study/MyBatis/</loc>
-    
-    <lastmod>2022-06-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://lyblog2022.github.io/note/2022/06/04/study/Spring/</loc>
     
     <lastmod>2022-06-04</lastmod>
     
@@ -72,6 +72,13 @@
   </url>
   
   <url>
+    <loc>https://lyblog2022.github.io/note/tags/%E5%AD%A6%E4%B9%A0/</loc>
+    <lastmod>2022-06-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://lyblog2022.github.io/note/tags/servlet/</loc>
     <lastmod>2022-06-04</lastmod>
     <changefreq>weekly</changefreq>
@@ -79,7 +86,7 @@
   </url>
   
   <url>
-    <loc>https://lyblog2022.github.io/note/tags/%E5%AD%A6%E4%B9%A0/</loc>
+    <loc>https://lyblog2022.github.io/note/tags/Spring/</loc>
     <lastmod>2022-06-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -95,7 +102,21 @@
   </url>
   
   <url>
+    <loc>https://lyblog2022.github.io/note/categories/%E5%AD%A6%E4%B9%A0/MyBatis/</loc>
+    <lastmod>2022-06-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://lyblog2022.github.io/note/categories/%E5%AD%A6%E4%B9%A0/servlet/</loc>
+    <lastmod>2022-06-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://lyblog2022.github.io/note/categories/%E5%AD%A6%E4%B9%A0/Spring/</loc>
     <lastmod>2022-06-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
