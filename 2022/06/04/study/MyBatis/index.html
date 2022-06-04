@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   
   
-  <title>My Note</title>
+  <title>MyBatis | My Note</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   
     <meta name="description" content="654645564">
@@ -82,216 +82,15 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  <article id="post-study/Spring" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-study/MyBatis" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-inner">
     
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/note/2022/06/04/study/Spring/">Spring</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-meta">
-      
-      <span class="article-date">
-  <i class="fa fa-date"></i>
-  <time class="dt-published" datetime="2022-06-04T08:59:55.000Z" itemprop="datePublished">2022年06月04日</time>
-</span>
-      
-      
-      
-<a href="/note/2022/06/04/study/Spring/#comments" class="article-comment-link">
-  
-  <i class="fa fa-commt"></i>
-  留言
-</a>
-
-
-    </div>
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        
-        
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <div class="article-tag-wrap">
-          
-
-          
-          
-
-
-        </div>
-      
-      
-      
-    </footer>
-  </div>
-</article>
-
-
-  <article id="post-study/Servlet" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/note/2022/06/04/study/Servlet/">Servlet</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-meta">
-      
-      <span class="article-date">
-  <i class="fa fa-date"></i>
-  <time class="dt-published" datetime="2022-06-04T08:59:30.000Z" itemprop="datePublished">2022年06月04日</time>
-</span>
-      
-  <div class="article-category">
-    <i class="fa fa-classify"></i>
-    <a class="article-category-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/">学习</a> > <a class="article-category-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/servlet/">servlet</a>
-  </div>
-
-      
-      
-<a href="/note/2022/06/04/study/Servlet/#comments" class="article-comment-link">
-  
-  <i class="fa fa-commt"></i>
-  留言
-</a>
-
-
-    </div>
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h3 id="1、Servlet的继承结构"><a href="#1、Servlet的继承结构" class="headerlink" title="1、Servlet的继承结构"></a>1、Servlet的继承结构</h3><img src="/note/2022/06/04/study/Servlet/servlet%E7%BB%A7%E6%89%BF%E7%BB%93%E6%9E%84.png" class="" title="This is an example image">
-
-<h3 id="2、Servlet接口"><a href="#2、Servlet接口" class="headerlink" title="2、Servlet接口"></a>2、Servlet接口</h3><ul>
-<li>init()：创建servlet对象后立即调用该方法完成其他初始化工作</li>
-<li>service()：处理客户端请求，执行业务操作，利用响应对象响应客户端请求</li>
-<li>destory()：再销毁servlet对象之前调用该方法，释放资源</li>
-<li>getServletConfig()：ServletConfig 是容器向Servlet传递参数的载体</li>
-<li>getServletInfo()：获取servlet相关信息</li>
-</ul>
-<h3 id="3、ServletConfig-接口"><a href="#3、ServletConfig-接口" class="headerlink" title="3、ServletConfig 接口"></a>3、ServletConfig 接口</h3><p>​	Servlet运行期间，需要一些辅助信息，这些信息可以在web.xml文件中，使用一个或多个元素进行配置。当tomacat初始化一个servlet时，会将该servlet的配置信息，封装到ServletConfig对象中，通过调用init(ServletConfig servletConfig)方法，将ServletConfig对象传递给Servlet</p>
-<h3 id="4、GenericServlet-抽象类"><a href="#4、GenericServlet-抽象类" class="headerlink" title="4、GenericServlet 抽象类"></a>4、GenericServlet 抽象类</h3><p>​	GenericServlet是实现了Servlet接口的抽象类。在GenericServlet中进一步的定义了Servlet接口的具体实现，其设计的目的是为了和应用层协议解耦，再GenericServlet中包含了一个Service抽象方法，可以通过继承GenericServlet并实现Service方法实现请求的处理，但是需要将ServletRequest和ServletResponse 转化为HttpServletRequest和HttpServletResponse</p>
-<h3 id="5、HttpServlet"><a href="#5、HttpServlet" class="headerlink" title="5、HttpServlet"></a>5、HttpServlet</h3><p>​	继承自GenericServlet，针对于处理Http协议的请求定制，在HttpServlet的service()方法中已经把ServletRequest和ServletResponse 转化为HttpServletRequest和HttpServletResponse</p>
-<h3 id="6、Servlet的生命周期"><a href="#6、Servlet的生命周期" class="headerlink" title="6、Servlet的生命周期"></a>6、Servlet的生命周期</h3><p>​	servlet的生命周期是由容器管理的，分别经历4个阶段</p>
-<table>
-<thead>
-<tr>
-<th>阶段</th>
-<th>字数</th>
-<th>时机</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>创建</td>
-<td>1次</td>
-<td>第一次请求之后</td>
-</tr>
-<tr>
-<td>初始化</td>
-<td>1次</td>
-<td>实例化之后</td>
-</tr>
-<tr>
-<td>执行服务</td>
-<td>多次</td>
-<td>每次请求</td>
-</tr>
-<tr>
-<td>销毁</td>
-<td>1次</td>
-<td>停止服务、</td>
-</tr>
-</tbody></table>
-<h3 id="7、注意事项"><a href="#7、注意事项" class="headerlink" title="7、注意事项"></a>7、注意事项</h3><ul>
-<li>在Servlet中一般不要轻易使用成员变量，可能会造成线程安全问题</li>
-<li>如果要使用，应尽量避免对成员变量产生修改</li>
-<li>如果要产生修改，应注意线程安全问题</li>
-</ul>
-<h3 id="8、ServletContext对象和ServletConfig对象"><a href="#8、ServletContext对象和ServletConfig对象" class="headerlink" title="8、ServletContext对象和ServletConfig对象"></a>8、ServletContext对象和ServletConfig对象</h3><p>​	ServletContext叫做Servlet上下文，服务器会为每一个web应用创建一个ServletContext对象，这个对象全局唯一，而且web应用中的所有Servlet都共享这个对象</p>
-<h4 id="8-1、ServletContext对象的作用"><a href="#8-1、ServletContext对象的作用" class="headerlink" title="8.1、ServletContext对象的作用"></a>8.1、ServletContext对象的作用</h4><ul>
-<li>相对路径转为绝对路径</li>
-<li>获取容器的附加信息</li>
-<li>读取配置</li>
-<li>全局容器</li>
-</ul>
-<h4 id="8-2、ServletContext的生命周期"><a href="#8-2、ServletContext的生命周期" class="headerlink" title="8.2、ServletContext的生命周期"></a>8.2、ServletContext的生命周期</h4><p>​	当容器启动时会创建ServletContext对象并一直缓存该对象，直到容器关闭后该对象生命周期结束，ServletContext的生命周期非常长，所以在使用全局容器时不建议存放业务数据</p>
-<h4 id="8-3、ServletConfig对象"><a href="#8-3、ServletConfig对象" class="headerlink" title="8.3、ServletConfig对象"></a>8.3、ServletConfig对象</h4><p>​	ServletConfig对象对应web.xml文件中的<Servlet>节点，当Tomcat初始化一个Servlet时，会将该Servlet的配置信息，封装到一个ServletConfig对象中，可以通过该对象读取<servlet>节点中的配置信息</p>
-<h3 id="9、请求转发"><a href="#9、请求转发" class="headerlink" title="9、请求转发"></a>9、请求转发</h3><h4 id="9-1-forward转发"><a href="#9-1-forward转发" class="headerlink" title="9.1 forward转发"></a>9.1 forward转发</h4><h5 id="9-1-1-forward转发处理流程"><a href="#9-1-1-forward转发处理流程" class="headerlink" title="9.1.1 forward转发处理流程"></a>9.1.1 forward转发处理流程</h5><ol>
-<li>清空response存放的正在响应正文数据缓冲区</li>
-<li>如果目标资源为Servlet或jsp，就调用他们的service方法，把该方法产生的响应结果发送到客户端；如果目标资源是静态文件中的HTML，就读取文件中的数据把它发送到客户端</li>
-</ol>
-<h5 id="9-1-2-forward处理特点"><a href="#9-1-2-forward处理特点" class="headerlink" title="9.1.2 forward处理特点"></a>9.1.2 forward处理特点</h5><ol>
-<li>由于forward()方法先清空用于存放相应正文的缓冲区，因此源Servlet生成的响应结果不会被发送到客户端，只有目标资源生成的响应结果才会被发送到客户端</li>
-<li>如果源Servlet在进行请求转发之前，已经提交了响应结(flushBuffer()，close()方法)，那么forward()方法会抛出异常，为避免异常，不应该在源servlet中提交响应结果</li>
-</ol>
-<h4 id="9-2-include转发"><a href="#9-2-include转发" class="headerlink" title="9.2 include转发"></a>9.2 include转发</h4><h5 id="9-2-1-include处理流程"><a href="#9-2-1-include处理流程" class="headerlink" title="9.2.1 include处理流程"></a>9.2.1 include处理流程</h5><ol>
-<li>如果目标资源为Servlet或者jsp，就调用他们的service方法，把该方法产生的响应正文添加到源Servlet的响应结果中；如果目标组建为HTML文档，就直接把文档的内容添加到源Servlet的响应结果中</li>
-<li>返回到源Servlet的服务方法中，继续执行后续代码</li>
-</ol>
-<h5 id="9-2-2-include处理特点"><a href="#9-2-2-include处理特点" class="headerlink" title="9.2.2 include处理特点"></a>9.2.2 include处理特点</h5><ol>
-<li>源Servlet与被包含的目标资源的输出数据都会被添加到响应结果中</li>
-<li>在目标资源对响应状态码或者响应开头所做的修改都会被忽略</li>
-</ol>
-<h3 id="10、Cookie对象和HttpSession对象"><a href="#10、Cookie对象和HttpSession对象" class="headerlink" title="10、Cookie对象和HttpSession对象"></a>10、Cookie对象和HttpSession对象</h3><p>​	Cookie对象和HttpSession对象的作用是维护客户端浏览器与服务端的会话状态的两个对象，二者的不同是Cookie是通过客户端浏览器实现会话的维持，而HttpSession是通过服务端来实现会话的维持</p>
-<h4 id="10-1-区别"><a href="#10-1-区别" class="headerlink" title="10.1 区别"></a>10.1 区别</h4><ul>
-<li>cookie数据存放在客户的浏览器或系统文件中，httpsession中的数据存放在服务器中</li>
-<li>cookie不安全，httpSession是安全的</li>
-<li>单个cookie保存的数据不能超过4K，httpSession无限制</li>
-</ul>
-<p>	</p>
-
-        
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <div class="article-tag-wrap">
-          
-
-          
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/note/tags/servlet/" rel="tag">servlet</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/note/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a></li></ul>
-
-          
-
-
-        </div>
-      
-      
-      
-    </footer>
-  </div>
-</article>
-
-
-  <article id="post-study/MyBatis" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/note/2022/06/04/study/MyBatis/">MyBatis</a>
+    <h1 class="p-name article-title" itemprop="headline name">
+      MyBatis
     </h1>
   
 
@@ -306,8 +105,22 @@
 </span>
       
       
+        <span class="article-views">
+  <i class="fa fa-views"></i>
+  <i id="busuanzi_container_page_pv">
+      <i id="busuanzi_value_page_pv"></i>
+  </i>
+</span>
+
+      
       
 <a href="/note/2022/06/04/study/MyBatis/#comments" class="article-comment-link">
+  
+    
+    
+    
+    
+    
   
   <i class="fa fa-commt"></i>
   留言
@@ -356,6 +169,18 @@
 </ul>
 
         
+            <div id="toc-article">
+                
+  <div class="widget-wrap" id="toc-wrap">
+    <h3 class="widget-title"><i class="fa fa-toc"></i> 文章目录</h3>
+    <div class="widget">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E7%AE%80%E4%BB%8B"><span class="toc-text">1、简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E6%A1%86%E6%9E%B6"><span class="toc-text">1.1 框架</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-ORM"><span class="toc-text">1.2 ORM</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-1-%E6%8C%81%E4%B9%85%E5%8C%96"><span class="toc-text">1.2.1 持久化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2-%E6%8C%81%E4%B9%85%E5%B1%82"><span class="toc-text">1.2.2 持久层</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81Mybatis%E9%85%8D%E7%BD%AE"><span class="toc-text">2、Mybatis配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E4%BA%8B%E5%8A%A1"><span class="toc-text">2.1 事务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E7%9A%84%E5%8A%A0%E8%BD%BD%E6%96%B9%E5%BC%8F"><span class="toc-text">2.2 映射文件的加载方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81Mybatis-%E5%BC%80%E5%8F%91"><span class="toc-text">3、Mybatis 开发</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0"><span class="toc-text">3.1 传递参数</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+
+            </div>
+        
         
       
     </div>
@@ -373,13 +198,36 @@
         </div>
       
       
+        
+<nav id="article-nav">
+  
+  
+    <a href="/note/2022/06/04/study/Servlet/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">newer</strong>
+      <div class="article-nav-title">
+        
+          Servlet
+        
+      </div>
+    </a>
+  
+</nav>
+
+      
+      
+        
+
+
+
+
+
+
+
+
       
     </footer>
   </div>
 </article>
-
-
-
 </section>
         
           <aside id="sidebar">
@@ -530,11 +378,29 @@
 
 
 
-
+  
+  
 
 
 
   
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+
 
 
 

@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Hexo</title>
+  <title>My Note</title>
   
-  
+  <subtitle>Welcome To My World</subtitle>
   <link href="https://lyblog2022.github.io/note/atom.xml" rel="self"/>
   
   <link href="https://lyblog2022.github.io/note/"/>
-  <updated>2022-06-04T06:53:55.828Z</updated>
+  <updated>2022-06-04T08:59:55.400Z</updated>
   <id>https://lyblog2022.github.io/note/</id>
   
   <author>
-    <name>John Doe</name>
+    <name>ly</name>
     
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>tags</title>
-    <link href="https://lyblog2022.github.io/note/2022/06/04/tags/"/>
-    <id>https://lyblog2022.github.io/note/2022/06/04/tags/</id>
-    <published>2022-06-04T06:53:55.000Z</published>
-    <updated>2022-06-04T06:53:55.828Z</updated>
+    <title>Spring</title>
+    <link href="https://lyblog2022.github.io/note/2022/06/04/study/Spring/"/>
+    <id>https://lyblog2022.github.io/note/2022/06/04/study/Spring/</id>
+    <published>2022-06-04T08:59:55.000Z</published>
+    <updated>2022-06-04T08:59:55.400Z</updated>
     
     
     
@@ -30,47 +30,52 @@
   </entry>
   
   <entry>
-    <title>article title</title>
-    <link href="https://lyblog2022.github.io/note/2022/06/04/article-title/"/>
-    <id>https://lyblog2022.github.io/note/2022/06/04/article-title/</id>
-    <published>2022-06-04T05:55:24.000Z</published>
-    <updated>2022-06-04T06:59:11.938Z</updated>
+    <title>Servlet</title>
+    <link href="https://lyblog2022.github.io/note/2022/06/04/study/Servlet/"/>
+    <id>https://lyblog2022.github.io/note/2022/06/04/study/Servlet/</id>
+    <published>2022-06-04T08:59:30.000Z</published>
+    <updated>2022-06-04T09:02:04.976Z</updated>
     
-    <content type="html"><![CDATA[<p>大叔的话说丢爱是</p>]]></content>
-    
-    
-    <summary type="html">这里填写摘要。也可以把摘要这一段删去，在文章中想要截断的地方加入&lt;!--more--&gt;，这样在首页就只显示开头到截断的内容，而不会显示全文</summary>
+    <content type="html"><![CDATA[<h3 id="1、Servlet的继承结构"><a href="#1、Servlet的继承结构" class="headerlink" title="1、Servlet的继承结构"></a>1、Servlet的继承结构</h3><img src="/note/2022/06/04/study/Servlet/servlet%E7%BB%A7%E6%89%BF%E7%BB%93%E6%9E%84.png" class="" title="This is an example image"><h3 id="2、Servlet接口"><a href="#2、Servlet接口" class="headerlink" title="2、Servlet接口"></a>2、Servlet接口</h3><ul><li>init()：创建servlet对象后立即调用该方法完成其他初始化工作</li><li>service()：处理客户端请求，执行业务操作，利用响应对象响应客户端请求</li><li>destory()：再销毁servlet对象之前调用该方法，释放资源</li><li>getServletConfig()：ServletConfig 是容器向Servlet传递参数的载体</li><li>getServletInfo()：获取servlet相关信息</li></ul><h3 id="3、ServletConfig-接口"><a href="#3、ServletConfig-接口" class="headerlink" title="3、ServletConfig 接口"></a>3、ServletConfig 接口</h3><p>​Servlet运行期间，需要一些辅助信息，这些信息可以在web.xml文件中，使用一个或多个元素进行配置。当tomacat初始化一个servlet时，会将该servlet的配置信息，封装到ServletConfig对象中，通过调用init(ServletConfig servletConfig)方法，将ServletConfig对象传递给Servlet</p><h3 id="4、GenericServlet-抽象类"><a href="#4、GenericServlet-抽象类" class="headerlink" title="4、GenericServlet 抽象类"></a>4、GenericServlet 抽象类</h3><p>​GenericServlet是实现了Servlet接口的抽象类。在GenericServlet中进一步的定义了Servlet接口的具体实现，其设计的目的是为了和应用层协议解耦，再GenericServlet中包含了一个Service抽象方法，可以通过继承GenericServlet并实现Service方法实现请求的处理，但是需要将ServletRequest和ServletResponse 转化为HttpServletRequest和HttpServletResponse</p><h3 id="5、HttpServlet"><a href="#5、HttpServlet" class="headerlink" title="5、HttpServlet"></a>5、HttpServlet</h3><p>​继承自GenericServlet，针对于处理Http协议的请求定制，在HttpServlet的service()方法中已经把ServletRequest和ServletResponse 转化为HttpServletRequest和HttpServletResponse</p><h3 id="6、Servlet的生命周期"><a href="#6、Servlet的生命周期" class="headerlink" title="6、Servlet的生命周期"></a>6、Servlet的生命周期</h3><p>​servlet的生命周期是由容器管理的，分别经历4个阶段</p><table><thead><tr><th>阶段</th><th>字数</th><th>时机</th></tr></thead><tbody><tr><td>创建</td><td>1次</td><td>第一次请求之后</td></tr><tr><td>初始化</td><td>1次</td><td>实例化之后</td></tr><tr><td>执行服务</td><td>多次</td><td>每次请求</td></tr><tr><td>销毁</td><td>1次</td><td>停止服务、</td></tr></tbody></table><h3 id="7、注意事项"><a href="#7、注意事项" class="headerlink" title="7、注意事项"></a>7、注意事项</h3><ul><li>在Servlet中一般不要轻易使用成员变量，可能会造成线程安全问题</li><li>如果要使用，应尽量避免对成员变量产生修改</li><li>如果要产生修改，应注意线程安全问题</li></ul><h3 id="8、ServletContext对象和ServletConfig对象"><a href="#8、ServletContext对象和ServletConfig对象" class="headerlink" title="8、ServletContext对象和ServletConfig对象"></a>8、ServletContext对象和ServletConfig对象</h3><p>​ServletContext叫做Servlet上下文，服务器会为每一个web应用创建一个ServletContext对象，这个对象全局唯一，而且web应用中的所有Servlet都共享这个对象</p><h4 id="8-1、ServletContext对象的作用"><a href="#8-1、ServletContext对象的作用" class="headerlink" title="8.1、ServletContext对象的作用"></a>8.1、ServletContext对象的作用</h4><ul><li>相对路径转为绝对路径</li><li>获取容器的附加信息</li><li>读取配置</li><li>全局容器</li></ul><h4 id="8-2、ServletContext的生命周期"><a href="#8-2、ServletContext的生命周期" class="headerlink" title="8.2、ServletContext的生命周期"></a>8.2、ServletContext的生命周期</h4><p>​当容器启动时会创建ServletContext对象并一直缓存该对象，直到容器关闭后该对象生命周期结束，ServletContext的生命周期非常长，所以在使用全局容器时不建议存放业务数据</p><h4 id="8-3、ServletConfig对象"><a href="#8-3、ServletConfig对象" class="headerlink" title="8.3、ServletConfig对象"></a>8.3、ServletConfig对象</h4><p>​ServletConfig对象对应web.xml文件中的<Servlet>节点，当Tomcat初始化一个Servlet时，会将该Servlet的配置信息，封装到一个ServletConfig对象中，可以通过该对象读取<servlet>节点中的配置信息</p><h3 id="9、请求转发"><a href="#9、请求转发" class="headerlink" title="9、请求转发"></a>9、请求转发</h3><h4 id="9-1-forward转发"><a href="#9-1-forward转发" class="headerlink" title="9.1 forward转发"></a>9.1 forward转发</h4><h5 id="9-1-1-forward转发处理流程"><a href="#9-1-1-forward转发处理流程" class="headerlink" title="9.1.1 forward转发处理流程"></a>9.1.1 forward转发处理流程</h5><ol><li>清空response存放的正在响应正文数据缓冲区</li><li>如果目标资源为Servlet或jsp，就调用他们的service方法，把该方法产生的响应结果发送到客户端；如果目标资源是静态文件中的HTML，就读取文件中的数据把它发送到客户端</li></ol><h5 id="9-1-2-forward处理特点"><a href="#9-1-2-forward处理特点" class="headerlink" title="9.1.2 forward处理特点"></a>9.1.2 forward处理特点</h5><ol><li>由于forward()方法先清空用于存放相应正文的缓冲区，因此源Servlet生成的响应结果不会被发送到客户端，只有目标资源生成的响应结果才会被发送到客户端</li><li>如果源Servlet在进行请求转发之前，已经提交了响应结(flushBuffer()，close()方法)，那么forward()方法会抛出异常，为避免异常，不应该在源servlet中提交响应结果</li></ol><h4 id="9-2-include转发"><a href="#9-2-include转发" class="headerlink" title="9.2 include转发"></a>9.2 include转发</h4><h5 id="9-2-1-include处理流程"><a href="#9-2-1-include处理流程" class="headerlink" title="9.2.1 include处理流程"></a>9.2.1 include处理流程</h5><ol><li>如果目标资源为Servlet或者jsp，就调用他们的service方法，把该方法产生的响应正文添加到源Servlet的响应结果中；如果目标组建为HTML文档，就直接把文档的内容添加到源Servlet的响应结果中</li><li>返回到源Servlet的服务方法中，继续执行后续代码</li></ol><h5 id="9-2-2-include处理特点"><a href="#9-2-2-include处理特点" class="headerlink" title="9.2.2 include处理特点"></a>9.2.2 include处理特点</h5><ol><li>源Servlet与被包含的目标资源的输出数据都会被添加到响应结果中</li><li>在目标资源对响应状态码或者响应开头所做的修改都会被忽略</li></ol><h3 id="10、Cookie对象和HttpSession对象"><a href="#10、Cookie对象和HttpSession对象" class="headerlink" title="10、Cookie对象和HttpSession对象"></a>10、Cookie对象和HttpSession对象</h3><p>​Cookie对象和HttpSession对象的作用是维护客户端浏览器与服务端的会话状态的两个对象，二者的不同是Cookie是通过客户端浏览器实现会话的维持，而HttpSession是通过服务端来实现会话的维持</p><h4 id="10-1-区别"><a href="#10-1-区别" class="headerlink" title="10.1 区别"></a>10.1 区别</h4><ul><li>cookie数据存放在客户的浏览器或系统文件中，httpsession中的数据存放在服务器中</li><li>cookie不安全，httpSession是安全的</li><li>单个cookie保存的数据不能超过4K，httpSession无限制</li></ul><p></p>]]></content>
     
     
+      
+      
+    <summary type="html">&lt;h3 id=&quot;1、Servlet的继承结构&quot;&gt;&lt;a href=&quot;#1、Servlet的继承结构&quot; class=&quot;headerlink&quot; title=&quot;1、Servlet的继承结构&quot;&gt;&lt;/a&gt;1、Servlet的继承结构&lt;/h3&gt;&lt;img src=&quot;/note/2022/06/0</summary>
+      
     
-    <category term="分类" scheme="https://lyblog2022.github.io/note/categories/%E5%88%86%E7%B1%BB/"/>
-    
-    <category term="子分类" scheme="https://lyblog2022.github.io/note/categories/%E5%88%86%E7%B1%BB/%E5%AD%90%E5%88%86%E7%B1%BB/"/>
     
     
-    <category term="标签1" scheme="https://lyblog2022.github.io/note/tags/%E6%A0%87%E7%AD%BE1/"/>
+    <category term="学习" scheme="https://lyblog2022.github.io/note/categories/%E5%AD%A6%E4%B9%A0/"/>
     
-    <category term="标签2" scheme="https://lyblog2022.github.io/note/tags/%E6%A0%87%E7%AD%BE2/"/>
+    <category term="servlet" scheme="https://lyblog2022.github.io/note/categories/%E5%AD%A6%E4%B9%A0/servlet/"/>
+    
+    
+    <category term="servlet" scheme="https://lyblog2022.github.io/note/tags/servlet/"/>
+    
+    <category term="学习" scheme="https://lyblog2022.github.io/note/tags/%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
   <entry>
-    <title>Hello World</title>
-    <link href="https://lyblog2022.github.io/note/2022/06/04/hello-world/"/>
-    <id>https://lyblog2022.github.io/note/2022/06/04/hello-world/</id>
-    <published>2022-06-04T05:48:03.442Z</published>
-    <updated>2022-06-04T05:48:03.442Z</updated>
+    <title>MyBatis</title>
+    <link href="https://lyblog2022.github.io/note/2022/06/04/study/MyBatis/"/>
+    <id>https://lyblog2022.github.io/note/2022/06/04/study/MyBatis/</id>
+    <published>2022-06-04T08:59:00.000Z</published>
+    <updated>2022-06-04T09:01:10.125Z</updated>
     
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+    <content type="html"><![CDATA[<h2 id="1、简介"><a href="#1、简介" class="headerlink" title="1、简介"></a>1、简介</h2><p><code>Mybatis</code> 是一款优秀的持久层框架，支持定制化<code>SQL</code>、存储过程及高级映射，可以使用简单的<code>XML</code>或注解来配置和映射原生信息</p><p>是一款半自动的持久层的半自动<code>ORM</code>映射框架</p><h3 id="1-1-框架"><a href="#1-1-框架" class="headerlink" title="1.1 框架"></a>1.1 框架</h3><ul><li>框架是一个基本概念上的结构，用于解决或处理复杂的问题。</li><li>使用框架的优点：减少开发时间，降低开发难度，保证设计质量，降低程序员之间的沟通以及日后维护的成本</li><li>框架是一个半成品，已经对基础的代码进行了封装并提供响应的<code>API</code>，开发者再使用框架是直接调用封装好的<code>API</code>，可以省去很多代码编写，从而提升效率和开发速度</li></ul><h3 id="1-2-ORM"><a href="#1-2-ORM" class="headerlink" title="1.2 ORM"></a>1.2 <code>ORM</code></h3><ul><li><code>Object-Relation Mapping</code>，对象关系映射</li><li>它的作用是在关系型数据库和对象之间做一个映射，这样在操作具体数据的时候就像操作对象一样</li></ul><h4 id="1-2-1-持久化"><a href="#1-2-1-持久化" class="headerlink" title="1.2.1 持久化"></a>1.2.1 持久化</h4><ul><li>持久：把数据保存到可永久保存的存储设备中</li><li>主要应用：将内存中的数据存储在关系型数据库中</li></ul><h4 id="1-2-2-持久层"><a href="#1-2-2-持久层" class="headerlink" title="1.2.2 持久层"></a>1.2.2 持久层</h4><ul><li>专注于实现数据持久化应用领域的某一个特定系统的一个逻辑层面，将数据使用者和数据实体想关联（<code>mapper</code>层、<code>DAO</code>层）</li></ul><h2 id="2、Mybatis配置"><a href="#2、Mybatis配置" class="headerlink" title="2、Mybatis配置"></a>2、<code>Mybatis</code>配置</h2><h3 id="2-1-事务"><a href="#2-1-事务" class="headerlink" title="2.1 事务"></a>2.1 事务</h3><p>​在<code>MyBatis</code> 核心配置文件中<code>envirment</code> 中通过<code>transactionManager</code>配置事务的处理策略</p><ul><li><code>JDBC</code>：该配置使用了<code>JDBC</code>的提交及回滚，依赖于从数据源得到的链接来管理事务范围</li><li><code>MANAGED</code>：该配置几乎无任何操作，不提交或回滚一个链接，它会让容器来管理整个生命周期（<code>Spring</code>应用服务器的上下文），默认情况下会关闭链接，但一些容器不希望如此，因此如果需要从链接中停止它，将<code>closeConnection</code>的属性值设置为<code>false</code>，<code>Mybatis</code>本身并不会处理事务，而是交给其他框架去处理</li></ul><h3 id="2-2-映射文件的加载方式"><a href="#2-2-映射文件的加载方式" class="headerlink" title="2.2 映射文件的加载方式"></a>2.2 映射文件的加载方式</h3><ol><li><code>mapper</code>的映射文件的文件路径导入，使用的是<code>mapper</code>标签的<code>resource</code>属性</li><li>网络资源路径使用的是<code>mapper</code>的<code>url</code>属性</li><li>接口的全限定名导入使用的是<code>mapper</code>标签的<code>class</code>属性—–基于接口的代理模式</li><li>包扫描形式加载所有的<code>mapper</code>映射文件，使用的<code>package</code>标签</li></ol><img src="/note/2022/06/04/study/MyBatis/mybatis-yswj.png" class="" title="mybatis 映射文件示例 image"><h2 id="3、Mybatis-开发"><a href="#3、Mybatis-开发" class="headerlink" title="3、Mybatis 开发"></a>3、<code>Mybatis</code> 开发</h2><h3 id="3-1-传递参数"><a href="#3-1-传递参数" class="headerlink" title="3.1 传递参数"></a>3.1 传递参数</h3><ul><li><p><em>${} 代表mybatis底层使用Statment语句对象,参数是以字符串拼接的形式设置</em></p></li><li><p>#{} 代表mybatis底层使用的preparedStatment语句对象,参数使用?作为占位符处理，更常用</p></li></ul>]]></content>
     
     
       
       
-    <summary type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt; for</summary>
+    <summary type="html">&lt;h2 id=&quot;1、简介&quot;&gt;&lt;a href=&quot;#1、简介&quot; class=&quot;headerlink&quot; title=&quot;1、简介&quot;&gt;&lt;/a&gt;1、简介&lt;/h2&gt;&lt;p&gt;&lt;code&gt;Mybatis&lt;/code&gt; 是一款优秀的持久层框架，支持定制化&lt;code&gt;SQL&lt;/code&gt;、存储过程及高级</summary>
       
     
     
     
+    
+    <category term="MyBatis" scheme="https://lyblog2022.github.io/note/tags/MyBatis/"/>
     
   </entry>
   
