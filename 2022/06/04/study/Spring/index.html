@@ -126,13 +126,122 @@
         <p>Spring学习</p>
 <span id="more"></span>
 
+<h2 id="1、Spring框架"><a href="#1、Spring框架" class="headerlink" title="1、Spring框架"></a>1、<code>Spring</code>框架</h2><h3 id="1-1-Spring框架"><a href="#1-1-Spring框架" class="headerlink" title="1.1 Spring框架"></a>1.1 <code>Spring</code>框架</h3><p>​	<code>Spring</code>框架是由于软件开发的复杂性而创建的。<code>Spring</code>使用的是基本的<code>JavaBean</code>来完成以前只可能由<code>EJB</code>完成的事情。然而，<code>Spring</code>的用途不仅仅限于服务器端的开发。从简单性、可测试性和松耦合性角度而言，绝大部分<code>Java</code>应用都可以从<code>Spring</code>中受益。</p>
+<p>​																																																		—-百度百科</p>
+<ul>
+<li>目的：解决企业应用开发的复杂性</li>
+<li>功能：使用基本的<code>JavaBean</code>代替<code>EJB</code>，并提供更对的企业应用功能</li>
+<li>范围：任何<code>Java</code>应用</li>
+</ul>
+<p>​	<code>Spring</code>是分层的全栈式的轻量级开发框架，以<code>IOC</code>和<code>AOP</code>为核心</p>
+<h3 id="1-2-优点"><a href="#1-2-优点" class="headerlink" title="1.2 优点"></a>1.2 优点</h3><ol>
+<li>方便解耦，简化开发</li>
+</ol>
+<p><code>Spring</code>通过容器，将对象的创建从代码中剥离出来，交给<code>Spring</code>控制，避免直接编码造成模块之间的耦合度高，用户也不必自己编码处理对象的单例和多例控制，主要关注接口功能即可，不用关注具体使用哪个实现类和实现细节问题 </p>
+<ol start="2">
+<li><code>AOP</code>切面编程</li>
+</ol>
+<p><code>AOP</code>切面编程是程序设计的一种概念，<code>Spring</code>对该概念实现的比较好，通过切面编程我们可以在不修改原有代码的情况下实现功能的增加，通常用于事务控制、日志记录、性能检测、权限控制等等</p>
+<ol start="3">
+<li>声明式事务</li>
+</ol>
+<p>事务的控制可以托管给<code>Spring</code>，我们通过注解或者配置文件声明事务的处理方式即可，不用我们自己去编码处理</p>
+<ol start="4">
+<li>整合<code>JUNIT</code>，方便测试</li>
+</ol>
+<p><code>spring</code>整合<code>JUNIT</code>单元测试，对于项目的功能都可以进行轻松快速的测试，便于我们调试程序</p>
+<ol start="5">
+<li>方便整合各种优秀的框架</li>
+<li>丰富的功能封装</li>
+</ol>
+<p><code>spring</code>对<code>JAVAEE</code>(<code>JDBC </code>，<code>JAVAMail</code>)都进行了一系列的封装，简化我们对于<code>API</code>的使用，提高程序的开发效率</p>
+<ol start="7">
+<li>规范的源码学习样本</li>
+</ol>
+<p><code>spring</code>的源码设计巧妙，结构清晰，大量使用了设计模式，是<code>java</code>代码规范编写的典范</p>
+<h2 id="2、Spring模块"><a href="#2、Spring模块" class="headerlink" title="2、Spring模块"></a>2、<code>Spring</code>模块</h2><img src="/note/2022/06/04/study/Spring/Spring%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84.png" class="" title="Spring体系结构 image">
+
+<h3 id="2-1-Data-Access-Integration（数据访问／集成）"><a href="#2-1-Data-Access-Integration（数据访问／集成）" class="headerlink" title="2.1 Data Access/Integration（数据访问／集成）"></a>2.1 <code>Data Access/Integration</code>（数据访问／集成）</h3><p>数据访问&#x2F;集成层包括 <code>JDBC</code>、<code>ORM</code>、<code>OXM</code>、JMS<code> </code>和 <code>Transactions </code>模块</p>
+<ul>
+<li><p><code>JDBC </code>模块：提供了一个 <code>JDBC </code>的抽象层，大幅度减少了在开发过程中对数据库操作的编码。</p>
+</li>
+<li><p><code>ORM </code>模块：对流行的对象关系映射 <code>API</code>，包括 <code>JPA</code>、<code>JDO</code>、<code>Hibernate</code>和 <code>iBatis </code>提供了的集成层。</p>
+</li>
+<li><p><code>OXM </code>模块：提供了一个支持对象<code>XML </code>映射的抽象层实现，如 <code>JAXB</code>、<code>Castor</code>、<code>XMLBeans</code>、<code>JiBX </code>和 <code>XStream</code>。 </p>
+</li>
+<li><p><code>JMS </code>模块：指<code>JAVA</code>消息服务，包含的功能为生产和消费的信息。</p>
+</li>
+<li><p><code>Transactions </code>事务模块：支持编程和声明式事务管理实现特殊接口类，并为所有的 <code>POJO</code>。</p>
+</li>
+</ul>
+<h3 id="2-2-Web-模块"><a href="#2-2-Web-模块" class="headerlink" title="2.2  Web 模块"></a>2.2  <code>Web </code>模块</h3><p><code>Spring </code>的 <code>Web </code>层包括 <code>Web</code>、<code>Servlet</code>、<code>Struts </code>和 <code>Portlet </code>组件</p>
+<ul>
+<li><code>Web </code>模块：提供了基本的 <code>Web </code>开发集成特性，例如多文件上传功能、使用的 <code>Servlet </code>监听器的 <code>IoC </code>容器初始化以及 <code>Web </code>应用上下文。</li>
+<li><code>Servlet</code>模块：包括 <code>Spring </code>模型—视图—控制器（<code>MVC</code>）实现 <code>Web</code>应用程序。</li>
+<li><code>Struts </code>模块：包含支持类内的 <code>Spring </code>应用程序，集成了经典的 <code>Struts Web</code> 层。</li>
+<li><code>Portlet </code>模块：提供了在 <code>Portlet </code>环境中使用 <code>MVC</code>实现，类似 <code>Web-Servlet</code> 模块的功能。</li>
+</ul>
+<h3 id="2-3-Core-Container（核心容器）"><a href="#2-3-Core-Container（核心容器）" class="headerlink" title="2.3 Core Container（核心容器）"></a>2.3 <code>Core Container</code>（核心容器）</h3><p><code>Spring </code>的核心容器是其他模块建立的基础，由 <code>Beans </code>模块、<code>Core </code>核心模块、<code>Context </code>上下文模块和 <code>Expression Language</code> 表达式语言模块组成</p>
+<ul>
+<li><code>Beans </code>模块：提供了 <code>BeanFactory</code>，是工厂模式的经典实现，<code>Spring </code>将管理对象称为 <code>Bean</code>。</li>
+<li><code>Core </code>核心模块：提供了 <code>Spring </code>框架的基本组成部分，包括 <code>IoC </code>和 <code>DI </code>功能。</li>
+<li><code>Context </code>上下文模块：建立在核心和 <code>Beans</code> 模块的基础之上，它是访问定义和配置任何对象的媒介。<code>ApplicationContext </code>接口是上下文模块的焦点。</li>
+<li><code>Expression Language</code> 模块：是运行时查询和操作对象图的强大的表达式语言。</li>
+</ul>
+<h3 id="2-4-其他模块"><a href="#2-4-其他模块" class="headerlink" title="2.4 其他模块"></a>2.4 其他模块</h3><p><code>Spring</code>的其他模块还有 <code>AOP</code>、<code>Aspects</code>、<code>Instrumentation </code>以及 <code>Test </code>模块</p>
+<ul>
+<li><code>AOP </code>模块：提供了面向切面编程实现，允许定义方法拦截器和切入点，将代码按照功能进行分离，以降低耦合性。</li>
+<li><code>Aspects </code>模块：提供与 <code>AspectJ </code>的集成，是一个功能强大且成熟的面向切面编程（<code>AOP</code>）框架。</li>
+<li><code>Instrumentation </code>模块：提供了类工具的支持和类加载器的实现，可以在特定的应用服务器中使用。</li>
+<li><code>Test </code>模块：支持 <code>Spring </code>组件，使用 <code>JUnit </code>或 <code>TestNG </code>框架的测试。</li>
+</ul>
+<h2 id="3、Spring-IOC"><a href="#3、Spring-IOC" class="headerlink" title="3、Spring_IOC"></a>3、Spring_IOC</h2><h3 id="3-1-控制反转"><a href="#3-1-控制反转" class="headerlink" title="3.1 控制反转"></a>3.1 控制反转</h3><p>​	控制反转（Inversion of Control，缩写为<strong>IoC</strong>），是面向对象编程中的一种设计原则，可以用来减低计算机代码之间的耦合度。其中最常见的方式叫做<strong>依赖注入</strong>（Dependency Injection，简称<strong>DI</strong>），还有一种方式叫<strong>依赖查找</strong>（Dependency Lookup）。通过控制反转，对象在被创建的时候，由一个调控系统内所有对象的外界实体将其所依赖的对象的引用传递给它。也可以说，依赖被注入到对象中。–【百度】</p>
+<p>​	简单来说，创建对象的权利，或者是控制的位置，由<code>Java</code>代码转移到<code>Spring</code>容器，由<code>Spring</code>的容器控制对象的创建，就是控制反转，<code>Spring</code>创建对象时，会读取配置文件中的信息，然后使用反射创建好的对象之后在容器中存储起来，当需要某个对象时，通过<code>id</code>获取对象即可，不需要自己去<code>new</code></p>
+<h3 id="3-2-原理分析"><a href="#3-2-原理分析" class="headerlink" title="3.2 原理分析"></a>3.2 原理分析</h3><h4 id="3-2-1-XML解析"><a href="#3-2-1-XML解析" class="headerlink" title="3.2.1 XML解析"></a>3.2.1 XML解析</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;stuDao&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.dao.impl.StuDaoImpl&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>​		将上面的信息读取进入程序  对象的ID ,一个是对象的类的全路径名</p>
+<h4 id="3-2-2-反射"><a href="#3-2-2-反射" class="headerlink" title="3.2.2 反射"></a>3.2.2 反射</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获得类的字节码</span></span><br><span class="line"><span class="type">Class</span> <span class="variable">clazz</span> <span class="operator">=</span>Class.forName(<span class="string">&quot;com.dao.impl.StuDaoImpl&quot;</span>);</span><br><span class="line"><span class="comment">//通过字节码实例化对象</span></span><br><span class="line"><span class="type">Object</span> <span class="variable">obj</span>  <span class="operator">=</span> clazz.newInstance(); </span><br><span class="line"><span class="comment">//将对象放到一个map集合中</span></span><br><span class="line">map.put(<span class="string">&quot;empDao&quot;</span>,obj)</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-2-3-工厂模式"><a href="#3-2-3-工厂模式" class="headerlink" title="3.2.3 工厂模式"></a>3.2.3 工厂模式</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> Object <span class="title function_">getBean</span><span class="params">(String name)</span>&#123; </span><br><span class="line">	<span class="type">Object</span> <span class="variable">obj</span> <span class="operator">=</span>map.get(name); </span><br><span class="line">    <span class="keyword">return</span> obj; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>IOC</code>接口	</p>
+<pre><code>+ `BeanFactory `接口：`IOC`容器基本功能接口，是`spring`内部使用的接口，我们在处理业务时一般不直接使用该接口
++ `ApplicationContext `接口：`BeanFactory`的子接口，提供更多更强大的功能，研发人员一般使用的接口
+</code></pre>
+<img src="/note/2022/06/04/study/Spring/spring2.png" class="" title="spring2 image">
+
+<h2 id="4、Spring-XML方式实现DI"><a href="#4、Spring-XML方式实现DI" class="headerlink" title="4、Spring_XML方式实现DI"></a>4、<code>Spring_XML</code>方式实现<code>DI</code></h2><p><code>spring</code>中的<code>Bean</code>的管理: </p>
+<p><code>Bean</code>(汉译咖啡豆)，又称<code>JAVABean</code>，其实就是<code>JAVA</code>程序程序中的一个个对象，所以<code>Bean</code>的管理其实就是<code>spring</code>对于<code>JAVA</code>程序中的对象的管理</p>
+<p>管理的内容</p>
+<pre><code>+ 对象的创建（`IOC`）：控制反转，就是`Spring`给我们创建对象，然后我们直接用，不用自己`NEW`
++ 属性的赋值（`DI`）：依赖注入，即创建属性时给对象属性赋值，对象功能的实现往往要依赖属性的值，由于对象属性不仅仅是基本数据类型，还可能是其他类或者引用类型，那么依赖注入将会把更多的对象之间的关系整理到一起，可以形成一个庞大的依赖关系，DI处理的是对象的属性赋值和互相依赖的关系
+</code></pre>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--通过无参构造方法构造对象--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;user1&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.bean.User&quot;</span> <span class="attr">name</span>=<span class="string">&quot;user1&quot;</span> <span class="attr">scope</span>=<span class="string">&quot;prototype&quot;</span> <span class="attr">lazy-init</span>=<span class="string">&quot;true&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">id:对象的id</span></span><br><span class="line"><span class="comment">class:类的全路径名</span></span><br><span class="line"><span class="comment">name:和id类似,一般不用</span></span><br><span class="line"><span class="comment">scope：控制对象单例多例和使用范围</span></span><br><span class="line"><span class="comment">	singleton：作用域(scope 默认值), Spring IOC容器中只会存在一个共享的bean实例</span></span><br><span class="line"><span class="comment">	prototype：作用域部署的bean，每一次获取都会产生一个新的bean实例，相当与一个new的操作</span></span><br><span class="line"><span class="comment">	request：表示该针对每一次HTTP请求都会产生一个新的bean，同时该bean仅在当前HTTP request内有效</span></span><br><span class="line"><span class="comment">	session：作用域表示该针对每一次HTTP请求都会产生一个新的bean，同时该bean仅在当前HTTP session内有效</span></span><br><span class="line"><span class="comment">	global session：作用域类似于标准的HTTP Session作用域，不过它仅仅在基于portlet的web应用中才有意义</span></span><br><span class="line"><span class="comment">lazy-init：懒加载 调用getBean的时候再去实例化对象</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--通过set方法给对象属性赋值--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;user1&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.bean.User&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;userid&quot;</span> <span class="attr">value</span>=<span class="string">&quot;1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span> <span class="attr">value</span>=<span class="string">&quot;张三&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">value</span>=<span class="string">&quot;abcdefg&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--通过有参构造给对象属性赋值--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;user2&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.msb.bean.User&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">name</span>=<span class="string">&quot;userid&quot;</span> <span class="attr">value</span>=<span class="string">&quot;2&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span> <span class="attr">value</span>=<span class="string">&quot;小明&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">value</span>=<span class="string">&quot;123456789&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--特殊符号--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;user1&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.msb.bean.User&quot;</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!--null值--&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;userid&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">null</span>&gt;</span><span class="tag">&lt;/<span class="name">null</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!--特殊符号 转译字符 &lt; &amp;lt;  &gt;&amp;gt;  &amp; &amp;amp;     --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span> <span class="attr">value</span>=<span class="string">&quot;<span class="symbol">&amp;amp;</span>xiaoming<span class="symbol">&amp;lt;</span><span class="symbol">&amp;gt;</span>&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!-- 特殊符号  &lt;![CDATA[内容]]&gt;  --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">value</span>&gt;</span>&lt;![CDATA[&amp;&lt;123456&gt;]]&gt;<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="5、Spring-Bean生命周期"><a href="#5、Spring-Bean生命周期" class="headerlink" title="5、Spring_Bean生命周期"></a>5、<code>Spring_Bean</code>生命周期</h2><pre><code> 1. 通过构造器创建bean实例========  执行构造器
+ 2. 为bean属性赋值===============  执行set方法
+ 3. 初始化bean=================== 调用bean的初始化方法,需要配置指定调用的方法
+ 4. bean的获取=================== 容器对象 getBean方法
+ 5. 容器关闭销毁bean============== 调用销毁方法,需要配置指定调用的方法
+</code></pre>
+<h2 id="6、Spring注解方式管理Bean"><a href="#6、Spring注解方式管理Bean" class="headerlink" title="6、Spring注解方式管理Bean"></a>6、<code>Spring</code>注解方式管理<code>Bean</code></h2><h3 id="6-1-注解方式创建对象IOC"><a href="#6-1-注解方式创建对象IOC" class="headerlink" title="6.1 注解方式创建对象IOC"></a>6.1 注解方式创建对象<code>IOC</code></h3><pre><code>+ @Component：放在类上,用于标记，告诉`spring`当前类需要由容器实例化`bean`并放入容器中
++ @Controller：@Component子注解，用于实例化`controller`层`bean`
++ @Service：@Component子注解，用于实例化`service`层`bean`
++ @Repository：@Component子注解，用于实例化持久层`bean`
+</code></pre>
+<h3 id="6-2-注解方式依赖注入DI"><a href="#6-2-注解方式依赖注入DI" class="headerlink" title="6.2 注解方式依赖注入DI"></a>6.2 注解方式依赖注入<code>DI</code></h3><pre><code>+ @Autowired：根据属性数据类型自动装配
++ @Qualifier：根据属性名称注入依赖
++ @Resources：可以根据类型,也可以根据名称注入
++ @Value：注入普通数据类型(8+String)
+</code></pre>
+<h2 id="7、Spring代理"><a href="#7、Spring代理" class="headerlink" title="7、Spring代理"></a>7、<code>Spring</code>代理</h2>
         
             <div id="toc-article">
                 
   <div class="widget-wrap" id="toc-wrap">
     <h3 class="widget-title"><i class="fa fa-toc"></i> 文章目录</h3>
     <div class="widget">
-      
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81Spring%E6%A1%86%E6%9E%B6"><span class="toc-text">1、Spring框架</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-Spring%E6%A1%86%E6%9E%B6"><span class="toc-text">1.1 Spring框架</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E4%BC%98%E7%82%B9"><span class="toc-text">1.2 优点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81Spring%E6%A8%A1%E5%9D%97"><span class="toc-text">2、Spring模块</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Data-Access-Integration%EF%BC%88%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE%EF%BC%8F%E9%9B%86%E6%88%90%EF%BC%89"><span class="toc-text">2.1 Data Access&#x2F;Integration（数据访问／集成）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Web-%E6%A8%A1%E5%9D%97"><span class="toc-text">2.2  Web 模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-Core-Container%EF%BC%88%E6%A0%B8%E5%BF%83%E5%AE%B9%E5%99%A8%EF%BC%89"><span class="toc-text">2.3 Core Container（核心容器）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E5%85%B6%E4%BB%96%E6%A8%A1%E5%9D%97"><span class="toc-text">2.4 其他模块</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81Spring-IOC"><span class="toc-text">3、Spring_IOC</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%AC"><span class="toc-text">3.1 控制反转</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90"><span class="toc-text">3.2 原理分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-1-XML%E8%A7%A3%E6%9E%90"><span class="toc-text">3.2.1 XML解析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-2-%E5%8F%8D%E5%B0%84"><span class="toc-text">3.2.2 反射</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-3-%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F"><span class="toc-text">3.2.3 工厂模式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4%E3%80%81Spring-XML%E6%96%B9%E5%BC%8F%E5%AE%9E%E7%8E%B0DI"><span class="toc-text">4、Spring_XML方式实现DI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5%E3%80%81Spring-Bean%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-text">5、Spring_Bean生命周期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6%E3%80%81Spring%E6%B3%A8%E8%A7%A3%E6%96%B9%E5%BC%8F%E7%AE%A1%E7%90%86Bean"><span class="toc-text">6、Spring注解方式管理Bean</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E6%B3%A8%E8%A7%A3%E6%96%B9%E5%BC%8F%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1IOC"><span class="toc-text">6.1 注解方式创建对象IOC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E6%B3%A8%E8%A7%A3%E6%96%B9%E5%BC%8F%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5DI"><span class="toc-text">6.2 注解方式依赖注入DI</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7%E3%80%81Spring%E4%BB%A3%E7%90%86"><span class="toc-text">7、Spring代理</span></a></li></ol>
     </div>
   </div>
 
@@ -203,6 +312,10 @@
             <a href="/note/2022/06/04/study/MyBatis/">MyBatis</a>
           </li>
         
+          <li>
+            <a href="/note/2022/05/18/dailysummary/20220518/dailysummary/">518总结--post请求调用接口</a>
+          </li>
+        
       </ul>
     </div>
   </div>
@@ -213,7 +326,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title"><i class="fa fa-tag"></i> 标签云</h3>
     <div class="widget tagcloud">
-      <a href="/note/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/note/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/note/tags/servlet/" style="font-size: 10px;">servlet</a> <a href="/note/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 20px;">学习</a>
+      <a href="/note/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/note/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/note/tags/servlet/" style="font-size: 10px;">servlet</a> <a href="/note/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 20px;">学习</a> <a href="/note/tags/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/" style="font-size: 10px;">接口调用</a>
     </div>
   </div>
 
@@ -222,7 +335,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title"><i class="fa fa-classify"></i> 分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/MyBatis/">MyBatis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/Spring/">Spring</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/servlet/">servlet</a><span class="category-list-count">1</span></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/MyBatis/">MyBatis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/Spring/">Spring</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/servlet/">servlet</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E6%80%BB%E7%BB%93/">总结</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E6%80%BB%E7%BB%93/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/">接口调用</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
   </div>
 
@@ -232,7 +345,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title"><i class="fa fa-archive"></i> 归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/note/archives/2022/">2022年</a><span class="archive-list-count">3</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/note/archives/2022/">2022年</a><span class="archive-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -242,7 +355,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title"><i class="fa fa-tag"></i> 标签</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/MyBatis/" rel="tag">MyBatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/Spring/" rel="tag">Spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/servlet/" rel="tag">servlet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a><span class="tag-list-count">3</span></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/MyBatis/" rel="tag">MyBatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/Spring/" rel="tag">Spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/servlet/" rel="tag">servlet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/" rel="tag">接口调用</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 

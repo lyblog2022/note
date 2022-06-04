@@ -163,6 +163,87 @@
 <li><p>#{} 代表mybatis底层使用的preparedStatment语句对象,参数使用?作为占位符处理，更常用</p>
 </li>
 </ul>
+<h2 id="4、MyBatis代理模式开发"><a href="#4、MyBatis代理模式开发" class="headerlink" title="4、MyBatis代理模式开发"></a>4、<code>MyBatis</code>代理模式开发</h2><p>在<code>MyBatis</code>中提供了一种称为<code>Mapper</code>代理（接口绑定）的操作方式，在实际开发中也使用该方式</p>
+<h3 id="4-1-原理浅析"><a href="#4-1-原理浅析" class="headerlink" title="4.1 原理浅析"></a>4.1 原理浅析</h3><p>​	底层使用了动态代理模式，动态创建一个<code>Mapper</code>的一个代理对象并赋给接口使用</p>
+<h2 id="5、动态SQL"><a href="#5、动态SQL" class="headerlink" title="5、动态SQL"></a>5、动态<code>SQL</code></h2><p>​	<code>MyBatis</code>在简化操作方法上提出了动态<code>SQL</code>功能，将使用<code>Java</code>代码拼接<code>SQL</code>语句，改变为在<code>XML</code>映射文件中截止标签拼接<code>SQL</code>语句。相比而言，大大减少代码量，更灵活、有利于后期维护</p>
+<p>​	<code>MyBatis</code>中动态<code>SQL</code>是编写在<code>mapper.xml</code>中的，其语法和<code>JSTL</code>类似，但是却是基于强大的<code>OGNL</code>表达式实现的</p>
+<p>​	<code>MyBatis</code>也可以在注解中配置<code>SQL</code>，但是由于注解功能受限，尤其是对于复杂的<code>SQL</code>语句，可读性很差，所以较少使用</p>
+<h3 id="5-1-If标签"><a href="#5-1-If标签" class="headerlink" title="5.1 If标签"></a>5.1 <code>If</code>标签</h3><p>条件查询，符合<code>if</code>的条件，则补充<code>SQL</code>语句</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span> ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">mapper</span></span></span><br><span class="line"><span class="meta">        <span class="keyword">PUBLIC</span> <span class="string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span></span></span><br><span class="line"><span class="meta">        <span class="string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;com.mapper.StudentMapper&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;findByCondition&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;Student&quot;</span>&gt;</span></span><br><span class="line">        select * from student where 1=1</span><br><span class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;stuno != null&quot;</span>&gt;</span></span><br><span class="line">            and stuno =#&#123;stuno&#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;classname != null and classname != &#x27;&#x27;&quot;</span>&gt;</span></span><br><span class="line">            and classname like concat(&#x27;%&#x27;,#&#123;classname&#125;,&#x27;%&#x27;)</span><br><span class="line">        <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-2-Where标签"><a href="#5-2-Where标签" class="headerlink" title="5.2 Where标签"></a>5.2 <code>Where</code>标签</h3><p>用于处理<code>where</code>关键字和<code>and</code></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;findStuByCondition&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;Student&quot;</span>&gt;</span></span><br><span class="line">    select * from student</span><br><span class="line">    <span class="tag">&lt;<span class="name">where</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;stuno != null&quot;</span>&gt;</span></span><br><span class="line">            and stuno= #&#123;stuno&#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;classname != null and classname != &#x27;&#x27;&quot;</span>&gt;</span></span><br><span class="line">            and classname= #&#123;classname&#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">where</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-Choose标签"><a href="#5-3-Choose标签" class="headerlink" title="5.3 Choose标签"></a>5.3 <code>Choose</code>标签</h3><p>前面的<code>when</code>条件成立  后面的  <code>when</code>就不再判断了</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;findStuByCondition&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;Student&quot;</span>&gt;</span></span><br><span class="line">    select * from student</span><br><span class="line">    <span class="tag">&lt;<span class="name">where</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">choose</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">when</span> <span class="attr">test</span>=<span class="string">&quot;stuno != null&quot;</span>&gt;</span></span><br><span class="line">                and stuno= #&#123;stuno&#125;</span><br><span class="line">            <span class="tag">&lt;/<span class="name">when</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">when</span> <span class="attr">test</span>=<span class="string">&quot;classname != null and classname != &#x27;&#x27;&quot;</span>&gt;</span></span><br><span class="line">                and classname= #&#123;classname&#125;</span><br><span class="line">            <span class="tag">&lt;/<span class="name">when</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">choose</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">where</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-4-Set标签"><a href="#5-4-Set标签" class="headerlink" title="5.4  Set标签"></a>5.4 <code> Set</code>标签</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">update</span> <span class="attr">id</span>=<span class="string">&quot;updateStuByCondtion&quot;</span> &gt;</span></span><br><span class="line">    update student</span><br><span class="line">    <span class="tag">&lt;<span class="name">set</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;classname != null and classname != &#x27;&#x27; &quot;</span>&gt;</span></span><br><span class="line">            , classname =#&#123;classname&#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;stuno != null &quot;</span>&gt;</span></span><br><span class="line">            , stuname =#&#123;stuname&#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">set</span>&gt;</span></span><br><span class="line">    where stuno =#&#123;stuno&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">update</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-5-Trim标签"><a href="#5-5-Trim标签" class="headerlink" title="5.5 Trim标签"></a>5.5 <code>Trim</code>标签</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">update</span> <span class="attr">id</span>=<span class="string">&quot;updateStuByCondition&quot;</span> &gt;</span></span><br><span class="line">    update student</span><br><span class="line">    <span class="comment">&lt;!--prefix 要增加什么前缀</span></span><br><span class="line"><span class="comment">    prefixOverrides 要去除什么前缀</span></span><br><span class="line"><span class="comment">    suffix 要增加什么后缀</span></span><br><span class="line"><span class="comment">    suffixOverrides 要去除什么后缀</span></span><br><span class="line"><span class="comment">    set 是trim的一种特殊情况</span></span><br><span class="line"><span class="comment">    --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">trim</span> <span class="attr">prefix</span>=<span class="string">&quot;set&quot;</span>  <span class="attr">suffixOverrides</span>=<span class="string">&quot;,&quot;</span> &gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;stuname != null and stuname != &#x27;&#x27;&quot;</span>&gt;</span></span><br><span class="line">            stuname= #&#123;stuname&#125;,</span><br><span class="line">        <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;classname != null and classname != &#x27;&#x27;&quot;</span>&gt;</span></span><br><span class="line">            classname= #&#123;classname&#125;,</span><br><span class="line">        <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">trim</span>&gt;</span></span><br><span class="line">    where  stuno = #&#123;stuno&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">update</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-6-Bind标签"><a href="#5-6-Bind标签" class="headerlink" title="5.6 Bind标签"></a>5.6 <code>Bind</code>标签</h3><p>一般用于处理模糊查询的模板</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;findStuByClassName&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;Student&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bind</span> <span class="attr">name</span>=<span class="string">&quot;likePattern&quot;</span> <span class="attr">value</span>=<span class="string">&quot;&#x27;%&#x27;+param1+&#x27;%&#x27;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">bind</span>&gt;</span></span><br><span class="line">    select * from student where classname like #&#123;classname&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="6、缓存"><a href="#6、缓存" class="headerlink" title="6、缓存"></a>6、缓存</h2><h3 id="6-1-一级缓存"><a href="#6-1-一级缓存" class="headerlink" title="6.1 一级缓存"></a>6.1 一级缓存</h3><p>​	一级存储是<code>SqlSession</code>上的缓存，默认开启，是一种内存型缓存,不要求实体类对象实现<code>Serializable</code>接口</p>
+<p>​	缓存中的数据使用键值对形式存储数据</p>
+<p>​	<code>namespace+sqlid+args+offset&gt;&gt;&gt; hash</code>值作为键,查询出的结果作为值</p>
+<img src="/note/2022/06/04/study/MyBatis/sqlsession.png" class="" title="sqlsession一级缓存 image">
+
+<h3 id="6-2-二级缓存"><a href="#6-2-二级缓存" class="headerlink" title="6.2 二级缓存"></a>6.2 二级缓存</h3><p>​	二级缓存是以<code>namespace</code>为标记的缓存，可以是由一个<code>SqlSessionFactory</code>创建的<code>SqlSession</code>之间共享缓存数据。默认并不开启，要求实体类必须实现序列化接口</p>
+<img src="/note/2022/06/04/study/MyBatis/sqlsession2.png" class="" title="sqlsession二级缓存 image">
+
+<p>注意：</p>
+<p>​	1、<code> MyBatis</code>的二级缓存的缓存介质有多种多样，而并不一定是在内存中，所以需要对<code>JavaBean</code>对象实现序列化接口。</p>
+<p>​	2、二级缓存是以 <code>namespace </code>为单位的，不同 <code>namespace</code> 下的操作互不影响</p>
+<p>​	3、加入<code>Cache</code>元素后，会对相应命名空间所有的<code>select</code>元素查询结果进行缓存，而其中的<code>insert</code>、<code>update</code>、<code>delete</code>在操作是会清空整个<code>namespace</code>的缓存</p>
+<p>​	4、<code>cache</code> 有一些可选的属性 <code>type</code>, <code>eviction</code>, <code>flushInterval</code>, <code>size</code>, <code>readOnly</code>, <code>blocking</code>。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">cache</span> <span class="attr">type</span>=<span class="string">&quot;&quot;</span> <span class="attr">readOnly</span>=<span class="string">&quot;&quot;</span> <span class="attr">eviction</span>=<span class="string">&quot;&quot;</span><span class="attr">flushInterval</span>=<span class="string">&quot;&quot;</span><span class="attr">size</span>=<span class="string">&quot;&quot;</span><span class="attr">blocking</span>=<span class="string">&quot;&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>含义</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>type</td>
+<td>自定义缓存类，要求实现org.apache.ibatis.cache.Cache接口</td>
+<td>null</td>
+</tr>
+<tr>
+<td>readOnly</td>
+<td>是否只读  <br />true:给所有调用者返回缓存对象的相同实例。因此这些对象不能被修改。这提供了很重要的性能优势。<br />false:会返回缓存对象的拷贝(通过序列化) 。这会慢一些,但是安全</td>
+<td>false</td>
+</tr>
+<tr>
+<td>eviction</td>
+<td>缓存策略<br />LRU（默认） – 最近最少使用：移除最长时间不被使用的对象。<br />FIFO – 先进先出：按对象进入缓存的顺序来移除它们。<br />SOFT – 软引用：基于垃圾回收器状态和软引用规则移除对象。<br />WEAK – 弱引用：更积极地基于垃圾收集器状态和弱引用规则移除对象。</td>
+<td>LRU</td>
+</tr>
+<tr>
+<td>flushInterval</td>
+<td>刷新间隔，毫秒为单位。默认为null，也就是没有刷新间隔，只有执行update、insert、delete语句才会刷新</td>
+<td>null</td>
+</tr>
+<tr>
+<td>size</td>
+<td>缓存对象个数</td>
+<td>1024</td>
+</tr>
+<tr>
+<td>blocking</td>
+<td>是否使用阻塞性缓存BlockingCache<br />true：在查询缓存时锁住对应的Key，如果缓存命中了则会释放对应的锁，否则会在查询数据库以后再释放锁，保证只有一个线程到数据库中查找指定key对应的数据<br />false：不使用阻塞性缓存，性能更好</td>
+<td>false</td>
+</tr>
+</tbody></table>
+<p>​	5、如果在加入<code>Cache</code>元素的前提下让个别<code>select </code>元素不使用缓存，可以使用<code>useCache</code>属性，设置为<code>false</code>。**<code>useCache</code>**控制当前sql语句是否启用缓存  <code>flushCache</code>控制当前<code>sql</code>执行一次后是否刷新缓存</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;findStuByCondition&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;Student&quot;</span> <span class="attr">useCache</span>=<span class="string">&quot;true&quot;</span> <span class="attr">flushCache</span>=<span class="string">&quot;false&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="6-3-三方缓存"><a href="#6-3-三方缓存" class="headerlink" title="6.3 三方缓存"></a>6.3 三方缓存</h3><pre><code>+ 分布式缓存框架：我们系统为了提高系统并发和性能，一般对系统进行分布式部署（集群部署方式）不适用分布缓存， 缓存的数据在各个服务单独存储，不方便系统开发。所以要使用分布式缓存对缓存数据进行集中管理.`ehcache`,`redis `,`memcache`缓存框架。
++ `Ehcache`：是一种广泛使用的开源`java`分布式缓存。主要面向通用缓存，`javaEE `和 轻量级容器。它具有内存和磁盘存储功能。被用于大型复杂分布式`web application`的
+</code></pre>
 
         
             <div id="toc-article">
@@ -170,7 +251,7 @@
   <div class="widget-wrap" id="toc-wrap">
     <h3 class="widget-title"><i class="fa fa-toc"></i> 文章目录</h3>
     <div class="widget">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E7%AE%80%E4%BB%8B"><span class="toc-text">1、简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E6%A1%86%E6%9E%B6"><span class="toc-text">1.1 框架</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-ORM"><span class="toc-text">1.2 ORM</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-1-%E6%8C%81%E4%B9%85%E5%8C%96"><span class="toc-text">1.2.1 持久化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2-%E6%8C%81%E4%B9%85%E5%B1%82"><span class="toc-text">1.2.2 持久层</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81Mybatis%E9%85%8D%E7%BD%AE"><span class="toc-text">2、Mybatis配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E4%BA%8B%E5%8A%A1"><span class="toc-text">2.1 事务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E7%9A%84%E5%8A%A0%E8%BD%BD%E6%96%B9%E5%BC%8F"><span class="toc-text">2.2 映射文件的加载方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81Mybatis-%E5%BC%80%E5%8F%91"><span class="toc-text">3、Mybatis 开发</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0"><span class="toc-text">3.1 传递参数</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E7%AE%80%E4%BB%8B"><span class="toc-text">1、简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E6%A1%86%E6%9E%B6"><span class="toc-text">1.1 框架</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-ORM"><span class="toc-text">1.2 ORM</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-1-%E6%8C%81%E4%B9%85%E5%8C%96"><span class="toc-text">1.2.1 持久化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2-%E6%8C%81%E4%B9%85%E5%B1%82"><span class="toc-text">1.2.2 持久层</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81Mybatis%E9%85%8D%E7%BD%AE"><span class="toc-text">2、Mybatis配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E4%BA%8B%E5%8A%A1"><span class="toc-text">2.1 事务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E7%9A%84%E5%8A%A0%E8%BD%BD%E6%96%B9%E5%BC%8F"><span class="toc-text">2.2 映射文件的加载方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81Mybatis-%E5%BC%80%E5%8F%91"><span class="toc-text">3、Mybatis 开发</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0"><span class="toc-text">3.1 传递参数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4%E3%80%81MyBatis%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%E5%BC%80%E5%8F%91"><span class="toc-text">4、MyBatis代理模式开发</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E5%8E%9F%E7%90%86%E6%B5%85%E6%9E%90"><span class="toc-text">4.1 原理浅析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5%E3%80%81%E5%8A%A8%E6%80%81SQL"><span class="toc-text">5、动态SQL</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-If%E6%A0%87%E7%AD%BE"><span class="toc-text">5.1 If标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-Where%E6%A0%87%E7%AD%BE"><span class="toc-text">5.2 Where标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-Choose%E6%A0%87%E7%AD%BE"><span class="toc-text">5.3 Choose标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-Set%E6%A0%87%E7%AD%BE"><span class="toc-text">5.4  Set标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-5-Trim%E6%A0%87%E7%AD%BE"><span class="toc-text">5.5 Trim标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-6-Bind%E6%A0%87%E7%AD%BE"><span class="toc-text">5.6 Bind标签</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6%E3%80%81%E7%BC%93%E5%AD%98"><span class="toc-text">6、缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E4%B8%80%E7%BA%A7%E7%BC%93%E5%AD%98"><span class="toc-text">6.1 一级缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98"><span class="toc-text">6.2 二级缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-%E4%B8%89%E6%96%B9%E7%BC%93%E5%AD%98"><span class="toc-text">6.3 三方缓存</span></a></li></ol></li></ol>
     </div>
   </div>
 
@@ -201,6 +282,15 @@
       
         
 <nav id="article-nav">
+  
+    <a href="/note/2022/05/18/dailysummary/20220518/dailysummary/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">older</strong>
+      <div class="article-nav-title">
+        
+          518总结--post请求调用接口
+        
+      </div>
+    </a>
   
   
     <a href="/note/2022/06/04/study/Servlet/" id="article-nav-newer" class="article-nav-link-wrap">
@@ -241,6 +331,10 @@
             <a href="/note/2022/06/04/study/MyBatis/">MyBatis</a>
           </li>
         
+          <li>
+            <a href="/note/2022/05/18/dailysummary/20220518/dailysummary/">518总结--post请求调用接口</a>
+          </li>
+        
       </ul>
     </div>
   </div>
@@ -251,7 +345,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title"><i class="fa fa-tag"></i> 标签云</h3>
     <div class="widget tagcloud">
-      <a href="/note/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/note/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/note/tags/servlet/" style="font-size: 10px;">servlet</a> <a href="/note/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 20px;">学习</a>
+      <a href="/note/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/note/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/note/tags/servlet/" style="font-size: 10px;">servlet</a> <a href="/note/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 20px;">学习</a> <a href="/note/tags/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/" style="font-size: 10px;">接口调用</a>
     </div>
   </div>
 
@@ -260,7 +354,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title"><i class="fa fa-classify"></i> 分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/MyBatis/">MyBatis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/Spring/">Spring</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/servlet/">servlet</a><span class="category-list-count">1</span></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/MyBatis/">MyBatis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/Spring/">Spring</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/servlet/">servlet</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E6%80%BB%E7%BB%93/">总结</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E6%80%BB%E7%BB%93/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/">接口调用</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
   </div>
 
@@ -270,7 +364,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title"><i class="fa fa-archive"></i> 归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/note/archives/2022/">2022年</a><span class="archive-list-count">3</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/note/archives/2022/">2022年</a><span class="archive-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -280,7 +374,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title"><i class="fa fa-tag"></i> 标签</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/MyBatis/" rel="tag">MyBatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/Spring/" rel="tag">Spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/servlet/" rel="tag">servlet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a><span class="tag-list-count">3</span></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/MyBatis/" rel="tag">MyBatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/Spring/" rel="tag">Spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/servlet/" rel="tag">servlet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/" rel="tag">接口调用</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
