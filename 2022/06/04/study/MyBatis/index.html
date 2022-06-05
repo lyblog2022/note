@@ -239,9 +239,10 @@
 <p>​	5、如果在加入<code>Cache</code>元素的前提下让个别<code>select </code>元素不使用缓存，可以使用<code>useCache</code>属性，设置为<code>false</code>。**<code>useCache</code>**控制当前sql语句是否启用缓存  <code>flushCache</code>控制当前<code>sql</code>执行一次后是否刷新缓存</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;findStuByCondition&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;Student&quot;</span> <span class="attr">useCache</span>=<span class="string">&quot;true&quot;</span> <span class="attr">flushCache</span>=<span class="string">&quot;false&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="6-3-三方缓存"><a href="#6-3-三方缓存" class="headerlink" title="6.3 三方缓存"></a>6.3 三方缓存</h3><pre><code>+ 分布式缓存框架：我们系统为了提高系统并发和性能，一般对系统进行分布式部署（集群部署方式）不适用分布缓存， 缓存的数据在各个服务单独存储，不方便系统开发。所以要使用分布式缓存对缓存数据进行集中管理.`ehcache`,`redis `,`memcache`缓存框架。
-+ `Ehcache`：是一种广泛使用的开源`java`分布式缓存。主要面向通用缓存，`javaEE `和 轻量级容器。它具有内存和磁盘存储功能。被用于大型复杂分布式`web application`的
-</code></pre>
+<h3 id="6-3-三方缓存"><a href="#6-3-三方缓存" class="headerlink" title="6.3 三方缓存"></a>6.3 三方缓存</h3><ul>
+<li>分布式缓存框架：我们系统为了提高系统并发和性能，一般对系统进行分布式部署（集群部署方式）不适用分布缓存， 缓存的数据在各个服务单独存储，不方便系统开发。所以要使用分布式缓存对缓存数据进行集中管理.<code>ehcache</code>,<code>redis </code>,<code>memcache</code>缓存框架。</li>
+<li><code>Ehcache</code>：是一种广泛使用的开源<code>java</code>分布式缓存。主要面向通用缓存，<code>javaEE </code>和 轻量级容器。它具有内存和磁盘存储功能。被用于大型复杂分布式<code>web application</code>的</li>
+</ul>
 
         
             <div id="toc-article">
@@ -318,6 +319,10 @@
       <ul>
         
           <li>
+            <a href="/note/2022/06/05/study/SpringMVC/">SpringMVC</a>
+          </li>
+        
+          <li>
             <a href="/note/2022/06/04/study/Spring/">Spring</a>
           </li>
         
@@ -343,7 +348,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title"><i class="fa fa-tag"></i> 标签云</h3>
     <div class="widget tagcloud">
-      <a href="/note/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/note/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/note/tags/servlet/" style="font-size: 10px;">servlet</a> <a href="/note/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 20px;">学习</a> <a href="/note/tags/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/" style="font-size: 10px;">接口调用</a>
+      <a href="/note/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/note/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/note/tags/Springmvc/" style="font-size: 10px;">Springmvc</a> <a href="/note/tags/servlet/" style="font-size: 10px;">servlet</a> <a href="/note/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 20px;">学习</a> <a href="/note/tags/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/" style="font-size: 10px;">接口调用</a>
     </div>
   </div>
 
@@ -352,7 +357,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title"><i class="fa fa-classify"></i> 分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/MyBatis/">MyBatis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/Spring/">Spring</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/servlet/">servlet</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E6%80%BB%E7%BB%93/">总结</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E6%80%BB%E7%BB%93/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/">接口调用</a><span class="category-list-count">1</span></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/MyBatis/">MyBatis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/Spring/">Spring</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/Springmvc/">Springmvc</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/servlet/">servlet</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E6%80%BB%E7%BB%93/">总结</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E6%80%BB%E7%BB%93/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/">接口调用</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
   </div>
 
@@ -362,7 +367,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title"><i class="fa fa-archive"></i> 归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/note/archives/2022/">2022年</a><span class="archive-list-count">4</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/note/archives/2022/">2022年</a><span class="archive-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -372,7 +377,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title"><i class="fa fa-tag"></i> 标签</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/MyBatis/" rel="tag">MyBatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/Spring/" rel="tag">Spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/servlet/" rel="tag">servlet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/" rel="tag">接口调用</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/MyBatis/" rel="tag">MyBatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/Spring/" rel="tag">Spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/Springmvc/" rel="tag">Springmvc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/servlet/" rel="tag">servlet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/" rel="tag">接口调用</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
