@@ -4,7 +4,16 @@
   <url>
     <loc>https://lyblog2022.github.io/note/2022/06/05/study/RPC/</loc>
     
-    <lastmod>2022-06-05</lastmod>
+    <lastmod>2022-06-06</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://lyblog2022.github.io/note/2022/06/04/study/Spring/</loc>
+    
+    <lastmod>2022-06-06</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -30,15 +39,6 @@
   
   <url>
     <loc>https://lyblog2022.github.io/note/2022/06/05/study/SpringMVC/</loc>
-    
-    <lastmod>2022-06-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://lyblog2022.github.io/note/2022/06/04/study/Spring/</loc>
     
     <lastmod>2022-06-05</lastmod>
     
@@ -129,14 +129,14 @@
   </url>
   
   <url>
-    <loc>https://lyblog2022.github.io/note/tags/Spring/</loc>
+    <loc>https://lyblog2022.github.io/note/tags/springboot/</loc>
     <lastmod>2022-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://lyblog2022.github.io/note/tags/springboot/</loc>
+    <loc>https://lyblog2022.github.io/note/tags/Spring/</loc>
     <lastmod>2022-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -166,7 +166,7 @@
   </url>
   
   <url>
-    <loc>https://lyblog2022.github.io/note/categories/%E5%AD%A6%E4%B9%A0/Spring/</loc>
+    <loc>https://lyblog2022.github.io/note/categories/%E5%AD%A6%E4%B9%A0/springboot/</loc>
     <lastmod>2022-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -180,21 +180,7 @@
   </url>
   
   <url>
-    <loc>https://lyblog2022.github.io/note/categories/%E5%AD%A6%E4%B9%A0/springboot/</loc>
-    <lastmod>2022-06-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://lyblog2022.github.io/note/categories/%E5%AD%A6%E4%B9%A0/RPC/</loc>
-    <lastmod>2022-06-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://lyblog2022.github.io/note/categories/%E5%AD%A6%E4%B9%A0/servlet/</loc>
+    <loc>https://lyblog2022.github.io/note/categories/%E5%AD%A6%E4%B9%A0/Spring/</loc>
     <lastmod>2022-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -208,7 +194,21 @@
   </url>
   
   <url>
+    <loc>https://lyblog2022.github.io/note/categories/%E5%AD%A6%E4%B9%A0/RPC/</loc>
+    <lastmod>2022-06-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://lyblog2022.github.io/note/categories/%E6%80%BB%E7%BB%93/</loc>
+    <lastmod>2022-06-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://lyblog2022.github.io/note/categories/%E5%AD%A6%E4%B9%A0/servlet/</loc>
     <lastmod>2022-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
