@@ -3,11 +3,11 @@
   <title>My Note</title>
   
   <subtitle>Welcome To My World</subtitle>
-  <link href="https://lyblog2022.github.io/atom.xml" rel="self"/>
+  <link href="https://lynote.cn/atom.xml" rel="self"/>
   
-  <link href="https://lyblog2022.github.io/"/>
+  <link href="https://lynote.cn/"/>
   <updated>2022-06-06T04:59:46.603Z</updated>
-  <id>https://lyblog2022.github.io/</id>
+  <id>https://lynote.cn/</id>
   
   <author>
     <name>ly</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>RPC-远程服务调用</title>
-    <link href="https://lyblog2022.github.io/2022/06/05/study/RPC/"/>
-    <id>https://lyblog2022.github.io/2022/06/05/study/RPC/</id>
+    <link href="https://lynote.cn/2022/06/05/study/RPC/"/>
+    <id>https://lynote.cn/2022/06/05/study/RPC/</id>
     <published>2022-06-05T08:45:21.000Z</published>
     <updated>2022-06-06T04:59:46.603Z</updated>
     
@@ -30,21 +30,21 @@
     
     
     
-    <category term="学习" scheme="https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/"/>
+    <category term="学习" scheme="https://lynote.cn/categories/%E5%AD%A6%E4%B9%A0/"/>
     
-    <category term="RPC" scheme="https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/RPC/"/>
+    <category term="RPC" scheme="https://lynote.cn/categories/%E5%AD%A6%E4%B9%A0/RPC/"/>
     
     
-    <category term="学习" scheme="https://lyblog2022.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    <category term="学习" scheme="https://lynote.cn/tags/%E5%AD%A6%E4%B9%A0/"/>
     
-    <category term="RPC" scheme="https://lyblog2022.github.io/tags/RPC/"/>
+    <category term="RPC" scheme="https://lynote.cn/tags/RPC/"/>
     
   </entry>
   
   <entry>
     <title>SpringBoot</title>
-    <link href="https://lyblog2022.github.io/2022/06/05/study/SpringBoot/"/>
-    <id>https://lyblog2022.github.io/2022/06/05/study/SpringBoot/</id>
+    <link href="https://lynote.cn/2022/06/05/study/SpringBoot/"/>
+    <id>https://lynote.cn/2022/06/05/study/SpringBoot/</id>
     <published>2022-06-05T07:02:13.000Z</published>
     <updated>2022-06-05T08:35:39.155Z</updated>
     
@@ -55,21 +55,21 @@
     
     
     
-    <category term="学习" scheme="https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/"/>
+    <category term="学习" scheme="https://lynote.cn/categories/%E5%AD%A6%E4%B9%A0/"/>
     
-    <category term="springboot" scheme="https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/springboot/"/>
+    <category term="springboot" scheme="https://lynote.cn/categories/%E5%AD%A6%E4%B9%A0/springboot/"/>
     
     
-    <category term="学习" scheme="https://lyblog2022.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    <category term="学习" scheme="https://lynote.cn/tags/%E5%AD%A6%E4%B9%A0/"/>
     
-    <category term="springboot" scheme="https://lyblog2022.github.io/tags/springboot/"/>
+    <category term="springboot" scheme="https://lynote.cn/tags/springboot/"/>
     
   </entry>
   
   <entry>
     <title>SpringMVC</title>
-    <link href="https://lyblog2022.github.io/2022/06/05/study/SpringMVC/"/>
-    <id>https://lyblog2022.github.io/2022/06/05/study/SpringMVC/</id>
+    <link href="https://lynote.cn/2022/06/05/study/SpringMVC/"/>
+    <id>https://lynote.cn/2022/06/05/study/SpringMVC/</id>
     <published>2022-06-05T04:55:50.000Z</published>
     <updated>2022-06-05T06:55:42.435Z</updated>
     
@@ -80,21 +80,21 @@
     
     
     
-    <category term="学习" scheme="https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/"/>
+    <category term="学习" scheme="https://lynote.cn/categories/%E5%AD%A6%E4%B9%A0/"/>
     
-    <category term="Springmvc" scheme="https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/Springmvc/"/>
+    <category term="Springmvc" scheme="https://lynote.cn/categories/%E5%AD%A6%E4%B9%A0/Springmvc/"/>
     
     
-    <category term="学习" scheme="https://lyblog2022.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    <category term="学习" scheme="https://lynote.cn/tags/%E5%AD%A6%E4%B9%A0/"/>
     
-    <category term="Springmvc" scheme="https://lyblog2022.github.io/tags/Springmvc/"/>
+    <category term="Springmvc" scheme="https://lynote.cn/tags/Springmvc/"/>
     
   </entry>
   
   <entry>
     <title>Spring</title>
-    <link href="https://lyblog2022.github.io/2022/06/04/study/Spring/"/>
-    <id>https://lyblog2022.github.io/2022/06/04/study/Spring/</id>
+    <link href="https://lynote.cn/2022/06/04/study/Spring/"/>
+    <id>https://lynote.cn/2022/06/04/study/Spring/</id>
     <published>2022-06-04T08:59:55.000Z</published>
     <updated>2022-06-06T04:53:57.256Z</updated>
     
@@ -105,21 +105,21 @@
     
     
     
-    <category term="学习" scheme="https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/"/>
+    <category term="学习" scheme="https://lynote.cn/categories/%E5%AD%A6%E4%B9%A0/"/>
     
-    <category term="Spring" scheme="https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/Spring/"/>
+    <category term="Spring" scheme="https://lynote.cn/categories/%E5%AD%A6%E4%B9%A0/Spring/"/>
     
     
-    <category term="学习" scheme="https://lyblog2022.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    <category term="学习" scheme="https://lynote.cn/tags/%E5%AD%A6%E4%B9%A0/"/>
     
-    <category term="Spring" scheme="https://lyblog2022.github.io/tags/Spring/"/>
+    <category term="Spring" scheme="https://lynote.cn/tags/Spring/"/>
     
   </entry>
   
   <entry>
     <title>Servlet</title>
-    <link href="https://lyblog2022.github.io/2022/06/04/study/Servlet/"/>
-    <id>https://lyblog2022.github.io/2022/06/04/study/Servlet/</id>
+    <link href="https://lynote.cn/2022/06/04/study/Servlet/"/>
+    <id>https://lynote.cn/2022/06/04/study/Servlet/</id>
     <published>2022-06-04T08:59:30.000Z</published>
     <updated>2022-06-04T10:16:44.166Z</updated>
     
@@ -130,21 +130,21 @@
     
     
     
-    <category term="学习" scheme="https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/"/>
+    <category term="学习" scheme="https://lynote.cn/categories/%E5%AD%A6%E4%B9%A0/"/>
     
-    <category term="servlet" scheme="https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/servlet/"/>
+    <category term="servlet" scheme="https://lynote.cn/categories/%E5%AD%A6%E4%B9%A0/servlet/"/>
     
     
-    <category term="学习" scheme="https://lyblog2022.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    <category term="学习" scheme="https://lynote.cn/tags/%E5%AD%A6%E4%B9%A0/"/>
     
-    <category term="servlet" scheme="https://lyblog2022.github.io/tags/servlet/"/>
+    <category term="servlet" scheme="https://lynote.cn/tags/servlet/"/>
     
   </entry>
   
   <entry>
     <title>MyBatis</title>
-    <link href="https://lyblog2022.github.io/2022/06/04/study/MyBatis/"/>
-    <id>https://lyblog2022.github.io/2022/06/04/study/MyBatis/</id>
+    <link href="https://lynote.cn/2022/06/04/study/MyBatis/"/>
+    <id>https://lynote.cn/2022/06/04/study/MyBatis/</id>
     <published>2022-06-04T08:59:00.000Z</published>
     <updated>2022-06-05T06:56:34.224Z</updated>
     
@@ -155,21 +155,21 @@
     
     
     
-    <category term="学习" scheme="https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/"/>
+    <category term="学习" scheme="https://lynote.cn/categories/%E5%AD%A6%E4%B9%A0/"/>
     
-    <category term="MyBatis" scheme="https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/MyBatis/"/>
+    <category term="MyBatis" scheme="https://lynote.cn/categories/%E5%AD%A6%E4%B9%A0/MyBatis/"/>
     
     
-    <category term="MyBatis" scheme="https://lyblog2022.github.io/tags/MyBatis/"/>
+    <category term="MyBatis" scheme="https://lynote.cn/tags/MyBatis/"/>
     
-    <category term="学习" scheme="https://lyblog2022.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    <category term="学习" scheme="https://lynote.cn/tags/%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
   <entry>
     <title>518总结--post请求调用接口</title>
-    <link href="https://lyblog2022.github.io/2022/05/18/dailysummary/20220518/dailysummary/"/>
-    <id>https://lyblog2022.github.io/2022/05/18/dailysummary/20220518/dailysummary/</id>
+    <link href="https://lynote.cn/2022/05/18/dailysummary/20220518/dailysummary/"/>
+    <id>https://lynote.cn/2022/05/18/dailysummary/20220518/dailysummary/</id>
     <published>2022-05-18T13:06:35.000Z</published>
     <updated>2022-06-04T15:25:27.560Z</updated>
     
@@ -180,12 +180,12 @@
     
     
     
-    <category term="总结" scheme="https://lyblog2022.github.io/categories/%E6%80%BB%E7%BB%93/"/>
+    <category term="总结" scheme="https://lynote.cn/categories/%E6%80%BB%E7%BB%93/"/>
     
-    <category term="接口调用" scheme="https://lyblog2022.github.io/categories/%E6%80%BB%E7%BB%93/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/"/>
+    <category term="接口调用" scheme="https://lynote.cn/categories/%E6%80%BB%E7%BB%93/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/"/>
     
     
-    <category term="接口调用" scheme="https://lyblog2022.github.io/tags/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/"/>
+    <category term="接口调用" scheme="https://lynote.cn/tags/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/"/>
     
   </entry>
   
