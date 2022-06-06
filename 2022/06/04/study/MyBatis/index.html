@@ -11,10 +11,10 @@
   
   
   
-    <link rel="alternate" href="/note/atom.xml" title="My Note" type="application/atom+xml">
+    <link rel="alternate" href="../../../../../atom.xml" title="My Note" type="application/atom+xml">
   
   
-    <link rel="shortcut icon" href="/note/favicon.png">
+    <link rel="shortcut icon" href="../../../../../favicon.png">
   
   
     
@@ -22,11 +22,11 @@
 
   
   
-<link rel="stylesheet" href="/note/css/style.css">
+<link rel="stylesheet" href="../css/style.css">
 
   
     
-<link rel="stylesheet" href="/note/fancybox/jquery.fancybox.min.css">
+<link rel="stylesheet" href="../fancybox/jquery.fancybox.min.css">
 
   
   
@@ -41,20 +41,20 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/note/" id="logo">My Note</a>
+        <a href="../../../../../index.html" id="logo">My Note</a>
       </h1>
       
         <h2 id="subtitle-wrap">
-          <a href="/note/" id="subtitle">Welcome To My World</a>
+          <a href="../../../../../index.html" id="subtitle">Welcome To My World</a>
         </h2>
       
     </div>
     <div id="header-inner" class="inner">
       <nav id="main-nav">
         
-          <a class="main-nav-link" href="/note/."><i class="fa fa-home"></i> 首页</a>
+          <a class="main-nav-link" href="../../../../../."><i class="fa fa-home"></i> 首页</a>
         
-          <a class="main-nav-link" href="/note/archives/"><i class="fa fa-archive"></i> 归档</a>
+          <a class="main-nav-link" href="../../../../../archives/"><i class="fa fa-archive"></i> 归档</a>
         
       </nav>
     </div>
@@ -104,7 +104,7 @@
       
   <div class="article-category">
     <i class="fa fa-classify"></i>
-    <a class="article-category-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/">学习</a> > <a class="article-category-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/MyBatis/">MyBatis</a>
+    <a class="article-category-link" href="../../../../../categories/%E5%AD%A6%E4%B9%A0/">学习</a> > <a class="article-category-link" href="../../../../../categories/%E5%AD%A6%E4%B9%A0/MyBatis/">MyBatis</a>
   </div>
 
       
@@ -153,7 +153,7 @@
 <li>接口的全限定名导入使用的是<code>mapper</code>标签的<code>class</code>属性—–基于接口的代理模式</li>
 <li>包扫描形式加载所有的<code>mapper</code>映射文件，使用的<code>package</code>标签</li>
 </ol>
-<img src="/note/2022/06/04/study/MyBatis/mybatis-yswj.png" class="" title="mybatis 映射文件示例 image">
+<img src="2022/06/04/study/MyBatis/mybatis-yswj.png" class="" title="mybatis 映射文件示例 image">
 
 <h2 id="3、Mybatis-开发"><a href="#3、Mybatis-开发" class="headerlink" title="3、Mybatis 开发"></a>3、<code>Mybatis</code> 开发</h2><h3 id="3-1-传递参数"><a href="#3-1-传递参数" class="headerlink" title="3.1 传递参数"></a>3.1 传递参数</h3><ul>
 <li><p><em>${} 代表mybatis底层使用Statment语句对象,参数是以字符串拼接的形式设置</em></p>
@@ -185,10 +185,10 @@
 <h2 id="6、缓存"><a href="#6、缓存" class="headerlink" title="6、缓存"></a>6、缓存</h2><h3 id="6-1-一级缓存"><a href="#6-1-一级缓存" class="headerlink" title="6.1 一级缓存"></a>6.1 一级缓存</h3><p>​	一级存储是<code>SqlSession</code>上的缓存，默认开启，是一种内存型缓存,不要求实体类对象实现<code>Serializable</code>接口</p>
 <p>​	缓存中的数据使用键值对形式存储数据</p>
 <p>​	<code>namespace+sqlid+args+offset&gt;&gt;&gt; hash</code>值作为键,查询出的结果作为值</p>
-<img src="/note/2022/06/04/study/MyBatis/sqlsession.png" class="" title="sqlsession一级缓存 image">
+<img src="2022/06/04/study/MyBatis/sqlsession.png" class="" title="sqlsession一级缓存 image">
 
 <h3 id="6-2-二级缓存"><a href="#6-2-二级缓存" class="headerlink" title="6.2 二级缓存"></a>6.2 二级缓存</h3><p>​	二级缓存是以<code>namespace</code>为标记的缓存，可以是由一个<code>SqlSessionFactory</code>创建的<code>SqlSession</code>之间共享缓存数据。默认并不开启，要求实体类必须实现序列化接口</p>
-<img src="/note/2022/06/04/study/MyBatis/sqlsession2.png" class="" title="sqlsession二级缓存 image">
+<img src="2022/06/04/study/MyBatis/sqlsession2.png" class="" title="sqlsession二级缓存 image">
 
 <p>注意：</p>
 <p>​	1、<code> MyBatis</code>的二级缓存的缓存介质有多种多样，而并不一定是在内存中，所以需要对<code>JavaBean</code>对象实现序列化接口。</p>
@@ -259,7 +259,7 @@
         
         
           <blockquote id="copyright">
-              <p>原文链接: <a href="https://lynote.cn/note/2022/06/04/study/MyBatis/">https://lynote.cn/note/2022/06/04/study/MyBatis/</a></p>
+              <p>原文链接: <a href="https://lyblog2022.github.io/note/2022/06/04/study/MyBatis/">https://lyblog2022.github.io/note/2022/06/04/study/MyBatis/</a></p>
               <p>版权声明: 转载请注明出处.</p>
           </blockquote>
         
@@ -271,7 +271,7 @@
           
 
           
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/note/tags/MyBatis/" rel="tag">MyBatis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/note/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../../../../tags/MyBatis/" rel="tag">MyBatis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../../../../tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a></li></ul>
 
           
 
@@ -282,7 +282,7 @@
         
 <nav id="article-nav">
   
-    <a href="/note/2022/05/18/dailysummary/20220518/dailysummary/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="../../../../05/18/dailysummary/20220518/dailysummary/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">older</strong>
       <div class="article-nav-title">
         
@@ -292,7 +292,7 @@
     </a>
   
   
-    <a href="/note/2022/06/04/study/Servlet/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="../Servlet/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">newer</strong>
       <div class="article-nav-title">
         
@@ -319,23 +319,23 @@
       <ul>
         
           <li>
-            <a href="/note/2022/06/05/study/RPC/">RPC-远程服务调用</a>
+            <a href="../../../05/study/RPC/">RPC-远程服务调用</a>
           </li>
         
           <li>
-            <a href="/note/2022/06/05/study/SpringBoot/">SpringBoot</a>
+            <a href="../../../05/study/SpringBoot/">SpringBoot</a>
           </li>
         
           <li>
-            <a href="/note/2022/06/05/study/SpringMVC/">SpringMVC</a>
+            <a href="../../../05/study/SpringMVC/">SpringMVC</a>
           </li>
         
           <li>
-            <a href="/note/2022/06/04/study/Spring/">Spring</a>
+            <a href="../Spring/">Spring</a>
           </li>
         
           <li>
-            <a href="/note/2022/06/04/study/Servlet/">Servlet</a>
+            <a href="../Servlet/">Servlet</a>
           </li>
         
       </ul>
@@ -348,7 +348,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title"><i class="fa fa-tag"></i> 标签云</h3>
     <div class="widget tagcloud">
-      <a href="/note/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/note/tags/RPC/" style="font-size: 10px;">RPC</a> <a href="/note/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/note/tags/Springmvc/" style="font-size: 10px;">Springmvc</a> <a href="/note/tags/servlet/" style="font-size: 10px;">servlet</a> <a href="/note/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/note/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 20px;">学习</a> <a href="/note/tags/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/" style="font-size: 10px;">接口调用</a>
+      <a href="../../../../../tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="../../../../../tags/RPC/" style="font-size: 10px;">RPC</a> <a href="../../../../../tags/Spring/" style="font-size: 10px;">Spring</a> <a href="../../../../../tags/Springmvc/" style="font-size: 10px;">Springmvc</a> <a href="../../../../../tags/servlet/" style="font-size: 10px;">servlet</a> <a href="../../../../../tags/springboot/" style="font-size: 10px;">springboot</a> <a href="../../../../../tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 20px;">学习</a> <a href="../../../../../tags/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/" style="font-size: 10px;">接口调用</a>
     </div>
   </div>
 
@@ -357,7 +357,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title"><i class="fa fa-classify"></i> 分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/MyBatis/">MyBatis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/RPC/">RPC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/Spring/">Spring</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/Springmvc/">Springmvc</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/servlet/">servlet</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/springboot/">springboot</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E6%80%BB%E7%BB%93/">总结</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/note/categories/%E6%80%BB%E7%BB%93/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/">接口调用</a><span class="category-list-count">1</span></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="../../../../../categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="../../../../../categories/%E5%AD%A6%E4%B9%A0/MyBatis/">MyBatis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="../../../../../categories/%E5%AD%A6%E4%B9%A0/RPC/">RPC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="../../../../../categories/%E5%AD%A6%E4%B9%A0/Spring/">Spring</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="../../../../../categories/%E5%AD%A6%E4%B9%A0/Springmvc/">Springmvc</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="../../../../../categories/%E5%AD%A6%E4%B9%A0/servlet/">servlet</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="../../../../../categories/%E5%AD%A6%E4%B9%A0/springboot/">springboot</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="../../../../../categories/%E6%80%BB%E7%BB%93/">总结</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="../../../../../categories/%E6%80%BB%E7%BB%93/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/">接口调用</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
   </div>
 
@@ -367,7 +367,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title"><i class="fa fa-archive"></i> 归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/note/archives/2022/">2022年</a><span class="archive-list-count">7</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../../../../archives/2022/">2022年</a><span class="archive-list-count">7</span></li></ul>
     </div>
   </div>
 
@@ -377,7 +377,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title"><i class="fa fa-tag"></i> 标签</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/MyBatis/" rel="tag">MyBatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/RPC/" rel="tag">RPC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/Spring/" rel="tag">Spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/Springmvc/" rel="tag">Springmvc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/servlet/" rel="tag">servlet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/springboot/" rel="tag">springboot</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/note/tags/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/" rel="tag">接口调用</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="../../../../../tags/MyBatis/" rel="tag">MyBatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../../tags/RPC/" rel="tag">RPC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../../tags/Spring/" rel="tag">Spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../../tags/Springmvc/" rel="tag">Springmvc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../../tags/servlet/" rel="tag">servlet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../../tags/springboot/" rel="tag">springboot</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../../tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="../../../../../tags/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/" rel="tag">接口调用</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -417,19 +417,19 @@
     </div>
   </div>
   
-<script src="/note/js/jquery-3.4.1.min.js"></script>
+<script src="../js/jquery-3.4.1.min.js"></script>
 
 
-<script src="/note/js/search.json.js"></script>
+<script src="../js/search.json.js"></script>
 
 
   
-<script src="/note/fancybox/jquery.fancybox.min.js"></script>
+<script src="../fancybox/jquery.fancybox.min.js"></script>
 
 
 
 
-<script src="/note/js/script.js"></script>
+<script src="../js/script.js"></script>
 
 
 
