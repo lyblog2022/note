@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   
   
-  <title>归档 | My Note</title>
+  <title>SpringBoot | My Note</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   
     <meta name="description" content="654645564">
@@ -80,107 +80,129 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-
-  
-  
+        <section id="main"><article id="post-study/SpringBoot" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
     
     
-    <section class="archives-wrap">
-      <div class="archive-title">
+      <header class="article-header">
         
-          <i class="fa fa-date"></i>
-          2022
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      SpringBoot
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+      <span class="article-date">
+  <i class="fa fa-date"></i>
+  <time class="dt-published" datetime="2022-06-05T07:02:13.000Z" itemprop="datePublished">2022-06-05</time>
+</span>
+      
+  <div class="article-category">
+    <i class="fa fa-classify"></i>
+    <a class="article-category-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/">学习</a> > <a class="article-category-link" href="/note/categories/%E5%AD%A6%E4%B9%A0/springboot/">springboot</a>
+  </div>
+
+      
+        <span class="article-views">
+  <i class="fa fa-views"></i>
+  <i id="busuanzi_container_page_pv">
+      <i id="busuanzi_value_page_pv"></i>
+  </i>
+</span>
+
+      
+      
+
+    </div>
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>SpringBoot学习1</p>
+<span id="more"></span>
+
+<h2 id="1、SpringBoot"><a href="#1、SpringBoot" class="headerlink" title="1、SpringBoot "></a>1、<code>SpringBoot </code></h2><h3 id="1-1-简介"><a href="#1-1-简介" class="headerlink" title="1.1 简介"></a>1.1 简介</h3><ul>
+<li><code>Spring Boot</code>是<code>Spring</code>公司的一个顶级项目，和<code>Spring Framework</code>是一个级别的。</li>
+<li><code>Spring Boot</code>实际上是利用<code>Spring Framework 4</code> 自动配置特性完成。编写项目时不需要编写<code>xml</code>文件。发展到现在，<code>Spring Boot</code>已经具有很很大的生态圈，各种主流技术已经都提供了<code>Spring Boot</code>的启动器。</li>
+</ul>
+<h3 id="1-2-启动器"><a href="#1-2-启动器" class="headerlink" title="1.2 启动器"></a>1.2 启动器</h3><p>​	<code>Spring</code>框架在项目中作用是<code>Spring</code>整合各种其他技术，让其他技术使用更加方便。<code>Spring Boot</code>的启动器实际上就是一个依赖。这个依赖中包含了整个这个技术的相关<code>jar</code>包，还包含了这个技术的自动配置，以前绝大多数<code>XML</code>配置都不需要配置了。当然了，启动器中自动配置无法实现所有内容的自动配置，在使用<code>Spring Boot</code>时还需要进行少量的配置（这个配置不是在<code>xml</code>中了，而是在<code>properties</code>或<code>yml</code>中即可）。如果是<code>Spring</code>自己封装的启动器的<code>artifact id</code>名字满足：<code>spring-boot-starter-xxxx</code>，如果是第三方公司提供的启动满足：<code>xxxx-spring-boot-starter</code>。以后每次使用<code>Spring Boot</code>整合其他技术时首先需要考虑导入启动器。 </p>
+<h3 id="1-3-优点"><a href="#1-3-优点" class="headerlink" title="1.3 优点"></a>1.3 优点</h3><ol>
+<li>使用<code>Spring Boot</code>可以创建独立的<code>Spring</code>应用程序</li>
+<li>在<code>Spring Boot</code>中直接嵌入了<code>Tomcat</code>、<code>Jetty</code>、<code>Undertow</code>等<code>Web </code>容器，在使用<code>SpringBoot</code>做<code>Web</code>开发时不需要部署<code>WAR</code>文件</li>
+<li>通过提供自己的启动器(<code>Starter</code>)依赖，简化项目构建配置</li>
+<li>尽量的自动配置<code>Spring</code>和第三方库</li>
+<li>绝对没有代码生成，也不需要<code>XML</code>配置文件</li>
+</ol>
+<h3 id="1-4-核心"><a href="#1-4-核心" class="headerlink" title="1.4 核心"></a>1.4 核心</h3><p>起步依赖- 起步依赖本质上是一个<code>Maven</code>项目对象模型（<code>Project Object Model</code>，<code>POM</code>），定义了对其他库的传递依赖，这些东西加在一起即支持某项功能。 简单的说，起步依赖就是将具备某种功能的坐标打包到一起，并提供一些默认的功能。 </p>
+<p>自动配置 -<code>Spring Boot</code>的自动配置是一个运行时（更准确地说，是应用程序启动时）的过程，考虑了众多因素，才决定 <code>Spring</code>配置应该用哪个，不该用哪个。该过程是<code>Spring</code>自动完成的。</p>
+
+        
+            <div id="toc-article">
+                
+  <div class="widget-wrap" id="toc-wrap">
+    <h3 class="widget-title"><i class="fa fa-toc"></i> 文章目录</h3>
+    <div class="widget">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81SpringBoot"><span class="toc-text">1、SpringBoot </span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E7%AE%80%E4%BB%8B"><span class="toc-text">1.1 简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%90%AF%E5%8A%A8%E5%99%A8"><span class="toc-text">1.2 启动器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E4%BC%98%E7%82%B9"><span class="toc-text">1.3 优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E6%A0%B8%E5%BF%83"><span class="toc-text">1.4 核心</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+
+            </div>
+        
+        
+          <blockquote id="copyright">
+              <p>原文链接: <a href="https://lyblog2022.github.io/note/2022/06/05/study/SpringBoot/">https://lyblog2022.github.io/note/2022/06/05/study/SpringBoot/</a></p>
+              <p>版权声明: 转载请注明出处.</p>
+          </blockquote>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div class="article-tag-wrap">
+          
+
+          
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/note/tags/springboot/" rel="tag">springboot</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/note/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a></li></ul>
+
+          
+
+
+        </div>
+      
+      
+        
+<nav id="article-nav">
+  
+    <a href="/note/2022/06/05/study/SpringMVC/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">older</strong>
+      <div class="article-nav-title">
+        
+          SpringMVC
         
       </div>
-      <div class="archives">
-  
-  <ul class="archive-article archive-type-post">
-  <li class="archive-article-inner">
-    <a href="/note/2022/06/05/study/RPC/">
-      <time class="dt-published" datetime="2022-06-05T08:45:21.000Z" itemprop="datePublished">2022-06-05</time>
-      | <span class="archive-article-title">RPC-远程服务调用</span>
     </a>
-  </li>
-</ul>
-
-
   
   
-  <ul class="archive-article archive-type-post">
-  <li class="archive-article-inner">
-    <a href="/note/2022/06/05/study/SpringBoot/">
-      <time class="dt-published" datetime="2022-06-05T07:02:13.000Z" itemprop="datePublished">2022-06-05</time>
-      | <span class="archive-article-title">SpringBoot</span>
+    <a href="/note/2022/06/05/study/RPC/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">newer</strong>
+      <div class="article-nav-title">
+        
+          RPC-远程服务调用
+        
+      </div>
     </a>
-  </li>
-</ul>
-
-
   
-  
-  <ul class="archive-article archive-type-post">
-  <li class="archive-article-inner">
-    <a href="/note/2022/06/05/study/SpringMVC/">
-      <time class="dt-published" datetime="2022-06-05T04:55:50.000Z" itemprop="datePublished">2022-06-05</time>
-      | <span class="archive-article-title">SpringMVC</span>
-    </a>
-  </li>
-</ul>
+</nav>
 
-
-  
-  
-  <ul class="archive-article archive-type-post">
-  <li class="archive-article-inner">
-    <a href="/note/2022/06/04/study/Spring/">
-      <time class="dt-published" datetime="2022-06-04T08:59:55.000Z" itemprop="datePublished">2022-06-04</time>
-      | <span class="archive-article-title">Spring</span>
-    </a>
-  </li>
-</ul>
-
-
-  
-  
-  <ul class="archive-article archive-type-post">
-  <li class="archive-article-inner">
-    <a href="/note/2022/06/04/study/Servlet/">
-      <time class="dt-published" datetime="2022-06-04T08:59:30.000Z" itemprop="datePublished">2022-06-04</time>
-      | <span class="archive-article-title">Servlet</span>
-    </a>
-  </li>
-</ul>
-
-
-  
-  
-  <ul class="archive-article archive-type-post">
-  <li class="archive-article-inner">
-    <a href="/note/2022/06/04/study/MyBatis/">
-      <time class="dt-published" datetime="2022-06-04T08:59:00.000Z" itemprop="datePublished">2022-06-04</time>
-      | <span class="archive-article-title">MyBatis</span>
-    </a>
-  </li>
-</ul>
-
-
-  
-  
-  <ul class="archive-article archive-type-post">
-  <li class="archive-article-inner">
-    <a href="/note/2022/05/18/dailysummary/20220518/dailysummary/">
-      <time class="dt-published" datetime="2022-05-18T13:06:35.000Z" itemprop="datePublished">2022-05-18</time>
-      | <span class="archive-article-title">518总结--post请求调用接口</span>
-    </a>
-  </li>
-</ul>
-
-
-
-  </div></section>
-
-
+      
+      
+    </footer>
+  </div>
+</article>
 </section>
         
           <aside id="sidebar">
@@ -314,6 +336,9 @@
 
 
 
+
+  
+  
 
 
 
