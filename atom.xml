@@ -6,7 +6,7 @@
   <link href="https://lyblog2022.github.io/atom.xml" rel="self"/>
   
   <link href="https://lyblog2022.github.io/"/>
-  <updated>2022-06-07T12:27:30.636Z</updated>
+  <updated>2022-06-07T13:14:12.741Z</updated>
   <id>https://lyblog2022.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>zookeeper常用命令</title>
+    <link href="https://lyblog2022.github.io/2022/06/07/study/zookeeper/"/>
+    <id>https://lyblog2022.github.io/2022/06/07/study/zookeeper/</id>
+    <published>2022-06-07T12:53:54.000Z</published>
+    <updated>2022-06-07T13:14:12.741Z</updated>
+    
+    <content type="html"><![CDATA[<p>zookeeper常用命令</p><span id="more"></span><h4 id="1、ls"><a href="#1、ls" class="headerlink" title="1、ls"></a>1、ls</h4><p>ls -s&#x2F;path</p><p>-s 详细信息，替代老版本ls2</p><p>-R 当前目录和子目录中内容都罗列出来</p><p>例如：ls -R &#x2F; 显示根目录下所有内容</p><img src="/2022/06/07/study/zookeeper/zookeeper1.png" class="" title="zookeeper1 image"><h4 id="2、create"><a href="#2、create" class="headerlink" title="2、create"></a>2、create</h4><p>create &#x2F;path [data]</p><p>[data] 包含内容</p><p>创建指定路径信息</p><p>例如：create &#x2F;demo 创建&#x2F;demo</p><img src="/2022/06/07/study/zookeeper/zookeeper2.png" class="" title="zookeeper2 image"><h4 id="3、get"><a href="#3、get" class="headerlink" title="3、get"></a>3、get</h4><p>get [-s] &#x2F;path</p><p>[-s] 详细信息</p><p>查看指定路径下内容。</p><p>例如： get -s &#x2F;demo</p><img src="/2022/06/07/study/zookeeper/zookeeper3.png" class="" title="zookeeper3 image"><p>null:存放的数据</p><p>cZxid:创建时zxid(znode每次改变时递增的事务id)</p><p>ctime:创建时间戳</p><p>mZxid:最近一次更新的zxid</p><p>mtime:最近一次更新的时间戳</p><p>pZxid:子节点的zxid</p><p>cversion:子节点更新次数</p><p>dataversion:节点数据更新次数</p><p>aclVersion:节点ACL(授权信息)的更新次数</p><p>ephemeralOwner:如果该节点为ephemeral节点(临时，生命周期与session一样), ephemeralOwner值表示与该节点绑定的session id. 如果该节点不是ephemeral节点, ephemeralOwner值为0.</p><p>dataLength:节点数据字节数</p><p>numChildren:子节点数量</p><h4 id="4、set"><a href="#4、set" class="headerlink" title="4、set"></a>4、set</h4><p>set &#x2F;path data</p><p>设置节点内容</p><img src="/2022/06/07/study/zookeeper/zookeeper5.png" class="" title="zookeeper5 image"><h4 id="5、delete"><a href="#5、delete" class="headerlink" title="5、delete"></a>5、delete</h4><p>delete &#x2F;path</p><p>删除节点</p><img src="/2022/06/07/study/zookeeper/zookeeper6.png" class="" title="zookeeper6 image">]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;zookeeper常用命令&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="学习" scheme="https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/"/>
+    
+    <category term="zookeeper" scheme="https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/zookeeper/"/>
+    
+    
+    <category term="zookeeper" scheme="https://lyblog2022.github.io/tags/zookeeper/"/>
+    
+    <category term="学习" scheme="https://lyblog2022.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
   
   <entry>
     <title>CentOS 8 安装zookeeper</title>
