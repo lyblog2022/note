@@ -1,3 +1,4 @@
+https://lyblog2022.github.io/2022/06/09/study/%E6%89%8B%E5%86%99rpc%E6%A1%86%E6%9E%B6/
 https://lyblog2022.github.io/2022/06/07/study/zookeeper%E4%BD%BF%E7%94%A8/
 https://lyblog2022.github.io/2022/06/07/study/zookeeper/
 https://lyblog2022.github.io/2022/06/06/software/zookeeper/
@@ -19,8 +20,8 @@ https://lyblog2022.github.io/tags/CentOS-8/
 https://lyblog2022.github.io/tags/zookeeper/
 https://lyblog2022.github.io/tags/MyBatis/
 https://lyblog2022.github.io/tags/%E5%AD%A6%E4%B9%A0/
-https://lyblog2022.github.io/tags/RPC/
 https://lyblog2022.github.io/tags/servlet/
+https://lyblog2022.github.io/tags/RPC/
 https://lyblog2022.github.io/tags/Spring/
 https://lyblog2022.github.io/tags/springboot/
 https://lyblog2022.github.io/tags/Springmvc/
@@ -31,11 +32,11 @@ https://lyblog2022.github.io/categories/CentOs-8/software/
 https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/Springmvc/
 https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/MyBatis/
 https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/zookeeper/
+https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/servlet/
+https://lyblog2022.github.io/categories/%E6%80%BB%E7%BB%93/
 https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/RPC/
 https://lyblog2022.github.io/categories/CentOs-8/software/jdk/
-https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/servlet/
 https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/Spring/
 https://lyblog2022.github.io/categories/CentOs-8/software/zookeeper/
 https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/springboot/
-https://lyblog2022.github.io/categories/%E6%80%BB%E7%BB%93/
 https://lyblog2022.github.io/categories/%E6%80%BB%E7%BB%93/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/
