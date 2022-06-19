@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="fastdfs-client-java-1.27">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../baidu/fastdfs-client-java-1.27.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
