@@ -102,6 +102,11 @@
   <time class="dt-published" datetime="2022-06-19T06:02:05.000Z" itemprop="datePublished">2022-06-19</time>
 </span>
       
+  <div class="article-category">
+    <i class="fa fa-classify"></i>
+    <a class="article-category-link" href="/categories/CentOs-8/">CentOs 8</a> > <a class="article-category-link" href="/categories/CentOs-8/software/">software</a> > <a class="article-category-link" href="/categories/CentOs-8/software/FastDFS/">FastDFS</a>
+  </div>
+
       
         <span class="article-views">
   <i class="fa fa-views"></i>
@@ -112,30 +117,100 @@
 
       
       
-<a href="/2022/06/19/software/FastDFS/#comments" class="article-comment-link">
-  
-    
-    
-    
-    
-    
-  
-  <i class="fa fa-commt"></i>
-  留言
-</a>
-
 
     </div>
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <p>CentOS8安装FastDFS</p>
+<span id="more"></span>
+
+<h4 id="1、安装FastDFS依赖"><a href="#1、安装FastDFS依赖" class="headerlink" title="1、安装FastDFS依赖"></a>1、安装FastDFS依赖</h4><p> FastDFS是C语言开发的应用。安装必须使用 make , cmake 和 gcc编译器。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y make cmake gcc gcc-c++</span><br></pre></td></tr></table></figure>
+
+<h4 id="2、上传并解压libfastcommon-master"><a href="#2、上传并解压libfastcommon-master" class="headerlink" title="2、上传并解压libfastcommon-master"></a>2、上传并解压libfastcommon-master</h4><p>上传libfastcommon-master 到 &#x2F;usr&#x2F;local&#x2F;tmp下。 libfastcommon是从FastDFS和FastDHT中提取出来的公共C函数库</p>
+<p>解压 libfastcommon-master.zip 由于是zip文件所以要使用 unzip命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/tmp</span><br><span class="line">unzip libfastcommon-master.zip</span><br></pre></td></tr></table></figure>
+
+<h4 id="3、编译并安装"><a href="#3、编译并安装" class="headerlink" title="3、编译并安装"></a>3、编译并安装</h4><p>libfastcommon没有提供make命令安装文件。使用的是shell脚本执行编译和安装。shell脚本为 make.sh</p>
+<p>进入解压后的文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd libfastcommon-master</span><br></pre></td></tr></table></figure>
+
+<p>编译</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./make.sh</span><br></pre></td></tr></table></figure>
+
+<p>安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./make.sh install</span><br></pre></td></tr></table></figure>
+
+<p>有固定的默认安装位置。在&#x2F;usr&#x2F;lib64 和  &#x2F;usr&#x2F;include&#x2F;fastcommon两个目录中</p>
+<h4 id="4、创建软连接"><a href="#4、创建软连接" class="headerlink" title="4、创建软连接"></a>4、创建软连接</h4><p> 因为FastDFS 主程序设置的lib目录是 &#x2F;usr&#x2F;local&#x2F;lib， 所以需要创建软连接</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ln -s /user/lib64/libfastcommon.so /usr/local/lib/libfastcommon.so</span><br><span class="line">ln -s /usr/local/lib64/libfdfsclient.so /usr/local/lib/libfdfsclient.so</span><br></pre></td></tr></table></figure>
+
+<h4 id="5、上传并解压FastDFS主程序"><a href="#5、上传并解压FastDFS主程序" class="headerlink" title="5、上传并解压FastDFS主程序"></a>5、上传并解压FastDFS主程序</h4><p>上传 FastDFS_v5.08.tar.gz 到 &#x2F;usr&#x2F;local&#x2F;tmp下后解压</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/tmp</span><br><span class="line">tar zxf FastDFS_v5.08.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h4 id="6、编译并安装FastDFS"><a href="#6、编译并安装FastDFS" class="headerlink" title="6、编译并安装FastDFS"></a>6、编译并安装FastDFS</h4><p>进入到解压后的FastDFS文件中</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd FastDFS</span><br></pre></td></tr></table></figure>
+
+<p>编译</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./make.sh</span><br></pre></td></tr></table></figure>
+
+<p>安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./make.sh install</span><br></pre></td></tr></table></figure>
+
+<p>​	安装后 FastDFS主程序所在的位置是</p>
+<p>​	&#x2F;usr&#x2F;bin  可执行文件所在的位置</p>
+<p>​	&#x2F;etc&#x2F;fdfs  配置文件所在的位置</p>
+<p>​	&#x2F;usr&#x2F;bin  主程序代码所在位置</p>
+<p>​	&#x2F;usr&#x2F;include&#x2F;fastdfs 包含一些插件组所在的位置</p>
+<h4 id="7、配置tracker"><a href="#7、配置tracker" class="headerlink" title="7、配置tracker"></a>7、配置tracker</h4><h5 id="7-1-复制配置文件"><a href="#7-1-复制配置文件" class="headerlink" title="7.1 复制配置文件"></a>7.1 复制配置文件</h5><p>进入到 &#x2F;etc&#x2F;fdfs 中 ， 把tracker配置文件复制一份</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /etc/fdfs</span><br><span class="line">cp tracker.conf.sample tracker.conf</span><br></pre></td></tr></table></figure>
+
+<h5 id="7-2-创建数据目录"><a href="#7-2-创建数据目录" class="headerlink" title="7.2 创建数据目录"></a>7.2 创建数据目录</h5><p>创建放置 tracker数据的目录</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /usr/local/fastdfs/tracker</span><br></pre></td></tr></table></figure>
+
+<h5 id="7-3-修改配置文件"><a href="#7-3-修改配置文件" class="headerlink" title="7.3 修改配置文件"></a>7.3 修改配置文件</h5><p>修改 tracker.conf 设置 tracker 内容存储目录</p>
+<p>base_path&#x3D;&#x2F;usr&#x2F;local&#x2F;fastdfs&#x2F;tracker</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim tracker.conf</span><br></pre></td></tr></table></figure>
+
+<h5 id="7-4-启动服务"><a href="#7-4-启动服务" class="headerlink" title="7.4 启动服务"></a>7.4 启动服务</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service fdfs_trackerd start</span><br></pre></td></tr></table></figure>
+
+<p>启动成功后， 配置文件中 base_path 指向的目录出现 FastDFS服务相关数据目录(data目录， logs 目录)</p>
+<h5 id="7-5-查看服务运行状态"><a href="#7-5-查看服务运行状态" class="headerlink" title="7.5 查看服务运行状态"></a>7.5 查看服务运行状态</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service fdfs_trackerd status</span><br></pre></td></tr></table></figure>
+
+<p>如果显示 is running 表示正常运行。</p>
+<h4 id="8、配置storage"><a href="#8、配置storage" class="headerlink" title="8、配置storage"></a>8、配置storage</h4><p> storage可以和tracker不在同一台服务器上。示例中把storage和tracker安装在同一台服务器上了。</p>
+<h5 id="8-1-复制配置文件"><a href="#8-1-复制配置文件" class="headerlink" title="8.1 复制配置文件"></a>8.1 复制配置文件</h5><p>进入到 &#x2F;etc&#x2F;fdfs, 把 storage 配置文件复制一份</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /etc/fdfs</span><br><span class="line">cp storage.conf.sample storage.conf</span><br></pre></td></tr></table></figure>
+
+<h5 id="8-2-创建目录"><a href="#8-2-创建目录" class="headerlink" title="8.2 创建目录"></a>8.2 创建目录</h5><p>创建两个目录， 把base用于存储基础数据和日志，store用于存储上传数据。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /usr/local/fastdfs/storage/base</span><br><span class="line">mkdir -p /usr/local/fastdfs/storage/store</span><br></pre></td></tr></table></figure>
+
+<h5 id="8-3-修改配置文件"><a href="#8-3-修改配置文件" class="headerlink" title="8.3 修改配置文件"></a>8.3 修改配置文件</h5><p>​	storage.conf配置文件用于描述存储服务的行为，需要进行下述修改</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/fdfs/storage.conf</span><br></pre></td></tr></table></figure>
+
+<p>配置内容如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">base_path=/usr/local/fastdfs/storage/base</span><br><span class="line">store_path0=/usr/local/fastdfs/storage/store</span><br><span class="line">tracker_server=tracker的服务IP：22122</span><br></pre></td></tr></table></figure>
+
+<p>​	base_path - 基础路径。用于保存storage server 基础数据内容和日志内容的目录。</p>
+<p>​	store_path0 - 存储路径。是用于保存FastDFS中存储文件的目录，就是要创建256*256个子目录的位置。</p>
+<p>​	base_path 和 store_path0 可以使用同一个目录。</p>
+<p>​	tracker_server - 跟踪服务器位置。就是跟踪服务器的IP和端口。</p>
+<p>​	启动服务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service fdfs_storaged start</span><br></pre></td></tr></table></figure>
+
+<p>​	启动成功后，配置文件中base_path 指向的目录中出现FastDFS服务相关数据目录（data目录、logs目录）配置文件中的store_path0指向的目录中同样出现FastDFS存储相关数据录（data目录）。其中$store_path0&#x2F;data&#x2F;目录中默认创建若干子孙目录（两级目录层级总计256*256个目录），是用于存储具体文件数据的。</p>
+<p>​	Storage 服务器启动比较慢，因为第一次启动的时候，需要创建256*256个目录。</p>
+<p>​	查看启动状态</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service fdfs_storaged status</span><br></pre></td></tr></table></figure>
+
+
         
             <div id="toc-article">
                 
   <div class="widget-wrap" id="toc-wrap">
     <h3 class="widget-title"><i class="fa fa-toc"></i> 文章目录</h3>
     <div class="widget">
-      
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%E3%80%81%E5%AE%89%E8%A3%85FastDFS%E4%BE%9D%E8%B5%96"><span class="toc-text">1、安装FastDFS依赖</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%E3%80%81%E4%B8%8A%E4%BC%A0%E5%B9%B6%E8%A7%A3%E5%8E%8Blibfastcommon-master"><span class="toc-text">2、上传并解压libfastcommon-master</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3%E3%80%81%E7%BC%96%E8%AF%91%E5%B9%B6%E5%AE%89%E8%A3%85"><span class="toc-text">3、编译并安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4%E3%80%81%E5%88%9B%E5%BB%BA%E8%BD%AF%E8%BF%9E%E6%8E%A5"><span class="toc-text">4、创建软连接</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5%E3%80%81%E4%B8%8A%E4%BC%A0%E5%B9%B6%E8%A7%A3%E5%8E%8BFastDFS%E4%B8%BB%E7%A8%8B%E5%BA%8F"><span class="toc-text">5、上传并解压FastDFS主程序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6%E3%80%81%E7%BC%96%E8%AF%91%E5%B9%B6%E5%AE%89%E8%A3%85FastDFS"><span class="toc-text">6、编译并安装FastDFS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7%E3%80%81%E9%85%8D%E7%BD%AEtracker"><span class="toc-text">7、配置tracker</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#7-1-%E5%A4%8D%E5%88%B6%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-text">7.1 复制配置文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7-2-%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E7%9B%AE%E5%BD%95"><span class="toc-text">7.2 创建数据目录</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7-3-%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-text">7.3 修改配置文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7-4-%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1"><span class="toc-text">7.4 启动服务</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7-5-%E6%9F%A5%E7%9C%8B%E6%9C%8D%E5%8A%A1%E8%BF%90%E8%A1%8C%E7%8A%B6%E6%80%81"><span class="toc-text">7.5 查看服务运行状态</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8%E3%80%81%E9%85%8D%E7%BD%AEstorage"><span class="toc-text">8、配置storage</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#8-1-%E5%A4%8D%E5%88%B6%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-text">8.1 复制配置文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#8-2-%E5%88%9B%E5%BB%BA%E7%9B%AE%E5%BD%95"><span class="toc-text">8.2 创建目录</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#8-3-%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-text">8.3 修改配置文件</span></a></li></ol></li></ol>
     </div>
   </div>
 
@@ -156,6 +231,8 @@
           
 
           
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS-8/" rel="tag">CentOS 8</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/FastDFS/" rel="tag">FastDFS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/software/" rel="tag">software</a></li></ul>
+
           
 
 
@@ -175,19 +252,18 @@
     </a>
   
   
+    <a href="/2022/06/20/study/FastDFS/FastDFS-file1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">newer</strong>
+      <div class="article-nav-title">
+        
+          FastDFS实现图片上传及下载
+        
+      </div>
+    </a>
+  
 </nav>
 
       
-      
-        
-
-
-
-
-
-
-
-
       
     </footer>
   </div>
@@ -203,6 +279,14 @@
       <ul>
         
           <li>
+            <a href="/2022/06/20/software/nginx/">nginx安装</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/20/study/FastDFS/FastDFS-file1/">FastDFS实现图片上传及下载</a>
+          </li>
+        
+          <li>
             <a href="/2022/06/19/software/FastDFS/">FastDFS安装</a>
           </li>
         
@@ -212,14 +296,6 @@
         
           <li>
             <a href="/2022/06/11/study/dubbo/dubbo%E5%AD%A6%E4%B9%A0/">dubbo学习</a>
-          </li>
-        
-          <li>
-            <a href="/2022/06/09/study/%E6%89%8B%E5%86%99rpc%E6%A1%86%E6%9E%B6/">手写rpc框架</a>
-          </li>
-        
-          <li>
-            <a href="/2022/06/07/study/zookeeper%E4%BD%BF%E7%94%A8/">zookeeper使用</a>
           </li>
         
       </ul>
@@ -232,7 +308,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title"><i class="fa fa-tag"></i> 标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CentOS-8/" style="font-size: 13.33px;">CentOS 8</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/RPC/" style="font-size: 13.33px;">RPC</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/Springmvc/" style="font-size: 10px;">Springmvc</a> <a href="/tags/dubbo/" style="font-size: 13.33px;">dubbo</a> <a href="/tags/jdk/" style="font-size: 10px;">jdk</a> <a href="/tags/servlet/" style="font-size: 10px;">servlet</a> <a href="/tags/software/" style="font-size: 13.33px;">software</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/tags/zookeeper/" style="font-size: 16.67px;">zookeeper</a> <a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 20px;">学习</a> <a href="/tags/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/" style="font-size: 10px;">接口调用</a> <a href="/tags/%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">项目</a>
+      <a href="/tags/CentOS-8/" style="font-size: 15px;">CentOS 8</a> <a href="/tags/FastDFS/" style="font-size: 12.5px;">FastDFS</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/RPC/" style="font-size: 12.5px;">RPC</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/Springmvc/" style="font-size: 10px;">Springmvc</a> <a href="/tags/dubbo/" style="font-size: 12.5px;">dubbo</a> <a href="/tags/jdk/" style="font-size: 10px;">jdk</a> <a href="/tags/servlet/" style="font-size: 10px;">servlet</a> <a href="/tags/software/" style="font-size: 15px;">software</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/tags/zookeeper/" style="font-size: 17.5px;">zookeeper</a> <a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 20px;">学习</a> <a href="/tags/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/" style="font-size: 10px;">接口调用</a> <a href="/tags/%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">项目</a>
     </div>
   </div>
 
@@ -241,7 +317,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title"><i class="fa fa-classify"></i> 分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/">CentOs 8</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/software/">software</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/software/jdk/">jdk</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/software/zookeeper/">zookeeper</a><span class="category-list-count">1</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">10</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/MyBatis/">MyBatis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/RPC/">RPC</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/Spring/">Spring</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/Springmvc/">Springmvc</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/dubbo/">dubbo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/servlet/">servlet</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/springboot/">springboot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/zookeeper/">zookeeper</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%80%BB%E7%BB%93/">总结</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%80%BB%E7%BB%93/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/">接口调用</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/dubbo/">dubbo</a><span class="category-list-count">1</span></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/">CentOs 8</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/software/">software</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/software/FastDFS/">FastDFS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/software/jdk/">jdk</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/software/zookeeper/">zookeeper</a><span class="category-list-count">1</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/FastDFS/">FastDFS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/MyBatis/">MyBatis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/RPC/">RPC</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/Spring/">Spring</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/Springmvc/">Springmvc</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/dubbo/">dubbo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/servlet/">servlet</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/springboot/">springboot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/zookeeper/">zookeeper</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%80%BB%E7%BB%93/">总结</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%80%BB%E7%BB%93/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/">接口调用</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/dubbo/">dubbo</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
   </div>
 
@@ -251,7 +327,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title"><i class="fa fa-archive"></i> 归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022年</a><span class="archive-list-count">15</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022年</a><span class="archive-list-count">17</span></li></ul>
     </div>
   </div>
 
@@ -261,7 +337,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title"><i class="fa fa-tag"></i> 标签</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS-8/" rel="tag">CentOS 8</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MyBatis/" rel="tag">MyBatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RPC/" rel="tag">RPC</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/" rel="tag">Spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Springmvc/" rel="tag">Springmvc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/" rel="tag">dubbo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jdk/" rel="tag">jdk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/servlet/" rel="tag">servlet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/software/" rel="tag">software</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/" rel="tag">springboot</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zookeeper/" rel="tag">zookeeper</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/" rel="tag">接口调用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag">项目</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS-8/" rel="tag">CentOS 8</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FastDFS/" rel="tag">FastDFS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MyBatis/" rel="tag">MyBatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RPC/" rel="tag">RPC</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/" rel="tag">Spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Springmvc/" rel="tag">Springmvc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/" rel="tag">dubbo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jdk/" rel="tag">jdk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/servlet/" rel="tag">servlet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/software/" rel="tag">software</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/" rel="tag">springboot</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zookeeper/" rel="tag">zookeeper</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/" rel="tag">接口调用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag">项目</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
