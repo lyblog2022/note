@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://lyblog2022.github.io/2022/06/20/study/FastDFS/FastDFS-file1/</loc>
+    <loc>https://lyblog2022.github.io/2022/06/20/software/nginx/</loc>
     
     <lastmod>2022-06-20</lastmod>
     
@@ -11,7 +11,7 @@
   </url>
   
   <url>
-    <loc>https://lyblog2022.github.io/2022/06/20/software/nginx/</loc>
+    <loc>https://lyblog2022.github.io/2022/06/20/study/FastDFS/FastDFS-file1/</loc>
     
     <lastmod>2022-06-20</lastmod>
     
@@ -217,6 +217,13 @@
   </url>
   
   <url>
+    <loc>https://lyblog2022.github.io/tags/nginx/</loc>
+    <lastmod>2022-06-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://lyblog2022.github.io/tags/MyBatis/</loc>
     <lastmod>2022-06-20</lastmod>
     <changefreq>weekly</changefreq>
@@ -245,14 +252,14 @@
   </url>
   
   <url>
-    <loc>https://lyblog2022.github.io/tags/Spring/</loc>
+    <loc>https://lyblog2022.github.io/tags/springboot/</loc>
     <lastmod>2022-06-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://lyblog2022.github.io/tags/springboot/</loc>
+    <loc>https://lyblog2022.github.io/tags/Spring/</loc>
     <lastmod>2022-06-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -310,7 +317,7 @@
   </url>
   
   <url>
-    <loc>https://lyblog2022.github.io/categories/CentOs-8/software/zookeeper/</loc>
+    <loc>https://lyblog2022.github.io/categories/CentOs-8/software/nginx/</loc>
     <lastmod>2022-06-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -324,7 +331,7 @@
   </url>
   
   <url>
-    <loc>https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/zookeeper/</loc>
+    <loc>https://lyblog2022.github.io/categories/%E6%80%BB%E7%BB%93/</loc>
     <lastmod>2022-06-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -332,20 +339,6 @@
   
   <url>
     <loc>https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/MyBatis/</loc>
-    <lastmod>2022-06-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/RPC/</loc>
-    <lastmod>2022-06-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://lyblog2022.github.io/categories/%E6%80%BB%E7%BB%93/</loc>
     <lastmod>2022-06-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -366,7 +359,7 @@
   </url>
   
   <url>
-    <loc>https://lyblog2022.github.io/categories/CentOs-8/software/jdk/</loc>
+    <loc>https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/RPC/</loc>
     <lastmod>2022-06-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -380,14 +373,14 @@
   </url>
   
   <url>
-    <loc>https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/servlet/</loc>
+    <loc>https://lyblog2022.github.io/categories/CentOs-8/software/jdk/</loc>
     <lastmod>2022-06-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/Spring/</loc>
+    <loc>https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/servlet/</loc>
     <lastmod>2022-06-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -401,7 +394,28 @@
   </url>
   
   <url>
+    <loc>https://lyblog2022.github.io/categories/CentOs-8/software/zookeeper/</loc>
+    <lastmod>2022-06-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/Spring/</loc>
+    <lastmod>2022-06-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/Springmvc/</loc>
+    <lastmod>2022-06-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/zookeeper/</loc>
     <lastmod>2022-06-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
