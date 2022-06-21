@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>高并发场景下的 httpClient 优化使用 | My Note</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+    <meta name="description" content="654645564">
+  
+  
+  
+    <link rel="alternate" href="/atom.xml" title="My Note" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">My Note</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Welcome To My World</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/."><i class="fa fa-home"></i> 首页</a>
+        
+          <a class="main-nav-link" href="/archives/"><i class="fa fa-archive"></i> 归档</a>
+        
+      </nav>
+    </div>
+    <div id="search-form">
+      <div id="result-mask" class="hide"></div>
+      <label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label>
+      <div id="result-wrap" class="hide">
+        <div id="search-result"></div>
+      </div>
+      <div class="hide">
+        <template id="search-tpl">
+          <div class="item">
+            <a href="/{path}" title="{title}">
+              <div class="title">{title}</div>
+              <div class="time">{date}</div>
+              <div class="tags">{tags}</div>
+            </a>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-summary/High-concurrency/高并发场景下的httpClient优化使用" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      高并发场景下的 httpClient 优化使用
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+      <span class="article-date">
+  <i class="fa fa-date"></i>
+  <time class="dt-published" datetime="2022-06-21T01:59:25.000Z" itemprop="datePublished">2022-06-21</time>
+</span>
+      
+  <div class="article-category">
+    <i class="fa fa-classify"></i>
+    <a class="article-category-link" href="/categories/%E9%82%A3%E4%BA%9B%E4%BB%A3%E7%A0%81%E9%82%A3%E4%BA%9B%E6%80%BB%E7%BB%93/">那些代码那些总结</a> > <a class="article-category-link" href="/categories/%E9%82%A3%E4%BA%9B%E4%BB%A3%E7%A0%81%E9%82%A3%E4%BA%9B%E6%80%BB%E7%BB%93/%E9%AB%98%E5%B9%B6%E5%8F%91/">高并发</a>
+  </div>
+
+      
+        <span class="article-views">
+  <i class="fa fa-views"></i>
+  <i id="busuanzi_container_page_pv">
+      <i id="busuanzi_value_page_pv"></i>
+  </i>
+</span>
+
+      
+      
+
+    </div>
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>高并发场景下的 httpClient 优化使用，参考自：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u010285974/article/details/85696239">仰望星空的尘埃</a></p>
+<span id="more"></span>
+
+<h4 id="1、HttpClient优化思路"><a href="#1、HttpClient优化思路" class="headerlink" title="1、HttpClient优化思路"></a>1、<code>HttpClient</code>优化思路</h4><ol>
+<li>池化</li>
+<li>长链接</li>
+<li><code>httpclient</code>和<code>httpget</code>复用</li>
+<li>合理的配置参数（最大并发请求数、各种超时时间、重试次数）</li>
+<li>异步</li>
+<li>源码</li>
+</ol>
+<h4 id="2、分析"><a href="#2、分析" class="headerlink" title="2、分析"></a>2、分析</h4><p>​	原始的使用比较简单，即每次请求时初始化一个<code>httpclient</code>，生成一个<code>httppost</code>对象，执行，然后从返回结果中取出<code>entity</code>，保存成一个字符串，最后显示关闭<code>response</code>和<code>client</code></p>
+<h5 id="2-1-httpclient反复创建开销"><a href="#2-1-httpclient反复创建开销" class="headerlink" title="2.1 httpclient反复创建开销"></a>2.1 <code>httpclient</code>反复创建开销</h5><p>​	<code>httpclient</code>是一个线程安全的类，没有必要由每个线程在每次使用时创建，全局保留一个即可</p>
+<h5 id="2-2-反复创建tcp连接的开销"><a href="#2-2-反复创建tcp连接的开销" class="headerlink" title="2.2 反复创建tcp连接的开销"></a>2.2 反复创建<code>tcp</code>连接的开销</h5><p>​	<code>tcp</code>的三次握手四次挥手两大过程，对于高频词的请求来说，消耗过大，如果每次请求需要花费5ms用于协商过程，那么对于<code>qps</code>为100的单系统，1秒钟就要花费500ms用于握手和挥手，<code>so</code>改成<code>keep alive</code>的方式实现连接复用</p>
+<h4 id="2-3-重复缓存entity的开销"><a href="#2-3-重复缓存entity的开销" class="headerlink" title="2.3 重复缓存entity的开销"></a>2.3 重复缓存<code>entity</code>的开销</h4><p>​	一般情况下，使用了以下的代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">resultString</span> <span class="operator">=</span> EntityUtils.toString(response.getEntity(), <span class="string">&quot;UTF-8&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>​	这里相当于额外复制了一份<code>content</code>到一个字符串内，而原本的<code>httpResponse</code>仍然保留了一份<code>content</code>，需要被<code>consume</code>掉，在高并发且<code>content</code>非常大的情况下，会消耗大量内存，并且需要显示的关闭链接</p>
+<h4 id="3、实现"><a href="#3、实现" class="headerlink" title="3、实现"></a>3、实现</h4><p>按照上面的分析，主要完成三件事：</p>
+<ul>
+<li>单例的<code>client</code></li>
+<li>缓存的保持链接</li>
+<li>更好的处理返回结果</li>
+</ul>
+<p>提到连接缓存，很容易想到数据库连接池。<code>httpclient4</code>提供了一个<code>PoolngHttpClientConnectionManager</code>作为连接池。通过以下步骤进行优化</p>
+<h5 id="3-1-定义一个keep-alive-strategy"><a href="#3-1-定义一个keep-alive-strategy" class="headerlink" title="3.1 定义一个keep alive strategy"></a>3.1 定义一个<code>keep alive strategy</code></h5><p>​	是否使用<code>keep-alive</code>要根据业务情况来定，其并不是灵丹妙药，而且<code>keep-alive</code>和<code>time_wait/close_wait</code>之间也有不少故事</p>
+<p>​	在本业务场景下，相当于有少数固定的客户端，长时间高频次的访问服务器，启用<code>keep-alive</code>非常合适</p>
+<p>​	【注意】 <code>http</code>的<code>keep-alive</code>与<code>tcp</code>的<code>KEEPALIVE</code>不是一个东西</p>
+<p>定义一个<code>strategy</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ConnectionKeepAliveStrategy</span> <span class="variable">strategy</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ConnectionKeepAliveStrategy</span>() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">long</span> <span class="title function_">getKeepAliveDuration</span><span class="params">(HttpResponse response, HttpContext context)</span> &#123;</span><br><span class="line">        <span class="type">HeaderElementIterator</span> <span class="variable">iterator</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BasicHeaderElementIterator</span>(response.headerIterator(HTTP.CONN_KEEP_ALIVE));</span><br><span class="line">        <span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">            <span class="type">HeaderElement</span> <span class="variable">element</span> <span class="operator">=</span> iterator.nextElement();</span><br><span class="line">            <span class="type">String</span> <span class="variable">param</span> <span class="operator">=</span> element.getName();</span><br><span class="line">            <span class="type">String</span> <span class="variable">value</span> <span class="operator">=</span> element.getValue();</span><br><span class="line">            <span class="keyword">if</span> (value != <span class="literal">null</span> &amp;&amp; param.equalsIgnoreCase(<span class="string">&quot;timeout&quot;</span>)) &#123;</span><br><span class="line">                <span class="keyword">return</span> Long.parseLong(value) * <span class="number">1000</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//默认时长为60s</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">60</span> * <span class="number">1000</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-2-配置一个PoolingHttpClientConnectionManager"><a href="#3-2-配置一个PoolingHttpClientConnectionManager" class="headerlink" title="3.2 配置一个PoolingHttpClientConnectionManager"></a>3.2 配置一个<code>PoolingHttpClientConnectionManager</code></h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">PoolingHttpClientConnectionManager</span> <span class="variable">connectionManager</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">PoolingHttpClientConnectionManager</span>();</span><br><span class="line">connectionManager.setMaxTotal(<span class="number">500</span>);</span><br><span class="line"><span class="comment">//默认每个路由最高50并发，也可以针对每个路由设置并发数。</span></span><br><span class="line">connectionManager.setDefaultMaxPerRoute(<span class="number">50</span>);</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-3-生成httpclient"><a href="#3-3-生成httpclient" class="headerlink" title="3.3 生成httpclient"></a>3.3 生成<code>httpclient</code></h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">HttpClientBuilder</span> <span class="variable">httpClient</span> <span class="operator">=</span> HttpClients.custom();</span><br><span class="line">httpClient.setConnectionManager(connectionManager);</span><br><span class="line">httpClient.setKeepAliveStrategy(strategy);</span><br><span class="line">httpClient.setDefaultRequestConfig(RequestConfig.custom().setStaleConnectionCheckEnabled(<span class="literal">true</span>).build());</span><br></pre></td></tr></table></figure>
+
+<p>【注意】：使用<code>setStaleConnectionCheckEnabled</code>方法来逐出已被关闭的链接不被推荐。更好的方式是手动启用一个线程，定时运行<code>closeExpiredConnections </code>和<code>closeIdleConnections</code>方法，如下所示。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">IdleConnectionMonitorThread</span> <span class="keyword">extends</span> <span class="title class_">Thread</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> HttpClientConnectionManager manager;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="type">boolean</span> shutdown;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">IdleConnectionMonitorThread</span><span class="params">(HttpClientConnectionManager manager)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>();</span><br><span class="line">        <span class="built_in">this</span>.manager = manager;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">while</span>(!shutdown)&#123;</span><br><span class="line">                <span class="keyword">synchronized</span> (<span class="built_in">this</span>)&#123;</span><br><span class="line">                    wait(<span class="number">5000</span>);</span><br><span class="line">                    manager.closeExpiredConnections();</span><br><span class="line">                    manager.closeIdleConnections(<span class="number">30</span>, TimeUnit.SECONDS);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">shutdown</span><span class="params">()</span> &#123;</span><br><span class="line">        shutdown = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">synchronized</span> (<span class="built_in">this</span>)&#123;</span><br><span class="line">            notifyAll();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-4-使用httpclient执行method时降低开销"><a href="#3-4-使用httpclient执行method时降低开销" class="headerlink" title="3.4 使用httpclient执行method时降低开销"></a>3.4 使用<code>httpclient</code>执行<code>method</code>时降低开销</h5><p>这里要注意的是，不要关闭<code>connection</code>。</p>
+<p>一种可行的获取内容的方式类似于，把<code>entity</code>里的东西复制一份：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">res = EntityUtils.toString(response.getEntity(),<span class="string">&quot;UTF-8&quot;</span>);</span><br><span class="line">EntityUtils.consume(response1.getEntity());</span><br></pre></td></tr></table></figure>
+
+<p>但是，更推荐的方式是定义一个<code>ResponseHandler</code>，其相关源码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> &lt;T&gt; T <span class="title function_">execute</span><span class="params">(<span class="keyword">final</span> HttpHost target, <span class="keyword">final</span> HttpRequest request,</span></span><br><span class="line"><span class="params">           <span class="keyword">final</span> ResponseHandler&lt;? extends T&gt; responseHandler, <span class="keyword">final</span> HttpContext context)</span></span><br><span class="line">           <span class="keyword">throws</span> IOException, ClientProtocolException &#123;</span><br><span class="line">       Args.notNull(responseHandler, <span class="string">&quot;Response handler&quot;</span>);</span><br><span class="line"></span><br><span class="line">       <span class="keyword">final</span> <span class="type">HttpResponse</span> <span class="variable">response</span> <span class="operator">=</span> execute(target, request, context);</span><br><span class="line"></span><br><span class="line">       <span class="keyword">final</span> T result;</span><br><span class="line">       <span class="keyword">try</span> &#123;</span><br><span class="line">           result = responseHandler.handleResponse(response);</span><br><span class="line">       &#125; <span class="keyword">catch</span> (<span class="keyword">final</span> Exception t) &#123;</span><br><span class="line">           <span class="keyword">final</span> <span class="type">HttpEntity</span> <span class="variable">entity</span> <span class="operator">=</span> response.getEntity();</span><br><span class="line">           <span class="keyword">try</span> &#123;</span><br><span class="line">               EntityUtils.consume(entity);</span><br><span class="line">           &#125; <span class="keyword">catch</span> (<span class="keyword">final</span> Exception t2) &#123;</span><br><span class="line">               <span class="comment">// Log this exception. The original exception is more</span></span><br><span class="line">               <span class="comment">// important and will be thrown to the caller.</span></span><br><span class="line">               <span class="built_in">this</span>.log.warn(<span class="string">&quot;Error consuming content after an exception.&quot;</span>, t2);</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">if</span> (t <span class="keyword">instanceof</span> RuntimeException) &#123;</span><br><span class="line">               <span class="keyword">throw</span> (RuntimeException) t;</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">if</span> (t <span class="keyword">instanceof</span> IOException) &#123;</span><br><span class="line">               <span class="keyword">throw</span> (IOException) t;</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">UndeclaredThrowableException</span>(t);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       <span class="comment">// Handling the response was successful. Ensure that the content has</span></span><br><span class="line">       <span class="comment">// been fully consumed.</span></span><br><span class="line">       <span class="keyword">final</span> <span class="type">HttpEntity</span> <span class="variable">entity</span> <span class="operator">=</span> response.getEntity();</span><br><span class="line">       <span class="comment">//</span></span><br><span class="line">       EntityUtils.consume(entity);</span><br><span class="line">       <span class="keyword">return</span> result;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>​	可以看到，如果我们使用<code>resultHandler</code>执行<code>execute</code>方法，会最终自动调用<code>consume</code>方法，而这个<code>consume</code>方法如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">consume</span><span class="params">(<span class="keyword">final</span> HttpEntity entity)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">       <span class="keyword">if</span> (entity == <span class="literal">null</span>) &#123;</span><br><span class="line">           <span class="keyword">return</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">if</span> (entity.isStreaming()) &#123;</span><br><span class="line">           <span class="keyword">final</span> <span class="type">InputStream</span> <span class="variable">instream</span> <span class="operator">=</span> entity.getContent();</span><br><span class="line">           <span class="keyword">if</span> (instream != <span class="literal">null</span>) &#123;</span><br><span class="line">               instream.close();</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>​	可以看到最终它关闭了输入流。</p>
+<h4 id="4、其他"><a href="#4、其他" class="headerlink" title="4、其他"></a>4、其他</h4><p>​	通过以上步骤，基本就完成了一个支持高并发的<code>httpclient</code>的写法，下面是一些额外的配置和提醒：</p>
+<h5 id="4-1-httpclient的一些超时配置"><a href="#4-1-httpclient的一些超时配置" class="headerlink" title="4.1 httpclient的一些超时配置"></a>4.1 <code>httpclient</code>的一些超时配置</h5><p>​	<code>CONNECTION_TIMEOUT</code>是连接超时时间，<code>SO_TIMEOUT</code>是<code>socket</code>超时时间，这两者是不同的。连接超时时间是发起请求前的等待时间；<code>socket</code>超时时间是等待数据的超时时间。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">HttpParams</span> <span class="variable">params</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BasicHttpParams</span>();</span><br><span class="line"><span class="comment">//设置连接超时时间</span></span><br><span class="line"><span class="comment">//设置请求超时2秒钟 根据业务调整</span></span><br><span class="line"><span class="type">Integer</span> <span class="variable">CONNECTION_TIMEOUT</span> <span class="operator">=</span> <span class="number">2</span> * <span class="number">1000</span>; </span><br><span class="line"><span class="comment">//设置等待数据超时时间2秒钟 根据业务调整</span></span><br><span class="line"><span class="type">Integer</span> <span class="variable">SO_TIMEOUT</span> <span class="operator">=</span> <span class="number">2</span> * <span class="number">1000</span>; </span><br><span class="line"> </span><br><span class="line"><span class="comment">//定义了当从ClientConnectionManager中检索ManagedClientConnection实例时使用的毫秒级的超时时间</span></span><br><span class="line"><span class="comment">//这个参数期望得到一个java.lang.Long类型的值。如果这个参数没有被设置，默认等于CONNECTION_TIMEOUT，因此一定要设置。</span></span><br><span class="line"><span class="comment">//在httpclient4.2.3中我记得它被改成了一个对象导致直接用long会报错，后来又改回来了</span></span><br><span class="line"><span class="type">Long</span> <span class="variable">CONN_MANAGER_TIMEOUT</span> <span class="operator">=</span> <span class="number">500L</span>; </span><br><span class="line"> </span><br><span class="line">params.setIntParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, CONNECTION_TIMEOUT);</span><br><span class="line">params.setIntParameter(CoreConnectionPNames.SO_TIMEOUT, SO_TIMEOUT);</span><br><span class="line">params.setLongParameter(ClientPNames.CONN_MANAGER_TIMEOUT, CONN_MANAGER_TIMEOUT);</span><br><span class="line"><span class="comment">//在提交请求之前 测试连接是否可用</span></span><br><span class="line">params.setBooleanParameter(CoreConnectionPNames.STALE_CONNECTION_CHECK, <span class="literal">true</span>);</span><br><span class="line"> </span><br><span class="line"><span class="comment">//另外设置http client的重试次数，默认是3次；当前是禁用掉（如果项目量不到，这个默认即可）</span></span><br><span class="line">httpClient.setHttpRequestRetryHandler(<span class="keyword">new</span> <span class="title class_">DefaultHttpRequestRetryHandler</span>(<span class="number">0</span>, <span class="literal">false</span>));</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-2-如果配置了nginx的话，nginx也要设置面向两端的keep-alive"><a href="#4-2-如果配置了nginx的话，nginx也要设置面向两端的keep-alive" class="headerlink" title="4.2 如果配置了nginx的话，nginx也要设置面向两端的keep-alive"></a>4.2 如果配置了<code>nginx</code>的话，<code>nginx</code>也要设置面向两端的<code>keep-alive</code></h5><p>​	现在的业务里，没有<code>nginx</code>的情况反而比较稀少。<code>nginx</code>默认和<code>client</code>端打开长连接而和<code>server</code>端使用短链接。注意<code>client</code>端的<code>keepalive_timeout</code>和<code>keepalive_requests</code>参数，以及<code>upstream</code>端的<code>keepalive</code>参数设置</p>
+<p>​	依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- httpclient --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.httpcomponents<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>httpclient<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.5.6<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Basic认证</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">CredentialsProvider</span> <span class="variable">credsProvider</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BasicCredentialsProvider</span>();</span><br><span class="line"><span class="comment">//httpClient</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> CloseableHttpClient httpclient;</span><br><span class="line"><span class="comment">//httpGet方法</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> HttpGet httpget;</span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> RequestConfig reqestConfig;</span><br><span class="line"><span class="comment">//响应处理器</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> ResponseHandler&lt;String&gt; responseHandler;</span><br><span class="line"><span class="comment">//jackson解析工具</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">ObjectMapper</span> <span class="variable">mapper</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectMapper</span>();</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> &#123;</span><br><span class="line">    System.setProperty(<span class="string">&quot;http.maxConnections&quot;</span>,<span class="string">&quot;50&quot;</span>);</span><br><span class="line">    System.setProperty(<span class="string">&quot;http.keepAlive&quot;</span>, <span class="string">&quot;true&quot;</span>);</span><br><span class="line">    <span class="comment">//设置basic校验</span></span><br><span class="line">    credsProvider.setCredentials(</span><br><span class="line">            <span class="keyword">new</span> <span class="title class_">AuthScope</span>(AuthScope.ANY_HOST, AuthScope.ANY_PORT, AuthScope.ANY_REALM),</span><br><span class="line">            <span class="keyword">new</span> <span class="title class_">UsernamePasswordCredentials</span>(<span class="string">&quot;&quot;</span>, <span class="string">&quot;&quot;</span>));</span><br><span class="line">    <span class="comment">//创建http客户端</span></span><br><span class="line">    httpclient = HttpClients.custom()</span><br><span class="line">            .useSystemProperties()</span><br><span class="line">            .setRetryHandler(<span class="keyword">new</span> <span class="title class_">DefaultHttpRequestRetryHandler</span>(<span class="number">3</span>,<span class="literal">true</span>))</span><br><span class="line">            .setDefaultCredentialsProvider(credsProvider)</span><br><span class="line">            .build();</span><br><span class="line">    <span class="comment">//初始化httpGet</span></span><br><span class="line">    httpget = <span class="keyword">new</span> <span class="title class_">HttpGet</span>();</span><br><span class="line">    <span class="comment">//初始化HTTP请求配置</span></span><br><span class="line">    reqestConfig = RequestConfig.custom()</span><br><span class="line">            .setContentCompressionEnabled(<span class="literal">true</span>)</span><br><span class="line">            .setSocketTimeout(<span class="number">100</span>)</span><br><span class="line">            .setAuthenticationEnabled(<span class="literal">true</span>)</span><br><span class="line">            .setConnectionRequestTimeout(<span class="number">100</span>)</span><br><span class="line">            .setConnectTimeout(<span class="number">100</span>).build();</span><br><span class="line">    httpget.setConfig(reqestConfig);</span><br><span class="line">    <span class="comment">//初始化response解析器</span></span><br><span class="line">    responseHandler = <span class="keyword">new</span> <span class="title class_">BasicResponseHandler</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 功能：返回响应</span></span><br><span class="line"><span class="comment"> * @author zhangdaquan</span></span><br><span class="line"><span class="comment"> * @date 2019/1/3 上午11:19</span></span><br><span class="line"><span class="comment"> * @param [url]</span></span><br><span class="line"><span class="comment"> * @return org.apache.http.client.methods.CloseableHttpResponse</span></span><br><span class="line"><span class="comment"> * @exception</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">getResponse</span><span class="params">(String url)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">    <span class="type">HttpGet</span> <span class="variable">get</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HttpGet</span>(url);</span><br><span class="line">    <span class="type">String</span> <span class="variable">response</span> <span class="operator">=</span> httpclient.execute(get,responseHandler);</span><br><span class="line">    <span class="keyword">return</span> response;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 功能：发送http请求，并用net.sf.json工具解析</span></span><br><span class="line"><span class="comment"> * @author zhangdaquan</span></span><br><span class="line"><span class="comment"> * @date 2018/8/15 下午2:21</span></span><br><span class="line"><span class="comment"> * @param [url]</span></span><br><span class="line"><span class="comment"> * @return org.json.JSONObject</span></span><br><span class="line"><span class="comment"> * @exception</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> JSONObject <span class="title function_">getUrl</span><span class="params">(String url)</span> <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        httpget.setURI(URI.create(url));</span><br><span class="line">        <span class="type">String</span> <span class="variable">response</span> <span class="operator">=</span> httpclient.execute(httpget,responseHandler);</span><br><span class="line">        <span class="type">JSONObject</span> <span class="variable">json</span> <span class="operator">=</span> JSONObject.fromObject(response);</span><br><span class="line">        <span class="keyword">return</span> json;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 功能：发送http请求，并用jackson工具解析</span></span><br><span class="line"><span class="comment"> * @author zhangdaquan</span></span><br><span class="line"><span class="comment"> * @date 2018/12/24 下午2:58</span></span><br><span class="line"><span class="comment"> * @param [url]</span></span><br><span class="line"><span class="comment"> * @return com.fasterxml.jackson.databind.JsonNode</span></span><br><span class="line"><span class="comment"> * @exception</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> JsonNode <span class="title function_">getUrl2</span><span class="params">(String url)</span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        httpget.setURI(URI.create(url));</span><br><span class="line">        <span class="type">String</span> <span class="variable">response</span> <span class="operator">=</span> httpclient.execute(httpget,responseHandler);</span><br><span class="line">        <span class="type">JsonNode</span> <span class="variable">node</span> <span class="operator">=</span> mapper.readTree(response);</span><br><span class="line">        <span class="keyword">return</span> node;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 功能：发送http请求，并用fastjson工具解析</span></span><br><span class="line"><span class="comment"> * @author zhangdaquan</span></span><br><span class="line"><span class="comment"> * @date 2018/12/24 下午2:58</span></span><br><span class="line"><span class="comment"> * @param [url]</span></span><br><span class="line"><span class="comment"> * @return com.fasterxml.jackson.databind.JsonNode</span></span><br><span class="line"><span class="comment"> * @exception</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> com.alibaba.fastjson.JSONObject <span class="title function_">getUrl3</span><span class="params">(String url)</span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        httpget.setURI(URI.create(url));</span><br><span class="line">        <span class="type">String</span> <span class="variable">response</span> <span class="operator">=</span> httpclient.execute(httpget,responseHandler);</span><br><span class="line">        com.alibaba.fastjson.<span class="type">JSONObject</span> <span class="variable">jsonObject</span> <span class="operator">=</span> com.alibaba.fastjson.JSONObject.parseObject(response);</span><br><span class="line">        <span class="keyword">return</span> jsonObject;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+        
+            <div id="toc-article">
+                
+  <div class="widget-wrap" id="toc-wrap">
+    <h3 class="widget-title"><i class="fa fa-toc"></i> 文章目录</h3>
+    <div class="widget">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%E3%80%81HttpClient%E4%BC%98%E5%8C%96%E6%80%9D%E8%B7%AF"><span class="toc-text">1、HttpClient优化思路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%E3%80%81%E5%88%86%E6%9E%90"><span class="toc-text">2、分析</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2-1-httpclient%E5%8F%8D%E5%A4%8D%E5%88%9B%E5%BB%BA%E5%BC%80%E9%94%80"><span class="toc-text">2.1 httpclient反复创建开销</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-2-%E5%8F%8D%E5%A4%8D%E5%88%9B%E5%BB%BAtcp%E8%BF%9E%E6%8E%A5%E7%9A%84%E5%BC%80%E9%94%80"><span class="toc-text">2.2 反复创建tcp连接的开销</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-%E9%87%8D%E5%A4%8D%E7%BC%93%E5%AD%98entity%E7%9A%84%E5%BC%80%E9%94%80"><span class="toc-text">2.3 重复缓存entity的开销</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3%E3%80%81%E5%AE%9E%E7%8E%B0"><span class="toc-text">3、实现</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-1-%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AAkeep-alive-strategy"><span class="toc-text">3.1 定义一个keep alive strategy</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-2-%E9%85%8D%E7%BD%AE%E4%B8%80%E4%B8%AAPoolingHttpClientConnectionManager"><span class="toc-text">3.2 配置一个PoolingHttpClientConnectionManager</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-3-%E7%94%9F%E6%88%90httpclient"><span class="toc-text">3.3 生成httpclient</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-4-%E4%BD%BF%E7%94%A8httpclient%E6%89%A7%E8%A1%8Cmethod%E6%97%B6%E9%99%8D%E4%BD%8E%E5%BC%80%E9%94%80"><span class="toc-text">3.4 使用httpclient执行method时降低开销</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4%E3%80%81%E5%85%B6%E4%BB%96"><span class="toc-text">4、其他</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#4-1-httpclient%E7%9A%84%E4%B8%80%E4%BA%9B%E8%B6%85%E6%97%B6%E9%85%8D%E7%BD%AE"><span class="toc-text">4.1 httpclient的一些超时配置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-2-%E5%A6%82%E6%9E%9C%E9%85%8D%E7%BD%AE%E4%BA%86nginx%E7%9A%84%E8%AF%9D%EF%BC%8Cnginx%E4%B9%9F%E8%A6%81%E8%AE%BE%E7%BD%AE%E9%9D%A2%E5%90%91%E4%B8%A4%E7%AB%AF%E7%9A%84keep-alive"><span class="toc-text">4.2 如果配置了nginx的话，nginx也要设置面向两端的keep-alive</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+
+            </div>
+        
+        
+          <blockquote id="copyright">
+              <p>原文链接: <a href="https://lyblog2022.github.io/2022/06/21/summary/High-concurrency/高并发场景下的httpClient优化使用/">https://lyblog2022.github.io/2022/06/21/summary/High-concurrency/高并发场景下的httpClient优化使用/</a></p>
+              <p>版权声明: 转载请注明出处.</p>
+          </blockquote>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div class="article-tag-wrap">
+          
+
+          
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/httpClient/" rel="tag">httpClient</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/" rel="tag">接口调用</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%82%A3%E4%BA%9B%E4%BB%A3%E7%A0%81%E9%82%A3%E4%BA%9B%E6%80%BB%E7%BB%93/" rel="tag">那些代码那些总结</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/" rel="tag">高并发</a></li></ul>
+
+          
+
+
+        </div>
+      
+      
+        
+<nav id="article-nav">
+  
+    <a href="/2022/06/20/software/nginx/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">older</strong>
+      <div class="article-nav-title">
+        
+          nginx安装
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+      
+      
+    </footer>
+  </div>
+</article>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-posts"></i> 最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/06/21/summary/High-concurrency/%E9%AB%98%E5%B9%B6%E5%8F%91%E5%9C%BA%E6%99%AF%E4%B8%8B%E7%9A%84httpClient%E4%BC%98%E5%8C%96%E4%BD%BF%E7%94%A8/">高并发场景下的 httpClient 优化使用</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/20/software/nginx/">nginx安装</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/20/study/FastDFS/FastDFS-file1/">FastDFS实现图片上传及下载</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/19/software/FastDFS/">FastDFS安装</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/12/study/dubbo/dubbo%E9%A1%B9%E7%9B%AE/">dubbo项目</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-tag"></i> 标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CentOS-8/" style="font-size: 16.67px;">CentOS 8</a> <a href="/tags/FastDFS/" style="font-size: 13.33px;">FastDFS</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/RPC/" style="font-size: 13.33px;">RPC</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/Springmvc/" style="font-size: 10px;">Springmvc</a> <a href="/tags/dubbo/" style="font-size: 13.33px;">dubbo</a> <a href="/tags/httpClient/" style="font-size: 13.33px;">httpClient</a> <a href="/tags/jdk/" style="font-size: 10px;">jdk</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/servlet/" style="font-size: 10px;">servlet</a> <a href="/tags/software/" style="font-size: 16.67px;">software</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/tags/zookeeper/" style="font-size: 16.67px;">zookeeper</a> <a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 20px;">学习</a> <a href="/tags/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/" style="font-size: 13.33px;">接口调用</a> <a href="/tags/%E9%82%A3%E4%BA%9B%E4%BB%A3%E7%A0%81%E9%82%A3%E4%BA%9B%E6%80%BB%E7%BB%93/" style="font-size: 13.33px;">那些代码那些总结</a> <a href="/tags/%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">项目</a> <a href="/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/" style="font-size: 10px;">高并发</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-classify"></i> 分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/">CentOs 8</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/software/">software</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/software/FastDFS/">FastDFS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/software/jdk/">jdk</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/software/nginx/">nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/software/zookeeper/">zookeeper</a><span class="category-list-count">1</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/FastDFS/">FastDFS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/MyBatis/">MyBatis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/RPC/">RPC</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/Spring/">Spring</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/Springmvc/">Springmvc</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/dubbo/">dubbo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/servlet/">servlet</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/springboot/">springboot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/zookeeper/">zookeeper</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%82%A3%E4%BA%9B%E4%BB%A3%E7%A0%81%E9%82%A3%E4%BA%9B%E6%80%BB%E7%BB%93/">那些代码那些总结</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%82%A3%E4%BA%9B%E4%BB%A3%E7%A0%81%E9%82%A3%E4%BA%9B%E6%80%BB%E7%BB%93/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/">接口调用</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%82%A3%E4%BA%9B%E4%BB%A3%E7%A0%81%E9%82%A3%E4%BA%9B%E6%80%BB%E7%BB%93/%E9%AB%98%E5%B9%B6%E5%8F%91/">高并发</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/dubbo/">dubbo</a><span class="category-list-count">1</span></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-archive"></i> 归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022年</a><span class="archive-list-count">18</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-tag"></i> 标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS-8/" rel="tag">CentOS 8</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FastDFS/" rel="tag">FastDFS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MyBatis/" rel="tag">MyBatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RPC/" rel="tag">RPC</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/" rel="tag">Spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Springmvc/" rel="tag">Springmvc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/" rel="tag">dubbo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/httpClient/" rel="tag">httpClient</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jdk/" rel="tag">jdk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/" rel="tag">nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/servlet/" rel="tag">servlet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/software/" rel="tag">software</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/" rel="tag">springboot</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zookeeper/" rel="tag">zookeeper</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/" rel="tag">接口调用</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%82%A3%E4%BA%9B%E4%BB%A3%E7%A0%81%E9%82%A3%E4%BA%9B%E6%80%BB%E7%BB%93/" rel="tag">那些代码那些总结</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag">项目</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/" rel="tag">高并发</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <a id="totop" href="#top"></a>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <p>
+        <a href="/sitemap.xml">网站地图</a>
+        <span> | </span><a href="/atom.xml">订阅本站</a>
+        <span> | </span><a href="/about/">联系博主</a>
+      </p>
+      
+        <p>
+          <i class="fa fa-visitors"></i>
+          <i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>
+          ，
+          <i class="fa fa-views"></i>
+          <i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>
+        </p>
+      
+      <p>
+        <span>Copyright &copy; 2022 ly.</span>
+        <span>Theme by <a href="https://github.com/chaooo/hexo-theme-BlueLake/" target="_blank">BlueLake.</a></span>
+        <span>Powered by <a href="https://hexo.io/" target="_blank">Hexo.</a></span>
+      </p>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </div>
+  
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+<script src="/js/search.json.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+
+  
+<script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+  
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+
+
+
+
+</body>
+</html>
