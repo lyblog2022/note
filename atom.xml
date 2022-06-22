@@ -6,7 +6,7 @@
   <link href="https://lyblog2022.github.io/atom.xml" rel="self"/>
   
   <link href="https://lyblog2022.github.io/"/>
-  <updated>2022-06-21T14:29:04.445Z</updated>
+  <updated>2022-06-22T03:32:31.869Z</updated>
   <id>https://lyblog2022.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>redis单机版安装</title>
+    <link href="https://lyblog2022.github.io/2022/06/22/software/redis/"/>
+    <id>https://lyblog2022.github.io/2022/06/22/software/redis/</id>
+    <published>2022-06-22T03:16:38.000Z</published>
+    <updated>2022-06-22T03:32:31.869Z</updated>
+    
+    <content type="html"><![CDATA[<p>CentOS8安装Redis单机版</p><span id="more"></span><h4 id="1、安装C语言依赖环境"><a href="#1、安装C语言依赖环境" class="headerlink" title="1、安装C语言依赖环境"></a>1、安装C语言依赖环境</h4><p>​redis使用C语言编写，所以需要安装C语言库</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y gcc-c++ automake autoconf libtool make tcl </span><br></pre></td></tr></table></figure><h4 id="2、上传并解压"><a href="#2、上传并解压" class="headerlink" title="2、上传并解压"></a>2、上传并解压</h4><p>​把<code>redis-5.0.5.tar.gz</code>上传到<code>/usr/local/tmp</code>中</p><p>​解压文件</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/tmp</span><br><span class="line">tar zxf redis-5.0.5.tar.gz</span><br></pre></td></tr></table></figure><h4 id="3、编译并安装"><a href="#3、编译并安装" class="headerlink" title="3、编译并安装"></a>3、编译并安装</h4><p>​进入解压文件夹</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/tmp/redis-5.0.5/</span><br></pre></td></tr></table></figure><p>​编译</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make</span><br></pre></td></tr></table></figure><p>​安装</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make install PREFIX=/usr/local/redis</span><br></pre></td></tr></table></figure><h4 id="4、开启守护进程"><a href="#4、开启守护进程" class="headerlink" title="4、开启守护进程"></a>4、开启守护进程</h4><p>复制<code>/usr/local/tmp/redis-5.0.5/</code>中<code>redis.conf</code>配置文件</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp redis.conf /usr/local/redis/bin/</span><br></pre></td></tr></table></figure><p>修改配置文件</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/redis/bin/</span><br><span class="line">vim redis.conf</span><br></pre></td></tr></table></figure><p>把<code>daemonize</code>的值由<code>no</code>修改为<code>yes</code></p><img src="/2022/06/22/software/redis/redis1.png" class="" title="redis1 image"><h4 id="5、修改外部访问"><a href="#5、修改外部访问" class="headerlink" title="5、修改外部访问"></a>5、修改外部访问</h4><p>在redis5中需要修改配置文件redis.conf允许外部访问。需要修改两处。</p><p>注释掉<code>bind 127.0.0.1</code></p><img src="/2022/06/22/software/redis/redis2.png" class="" title="redis2 image"><p><code>protected-mode</code> <code>yes</code> 改成 <code>no</code></p><img src="/2022/06/22/software/redis/redis3.png" class="" title="redis3 image"><h4 id="6、启动并测试"><a href="#6、启动并测试" class="headerlink" title="6、启动并测试"></a>6、启动并测试</h4><h5 id="6-1-启动redis"><a href="#6-1-启动redis" class="headerlink" title="6.1 启动redis"></a>6.1 启动redis</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./redis-server redis.conf</span><br></pre></td></tr></table></figure><img src="/2022/06/22/software/redis/redis4.png" class="" title="redis4 image"><h5 id="6-2-启动客户端工具"><a href="#6-2-启动客户端工具" class="headerlink" title="6.2 启动客户端工具"></a>6.2 启动客户端工具</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./redis-cli</span><br></pre></td></tr></table></figure><img src="/2022/06/22/software/redis/redis5.png" class="" title="redis5 image"><h5 id="6-3-关闭redis"><a href="#6-3-关闭redis" class="headerlink" title="6.3 关闭redis"></a>6.3 关闭redis</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./redis-cli shutdown</span><br></pre></td></tr></table></figure><img src="/2022/06/22/software/redis/redis6.png" class="" title="redis6 image">]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;CentOS8安装Redis单机版&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="CentOs 8" scheme="https://lyblog2022.github.io/categories/CentOs-8/"/>
+    
+    <category term="software" scheme="https://lyblog2022.github.io/categories/CentOs-8/software/"/>
+    
+    <category term="redis" scheme="https://lyblog2022.github.io/categories/CentOs-8/software/redis/"/>
+    
+    
+    <category term="software" scheme="https://lyblog2022.github.io/tags/software/"/>
+    
+    <category term="CentOS 8" scheme="https://lyblog2022.github.io/tags/CentOS-8/"/>
+    
+    <category term="redis" scheme="https://lyblog2022.github.io/tags/redis/"/>
+    
+  </entry>
   
   <entry>
     <title>nginx初步学习</title>
@@ -226,9 +255,9 @@
     
     <category term="zookeeper" scheme="https://lyblog2022.github.io/tags/zookeeper/"/>
     
-    <category term="学习" scheme="https://lyblog2022.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
-    
     <category term="RPC" scheme="https://lyblog2022.github.io/tags/RPC/"/>
+    
+    <category term="学习" scheme="https://lyblog2022.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
@@ -359,9 +388,9 @@
     <category term="RPC" scheme="https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/RPC/"/>
     
     
-    <category term="学习" scheme="https://lyblog2022.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
-    
     <category term="RPC" scheme="https://lyblog2022.github.io/tags/RPC/"/>
+    
+    <category term="学习" scheme="https://lyblog2022.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
@@ -484,9 +513,9 @@
     <category term="MyBatis" scheme="https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/MyBatis/"/>
     
     
-    <category term="MyBatis" scheme="https://lyblog2022.github.io/tags/MyBatis/"/>
-    
     <category term="学习" scheme="https://lyblog2022.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+    <category term="MyBatis" scheme="https://lyblog2022.github.io/tags/MyBatis/"/>
     
   </entry>
   
