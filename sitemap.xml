@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://lyblog2022.github.io/2022/06/23/study/redis/redis3/</loc>
+    
+    <lastmod>2022-06-23</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://lyblog2022.github.io/2022/06/23/study/redis/redis2/</loc>
     
     <lastmod>2022-06-23</lastmod>
@@ -248,14 +257,14 @@
   </url>
   
   <url>
-    <loc>https://lyblog2022.github.io/tags/jdk/</loc>
+    <loc>https://lyblog2022.github.io/tags/nginx/</loc>
     <lastmod>2022-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://lyblog2022.github.io/tags/nginx/</loc>
+    <loc>https://lyblog2022.github.io/tags/jdk/</loc>
     <lastmod>2022-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -453,7 +462,7 @@
   </url>
   
   <url>
-    <loc>https://lyblog2022.github.io/categories/CentOs-8/software/jdk/</loc>
+    <loc>https://lyblog2022.github.io/categories/CentOs-8/software/nginx/</loc>
     <lastmod>2022-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -488,7 +497,7 @@
   </url>
   
   <url>
-    <loc>https://lyblog2022.github.io/categories/CentOs-8/software/nginx/</loc>
+    <loc>https://lyblog2022.github.io/categories/CentOs-8/software/jdk/</loc>
     <lastmod>2022-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

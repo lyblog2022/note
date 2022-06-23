@@ -1,3 +1,4 @@
+https://lyblog2022.github.io/2022/06/23/study/redis/redis3/
 https://lyblog2022.github.io/2022/06/23/study/redis/redis2/
 https://lyblog2022.github.io/2022/06/22/study/redis/redis1/
 https://lyblog2022.github.io/2022/06/22/software/redis/
@@ -26,8 +27,8 @@ https://lyblog2022.github.io/
 https://lyblog2022.github.io/tags/software/
 https://lyblog2022.github.io/tags/FastDFS/
 https://lyblog2022.github.io/tags/CentOS-8/
-https://lyblog2022.github.io/tags/jdk/
 https://lyblog2022.github.io/tags/nginx/
+https://lyblog2022.github.io/tags/jdk/
 https://lyblog2022.github.io/tags/redis/
 https://lyblog2022.github.io/tags/zookeeper/
 https://lyblog2022.github.io/tags/MyBatis/
@@ -55,12 +56,12 @@ https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/FastDFS/
 https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/MyBatis/
 https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/dubbo/
 https://lyblog2022.github.io/categories/%E9%A1%B9%E7%9B%AE/
-https://lyblog2022.github.io/categories/CentOs-8/software/jdk/
+https://lyblog2022.github.io/categories/CentOs-8/software/nginx/
 https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/nginx/
 https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/redis/
 https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/RPC/
 https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/servlet/
-https://lyblog2022.github.io/categories/CentOs-8/software/nginx/
+https://lyblog2022.github.io/categories/CentOs-8/software/jdk/
 https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/Spring/
 https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/springboot/
 https://lyblog2022.github.io/categories/%E5%AD%A6%E4%B9%A0/Springmvc/
