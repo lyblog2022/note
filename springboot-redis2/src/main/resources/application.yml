@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/study?characterEncoding=utf-8&serverTimezone=UTC
+    username: root
+    password: liuyong
+  redis:
+    cluster:
+      nodes: 192.168.213.133:7001,192.168.213.133:7002,192.168.213.133:7003,192.168.213.133:7004,192.168.213.133:7005,192.168.213.133:7006
+mybatis:
+  type-aliases-package: com.pojo
+  mapper-locations: classpath:com/mapper/*.xml
