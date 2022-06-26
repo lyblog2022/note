@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>RabbitMQ初步学习 | My Note</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+    <meta name="description" content="654645564">
+  
+  
+  
+    <link rel="alternate" href="/atom.xml" title="My Note" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">My Note</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Welcome To My World</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/."><i class="fa fa-home"></i> 首页</a>
+        
+          <a class="main-nav-link" href="/archives/"><i class="fa fa-archive"></i> 归档</a>
+        
+      </nav>
+    </div>
+    <div id="search-form">
+      <div id="result-mask" class="hide"></div>
+      <label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label>
+      <div id="result-wrap" class="hide">
+        <div id="search-result"></div>
+      </div>
+      <div class="hide">
+        <template id="search-tpl">
+          <div class="item">
+            <a href="/{path}" title="{title}">
+              <div class="title">{title}</div>
+              <div class="time">{date}</div>
+              <div class="tags">{tags}</div>
+            </a>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-study/rabbitMq/rabbitMQ1" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      RabbitMQ初步学习
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+      <span class="article-date">
+  <i class="fa fa-date"></i>
+  <time class="dt-published" datetime="2022-06-26T02:17:45.000Z" itemprop="datePublished">2022-06-26</time>
+</span>
+      
+  <div class="article-category">
+    <i class="fa fa-classify"></i>
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a> > <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0/RabbitMQ/">RabbitMQ</a>
+  </div>
+
+      
+        <span class="article-views">
+  <i class="fa fa-views"></i>
+  <i id="busuanzi_container_page_pv">
+      <i id="busuanzi_value_page_pv"></i>
+  </i>
+</span>
+
+      
+      
+
+    </div>
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>RabbitMQ学习及简单原理简介</p>
+<span id="more"></span>
+
+<h3 id="1、AMQP"><a href="#1、AMQP" class="headerlink" title="1、AMQP"></a>1、AMQP</h3><h4 id="1-1-AMQP"><a href="#1-1-AMQP" class="headerlink" title="1.1 AMQP"></a>1.1 AMQP</h4><p>​	<code>AMQP</code>(<code>Advanced Message Queuing Protocol</code>，高级消息队列协议)是进程之间传递异步消息的网络协议。</p>
+<h4 id="1-2-AMQP工作过程"><a href="#1-2-AMQP工作过程" class="headerlink" title="1.2 AMQP工作过程"></a>1.2 AMQP工作过程</h4><p>​	发布者(Publisher)发布消息(Message)，经过交换机(Exchange)，交换机根据路由规则将收到消息分发给交换机绑定的队列(Queue)，最后AMQP代理会将消息投递给订阅了此队列的消费者，或者消费者按照需求自行获取。</p>
+<img src="/2022/06/26/study/rabbitMq/rabbitMQ1/mq1.png" class="" title="mq1 image">
+
+<h4 id="1-3-队列"><a href="#1-3-队列" class="headerlink" title="1.3 队列"></a>1.3 队列</h4><p>​	队列是数据结构中概念。数据存储在一个队列中，数据是有顺序的，先进的先出，后进后出。其中一侧负责进数据，另一侧负责出数据。</p>
+<p>​	MQ（消息队列）很多功能都是基于此队列结构实现的</p>
+<p>​	<img src="/2022/06/26/study/rabbitMq/rabbitMQ1/mq2.png" class="" title="mq2 image"></p>
+<h3 id="2、RabbitMQ"><a href="#2、RabbitMQ" class="headerlink" title="2、RabbitMQ"></a>2、RabbitMQ</h3><h4 id="2-1-RabbitMQ介绍"><a href="#2-1-RabbitMQ介绍" class="headerlink" title="2.1 RabbitMQ介绍"></a>2.1 RabbitMQ介绍</h4><p>​	RabbitMQ是由Erlang语言编写的基于AMQP的消息中间件。而消息中间件作为分布式系统重要组件之一，可以解决应用耦合，异步消息，流量削峰等问题。</p>
+<h5 id="2-1-1-解决应用耦合"><a href="#2-1-1-解决应用耦合" class="headerlink" title="2.1.1 解决应用耦合"></a>2.1.1 解决应用耦合</h5><p>​	不使用MQ时</p>
+<p>​	<img src="/2022/06/26/study/rabbitMq/rabbitMQ1/mq3.png" class="" title="mq3 image"></p>
+<p>​	使用MQ解决耦合</p>
+<p>​	<img src="/2022/06/26/study/rabbitMq/rabbitMQ1/mq4.png" class="" title="mq4 image"></p>
+<h4 id="2-2-RabbitMQ适用场景"><a href="#2-2-RabbitMQ适用场景" class="headerlink" title="2.2 RabbitMQ适用场景"></a>2.2 RabbitMQ适用场景</h4><ul>
+<li>排队算法 : 使用消息队列特性</li>
+<li>秒杀活动 : 使用消息队列特性</li>
+<li>消息分发 : 使用消息异步特性</li>
+<li>异步处理 : 使用消息异步特性</li>
+<li>数据同步 : 使用消息异步特性</li>
+<li>处理耗时任务 : 使用消息异步特性</li>
+<li>流量销峰</li>
+</ul>
+<h3 id="3、RabbitMQ原理"><a href="#3、RabbitMQ原理" class="headerlink" title="3、RabbitMQ原理"></a>3、RabbitMQ原理</h3><p>​	<img src="/2022/06/26/study/rabbitMq/rabbitMQ1/mq5.png" class="" title="mq5 image"></p>
+<ol>
+<li><strong>Message</strong>：消息。消息是不具名的，它由消息头消息体组成。消息体是不透明的，而消息头则由一系列可选属性组成，这些属性包括：routing-key(路由键)、priority(相对于其他消息的优先权)、delivery-mode(指出消息可能持久性存储)等。</li>
+<li><strong>Publisher</strong>：消息的生产者。也是一个向交换器发布消息的客户端应用程序。</li>
+<li><strong>Consumer</strong>：消息的消费者。表示一个从消息队列中取得消息的客户端应用程序。</li>
+<li><strong>Exchange</strong>：交换器。用来接收生产者发送的消息并将这些消息路由给服务器中的队列。三种常用的交换器类型1. direct(发布与订阅 完全匹配)2. fanout(广播)3. topic(主题，规则匹配)</li>
+<li><strong>Binding</strong>：绑定。用于消息队列和交换器之间的关联。一个绑定就是基于路由键将交换器和消息队列连接起来的路由规则，所以可以将交换器理解成一个由绑定构成的路由表。</li>
+<li><strong>Queue</strong>：消息队列。用来保存消息直到发送给消费者。它是消息的容器，也是消息的终点。一个消息可投入一个或多个队列。消息一直在队列里面，等待消费者链接到这个队列将其取走。</li>
+<li><strong>Routing-key</strong>：路由键。RabbitMQ决定消息该投递到哪个队列的规则。（也可以理解为队列的名称，路由键是key，队列是value）队列通过路由键绑定到交换器。消息发送到MQ服务器时，消息将拥有一个路由键，即便是空的，RabbitMQ也会将其和绑定使用的路由键进行匹配。如果相匹配，消息将会投递到该队列。如果不匹配，消息将会进入黑洞</li>
+<li><strong>Connection</strong>：链接。指rabbit服务器和服务建立的TCP链接。</li>
+<li><strong>Channel</strong>：信道。<ol>
+<li>Channel中文叫做信道，是TCP里面的虚拟链接。例如：电缆相当于TCP，信道是一个独立光纤束，一条TCP连接上创建多条信道是没有问题的。</li>
+<li>TCP一旦打开，就会创建AMQP信道</li>
+<li>无论是发布消息、接收消息、订阅队列，这些动作都是通过信道完成的。</li>
+</ol>
+</li>
+<li><strong>Virtual Host</strong>：虚拟主机。表示一批交换器，消息队列和相关对象。虚拟主机是共享相同的身份认证和加密环境的独立服务器域。每个vhost本质上就是一个mini版的RabbitMQ服务器，拥有自己的队列、交换器、绑定和权限机制。vhost是AMQP概念的基础，必须在链接时指定，RabbitMQ默认的vhost是**&#x2F;**</li>
+<li><strong>Borker</strong>：表示消息队列服务器实体。</li>
+<li><strong>交换器和队列的关系</strong>：交换器是通过路由键和队列绑定在一起的，如果消息拥有的路由键跟队列和交换器的路由键匹配，那么消息就会被路由到该绑定的队列中。也就是说，消息到队列的过程中，消息首先会经过交换器，接下来交换器在通过路由键匹配分发消息到具体的队列中。     路由键可以理解为匹配的规则。</li>
+<li><strong>RabbitMQ为什么需要信道？为什么不是TCP直接通信？</strong><ol>
+<li>TCP的创建和销毁开销特别大。创建需要3次握手，销毁需要4次分手</li>
+<li>如果不用信道，那应用程序就会以TCP链接Rabbit，高峰时每秒成千上万条链接会造成资源巨大的浪费，而且操作系统每秒处理TCP链接数也是有限制的，必定造成性能瓶颈</li>
+<li>信道的原理是一条线程一条通道，多条线程多条通道同用一条TCP链接。一条TCP链接可以容纳无限的信道，即使每秒成千上万的请求也不会成为性能的瓶颈。</li>
+</ol>
+</li>
+</ol>
+<h3 id="4、交换器（交换机）"><a href="#4、交换器（交换机）" class="headerlink" title="4、交换器（交换机）"></a>4、交换器（交换机）</h3><p>​	交换器负责接收客户端传递过来的消息，并转发到对应的队列中。在RabbitMQ中支持四种交换器</p>
+<ol>
+<li>Direct Exchange：直连交换器（默认）</li>
+<li>Fanout Exchange：扇形交换器</li>
+<li>Topic Exchange：主题交换器</li>
+<li>Header Exchange：首部交换器。</li>
+</ol>
+<p>​	在RabbitMq的Web管理界面中Exchanges选项卡就可以看见这四个交换器。</p>
+<img src="/2022/06/26/study/rabbitMq/rabbitMQ1/mq6.png" class="" title="mq6 image">
+
+<h4 id="4-1-direct交换器"><a href="#4-1-direct交换器" class="headerlink" title="4.1 direct交换器"></a>4.1 direct交换器</h4><p>​	direct交换器是RabbitMQ默认交换器。默认会进行公平调度。所有接受者依次从消息队列中获取值。Publisher给哪个队列发消息，就一定是给哪个队列发送消息。对交换器绑定的其他队列没有任何影响。</p>
+<p>​	代码实现</p>
+<h5 id="4-1-1-添加依赖"><a href="#4-1-1-添加依赖" class="headerlink" title="4.1.1 添加依赖"></a>4.1.1 添加依赖</h5><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-amqp<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="4-1-2-编写配置文件"><a href="#4-1-2-编写配置文件" class="headerlink" title="4.1.2 编写配置文件"></a>4.1.2 编写配置文件</h5><p>​	新建application.yml.</p>
+<p>​	host:默认值localhost</p>
+<p>​	username默认值：guest</p>
+<p>​	password默认值：guest	</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">rabbitmq:</span></span><br><span class="line">    <span class="attr">host:</span> <span class="number">192.168</span><span class="number">.213</span><span class="number">.133</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">ly</span></span><br><span class="line">    <span class="attr">password:</span> <span class="string">qwq</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="4-1-3-配置类"><a href="#4-1-3-配置类" class="headerlink" title="4.1.3 配置类"></a>4.1.3 配置类</h5><p>​	队列的创建只有没有这个队列的时候需要编写。以后没有这个queue()方法也可以。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.rabbitmq.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.amqp.core.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * RabbitwqConfig</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> liuyong</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> 1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span> com.rabbitmq.config</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022/6/26 11:08</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RabbitwqConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">protected</span> Queue <span class="title function_">queue</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">Queue</span> <span class="variable">queue</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Queue</span>(<span class="string">&quot;myQueue&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> queue;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-1-4-编写测试类"><a href="#4-1-4-编写测试类" class="headerlink" title="4.1.4 编写测试类"></a>4.1.4 编写测试类</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.rabbitmq;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.junit.jupiter.api.Test;</span><br><span class="line"><span class="keyword">import</span> org.springframework.amqp.core.AmqpTemplate;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.test.context.SpringBootTest;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootTest()</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RabbitmqApplicationTests</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> AmqpTemplate amqpTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * provider</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">contextLoads</span><span class="params">()</span> &#123;</span><br><span class="line">        amqpTemplate.convertAndSend(<span class="string">&quot;myQueue&quot;</span>,<span class="string">&quot;send text312312&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;success&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-1-5-创建consumer"><a href="#4-1-5-创建consumer" class="headerlink" title="4.1.5 创建consumer"></a>4.1.5 创建consumer</h5><p>pom文件，yml文件，config文件与provider相同</p>
+<h5 id="4-1-6-编写监听器"><a href="#4-1-6-编写监听器" class="headerlink" title="4.1.6 编写监听器"></a>4.1.6 编写监听器</h5><p>​	注意：</p>
+<p>​	类上要有@Componet，项目启动时此类生效。</p>
+<p>​	@RabbitListener 监听指定队列。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.rabbitmq.receive;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.amqp.rabbit.annotation.RabbitListener;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * ReceiveDemo</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> liuyong</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> 1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span> com.rabbitmq.receive</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022/6/26 11:49</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ReceiveDemo</span> &#123;</span><br><span class="line">    <span class="meta">@RabbitListener(queues = &quot;myQueue&quot;)</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">demo</span><span class="params">(String msg)</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;获取到的消息：&quot;</span> + msg);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RabbitListener(queues = &quot;myQueue&quot;)</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">demo2</span><span class="params">(String msg)</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;获取到的消息22222222：&quot;</span> + msg);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="4-2-fanout交换器"><a href="#4-2-fanout交换器" class="headerlink" title="4.2 fanout交换器"></a>4.2 fanout交换器</h4><p>​	扇形交换器，实际上做的事情就是广播，fanout会把消息发送给所有的绑定在当前交换器上的队列。且每个队列消息中第一个Consumer能收到消息。</p>
+<p>​	代码示例</p>
+<p>pom文件、yml文件与direct示例相同</p>
+<h5 id="4-2-1-修改配置类"><a href="#4-2-1-修改配置类" class="headerlink" title="4.2.1 修改配置类"></a>4.2.1 修改配置类</h5><p>在config配置文件内添加以下代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> Queue <span class="title function_">createQueue1</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Queue</span>(<span class="string">&quot;myfanout1&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> Queue <span class="title function_">createQueue2</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Queue</span>(<span class="string">&quot;myfanout2&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> FanoutExchange <span class="title function_">getFanout</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">FanoutExchange</span>(<span class="string">&quot;amq.fanout&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> Binding <span class="title function_">binding</span><span class="params">(Queue createQueue1,FanoutExchange getFanout)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> BindingBuilder.bind(createQueue1).to(getFanout);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> Binding <span class="title function_">binding2</span><span class="params">(Queue createQueue2,FanoutExchange getFanout)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> BindingBuilder.bind(createQueue2).to(getFanout);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-2-2-编写发送方法"><a href="#4-2-2-编写发送方法" class="headerlink" title="4.2.2 编写发送方法"></a>4.2.2 编写发送方法</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">   <span class="keyword">void</span> <span class="title function_">contextLoads2</span><span class="params">()</span> &#123;</span><br><span class="line">       amqpTemplate.convertAndSend(<span class="string">&quot;amq.fanout&quot;</span>,<span class="string">&quot;core&quot;</span>,<span class="string">&quot;hhhh&quot;</span>);</span><br><span class="line">       System.out.println(<span class="string">&quot;success&quot;</span>);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-2-3-consumer"><a href="#4-2-3-consumer" class="headerlink" title="4.2.3 consumer"></a>4.2.3 consumer</h4><p>在receiveDemo下添加以下代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RabbitListener(queues = &quot;myfanout1&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">demo3</span><span class="params">(String msg)</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;myfanout1:&quot;</span>+msg);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@RabbitListener(queues = &quot;myfanout2&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">demo4</span><span class="params">(String msg)</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;myfanout2:&quot;</span>+msg);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-3-topic交换器"><a href="#4-3-topic交换器" class="headerlink" title="4.3 topic交换器"></a>4.3 topic交换器</h4><p>​	允许在路由键（RoutingKey）中出现匹配规则。</p>
+<p>​	路由键的写法和包写法相同。com.xxxx.xxx格式。</p>
+<p>​	在绑定时可以带有下面特殊符号，中间可以出现:</p>
+<p>​	* : 代表一个单词（两个.之间内容）</p>
+<p>​	# : 0个或多个字符</p>
+<p>​	接收方依然是公平调度，同一个队列中内容轮换获取值。</p>
+<p>​	示例代码</p>
+<p>pom，yml文件与以上相同</p>
+<h5 id="4-3-1-修改配置类"><a href="#4-3-1-修改配置类" class="headerlink" title="4.3.1 修改配置类"></a>4.3.1 修改配置类</h5><p>在config文件中添加以下代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> Queue <span class="title function_">topicQueue1</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Queue</span>(<span class="string">&quot;topic1&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> Queue <span class="title function_">topicQueue2</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Queue</span>(<span class="string">&quot;topic2&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> TopicExchange <span class="title function_">getTopic</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">TopicExchange</span>(<span class="string">&quot;amq.topic&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> Binding <span class="title function_">topicBinding1</span><span class="params">(Queue topicQueue1,TopicExchange getTopic)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> BindingBuilder.bind(topicQueue1).to(getTopic).with(<span class="string">&quot;com.*&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> Binding <span class="title function_">topicBinding2</span><span class="params">(Queue topicQueue2,TopicExchange getTopic)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> BindingBuilder.bind(topicQueue2).to(getTopic).with(<span class="string">&quot;com.#&quot;</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-3-2-发送消息"><a href="#4-3-2-发送消息" class="headerlink" title="4.3.2 发送消息"></a>4.3.2 发送消息</h5><p>​	第二个参数为路由键，匹配配置类中绑定时的路由规则。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">contextLoads3</span><span class="params">()</span> &#123;</span><br><span class="line">        amqpTemplate.convertAndSend(<span class="string">&quot;amq.topic&quot;</span>,<span class="string">&quot;com.q.w&quot;</span>,<span class="string">&quot;msg&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;success&quot;</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-3-3-Consumer"><a href="#4-3-3-Consumer" class="headerlink" title="4.3.3 Consumer"></a>4.3.3 Consumer</h5><p>​	在receiveDemo下添加以下代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RabbitListener(queues = &quot;topic1&quot;)</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">demo5</span><span class="params">(String msg)</span> &#123;</span><br><span class="line">       System.out.println(<span class="string">&quot;topic1:&quot;</span>+msg);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="meta">@RabbitListener(queues = &quot;topic2&quot;)</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">demo6</span><span class="params">(String msg)</span> &#123;</span><br><span class="line">       System.out.println(<span class="string">&quot;topic2:&quot;</span>+msg);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+        
+            <div id="toc-article">
+                
+  <div class="widget-wrap" id="toc-wrap">
+    <h3 class="widget-title"><i class="fa fa-toc"></i> 文章目录</h3>
+    <div class="widget">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81AMQP"><span class="toc-text">1、AMQP</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-AMQP"><span class="toc-text">1.1 AMQP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-AMQP%E5%B7%A5%E4%BD%9C%E8%BF%87%E7%A8%8B"><span class="toc-text">1.2 AMQP工作过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-%E9%98%9F%E5%88%97"><span class="toc-text">1.3 队列</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81RabbitMQ"><span class="toc-text">2、RabbitMQ</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-RabbitMQ%E4%BB%8B%E7%BB%8D"><span class="toc-text">2.1 RabbitMQ介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2-1-1-%E8%A7%A3%E5%86%B3%E5%BA%94%E7%94%A8%E8%80%A6%E5%90%88"><span class="toc-text">2.1.1 解决应用耦合</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-RabbitMQ%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-text">2.2 RabbitMQ适用场景</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81RabbitMQ%E5%8E%9F%E7%90%86"><span class="toc-text">3、RabbitMQ原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81%E4%BA%A4%E6%8D%A2%E5%99%A8%EF%BC%88%E4%BA%A4%E6%8D%A2%E6%9C%BA%EF%BC%89"><span class="toc-text">4、交换器（交换机）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-direct%E4%BA%A4%E6%8D%A2%E5%99%A8"><span class="toc-text">4.1 direct交换器</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#4-1-1-%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96"><span class="toc-text">4.1.1 添加依赖</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-1-2-%E7%BC%96%E5%86%99%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-text">4.1.2 编写配置文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-1-3-%E9%85%8D%E7%BD%AE%E7%B1%BB"><span class="toc-text">4.1.3 配置类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-1-4-%E7%BC%96%E5%86%99%E6%B5%8B%E8%AF%95%E7%B1%BB"><span class="toc-text">4.1.4 编写测试类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-1-5-%E5%88%9B%E5%BB%BAconsumer"><span class="toc-text">4.1.5 创建consumer</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-1-6-%E7%BC%96%E5%86%99%E7%9B%91%E5%90%AC%E5%99%A8"><span class="toc-text">4.1.6 编写监听器</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-fanout%E4%BA%A4%E6%8D%A2%E5%99%A8"><span class="toc-text">4.2 fanout交换器</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#4-2-1-%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E7%B1%BB"><span class="toc-text">4.2.1 修改配置类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-2-2-%E7%BC%96%E5%86%99%E5%8F%91%E9%80%81%E6%96%B9%E6%B3%95"><span class="toc-text">4.2.2 编写发送方法</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-3-consumer"><span class="toc-text">4.2.3 consumer</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-3-topic%E4%BA%A4%E6%8D%A2%E5%99%A8"><span class="toc-text">4.3 topic交换器</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#4-3-1-%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E7%B1%BB"><span class="toc-text">4.3.1 修改配置类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-3-2-%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AF"><span class="toc-text">4.3.2 发送消息</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-3-3-Consumer"><span class="toc-text">4.3.3 Consumer</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </div>
+
+
+            </div>
+        
+        
+          <blockquote id="copyright">
+              <p>原文链接: <a href="https://lyblog2022.github.io/2022/06/26/study/rabbitMq/rabbitMQ1/">https://lyblog2022.github.io/2022/06/26/study/rabbitMq/rabbitMQ1/</a></p>
+              <p>版权声明: 转载请注明出处.</p>
+          </blockquote>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div class="article-tag-wrap">
+          
+
+          
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RabbitMQ/" rel="tag">RabbitMQ</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a></li></ul>
+
+          
+
+
+        </div>
+      
+      
+        
+<nav id="article-nav">
+  
+    <a href="/2022/06/25/software/rabbitMq/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">older</strong>
+      <div class="article-nav-title">
+        
+          RabbitMQ安装
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+      
+      
+    </footer>
+  </div>
+</article>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-posts"></i> 最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/06/26/study/rabbitMq/rabbitMQ1/">RabbitMQ初步学习</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/25/software/rabbitMq/">RabbitMQ安装</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/25/study/redis/redis4/">springboot整合redis</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/23/study/redis/redis3/">redis哨兵及集群</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/23/study/redis/redis2/">redis持久化及主从复制</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-tag"></i> 标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CentOS-8/" style="font-size: 17.14px;">CentOS 8</a> <a href="/tags/FastDFS/" style="font-size: 11.43px;">FastDFS</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/RPC/" style="font-size: 11.43px;">RPC</a> <a href="/tags/RabbitMQ/" style="font-size: 11.43px;">RabbitMQ</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/Springmvc/" style="font-size: 10px;">Springmvc</a> <a href="/tags/centos8/" style="font-size: 12.86px;">centos8</a> <a href="/tags/dubbo/" style="font-size: 11.43px;">dubbo</a> <a href="/tags/httpClient/" style="font-size: 11.43px;">httpClient</a> <a href="/tags/jdk/" style="font-size: 10px;">jdk</a> <a href="/tags/nginx/" style="font-size: 11.43px;">nginx</a> <a href="/tags/redis/" style="font-size: 15.71px;">redis</a> <a href="/tags/servlet/" style="font-size: 10px;">servlet</a> <a href="/tags/software/" style="font-size: 18.57px;">software</a> <a href="/tags/springboot/" style="font-size: 11.43px;">springboot</a> <a href="/tags/zookeeper/" style="font-size: 14.29px;">zookeeper</a> <a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 20px;">学习</a> <a href="/tags/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/" style="font-size: 11.43px;">接口调用</a> <a href="/tags/%E9%82%A3%E4%BA%9B%E4%BB%A3%E7%A0%81%E9%82%A3%E4%BA%9B%E6%80%BB%E7%BB%93/" style="font-size: 11.43px;">那些代码那些总结</a> <a href="/tags/%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">项目</a> <a href="/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/" style="font-size: 10px;">高并发</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-classify"></i> 分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/">CentOs 8</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/RabbitMQ/">RabbitMQ</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/RabbitMQ/redis/">redis</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/software/">software</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/software/FastDFS/">FastDFS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/software/jdk/">jdk</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/software/nginx/">nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/software/redis/">redis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/software/zookeeper/">zookeeper</a><span class="category-list-count">1</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">17</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/FastDFS/">FastDFS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/MyBatis/">MyBatis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/RPC/">RPC</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/RabbitMQ/">RabbitMQ</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/Spring/">Spring</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/Springmvc/">Springmvc</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/dubbo/">dubbo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/nginx/">nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/redis/">redis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/servlet/">servlet</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/springboot/">springboot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/zookeeper/">zookeeper</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%82%A3%E4%BA%9B%E4%BB%A3%E7%A0%81%E9%82%A3%E4%BA%9B%E6%80%BB%E7%BB%93/">那些代码那些总结</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%82%A3%E4%BA%9B%E4%BB%A3%E7%A0%81%E9%82%A3%E4%BA%9B%E6%80%BB%E7%BB%93/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/">接口调用</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%82%A3%E4%BA%9B%E4%BB%A3%E7%A0%81%E9%82%A3%E4%BA%9B%E6%80%BB%E7%BB%93/%E9%AB%98%E5%B9%B6%E5%8F%91/">高并发</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/dubbo/">dubbo</a><span class="category-list-count">1</span></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-archive"></i> 归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022年</a><span class="archive-list-count">26</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-tag"></i> 标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS-8/" rel="tag">CentOS 8</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FastDFS/" rel="tag">FastDFS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MyBatis/" rel="tag">MyBatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RPC/" rel="tag">RPC</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RabbitMQ/" rel="tag">RabbitMQ</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/" rel="tag">Spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Springmvc/" rel="tag">Springmvc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos8/" rel="tag">centos8</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/" rel="tag">dubbo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/httpClient/" rel="tag">httpClient</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jdk/" rel="tag">jdk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/" rel="tag">nginx</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/" rel="tag">redis</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/servlet/" rel="tag">servlet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/software/" rel="tag">software</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/" rel="tag">springboot</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zookeeper/" rel="tag">zookeeper</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a><span class="tag-list-count">18</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/" rel="tag">接口调用</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%82%A3%E4%BA%9B%E4%BB%A3%E7%A0%81%E9%82%A3%E4%BA%9B%E6%80%BB%E7%BB%93/" rel="tag">那些代码那些总结</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag">项目</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/" rel="tag">高并发</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <a id="totop" href="#top"></a>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <p>
+        <a href="/sitemap.xml">网站地图</a>
+        <span> | </span><a href="/atom.xml">订阅本站</a>
+        <span> | </span><a href="/about/">联系博主</a>
+      </p>
+      
+        <p>
+          <i class="fa fa-visitors"></i>
+          <i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>
+          ，
+          <i class="fa fa-views"></i>
+          <i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>
+        </p>
+      
+      <p>
+        <span>Copyright &copy; 2022 ly.</span>
+        <span>Theme by <a href="https://github.com/chaooo/hexo-theme-BlueLake/" target="_blank">BlueLake.</a></span>
+        <span>Powered by <a href="https://hexo.io/" target="_blank">Hexo.</a></span>
+      </p>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </div>
+  
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+<script src="/js/search.json.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+
+  
+<script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+  
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+
+
+
+
+</body>
+</html>
