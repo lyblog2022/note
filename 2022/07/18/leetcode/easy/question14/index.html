@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   
   
-  <title>RabbitMQ安装 | My Note</title>
+  <title>14. 最长公共前缀 | My Note</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   
     <meta name="description" content="654645564">
@@ -80,7 +80,7 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-software/rabbitMq" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-leetcode/easy/question14" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-inner">
     
     
@@ -88,7 +88,7 @@
         
   
     <h1 class="p-name article-title" itemprop="headline name">
-      RabbitMQ安装
+      14. 最长公共前缀
     </h1>
   
 
@@ -99,12 +99,12 @@
       
       <span class="article-date">
   <i class="fa fa-date"></i>
-  <time class="dt-published" datetime="2022-06-25T05:16:19.000Z" itemprop="datePublished">2022-06-25</time>
+  <time class="dt-published" datetime="2022-07-18T08:40:03.000Z" itemprop="datePublished">2022-07-18</time>
 </span>
       
   <div class="article-category">
     <i class="fa fa-classify"></i>
-    <a class="article-category-link" href="/categories/CentOs-8/">CentOs 8</a> > <a class="article-category-link" href="/categories/CentOs-8/RabbitMQ/">RabbitMQ</a> > <a class="article-category-link" href="/categories/CentOs-8/RabbitMQ/redis/">redis</a>
+    <a class="article-category-link" href="/categories/leetcode/">leetcode</a> > <a class="article-category-link" href="/categories/leetcode/easy/">easy</a>
   </div>
 
       
@@ -121,104 +121,24 @@
     </div>
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>CentOS8安装RabbitMQ</p>
+        <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/longest-common-prefix/">最长公共前缀</a>编写一个函数来查找字符串数组中的最长公共前缀。如果不存在公共前缀，返回空字符串“”。</p>
 <span id="more"></span>
 
-<h4 id="1、Erlang安装"><a href="#1、Erlang安装" class="headerlink" title="1、Erlang安装"></a>1、Erlang安装</h4><p>​	RabbitMQ是使用Erlang语言编写的，所以需要先配置Erlang</p>
-<h5 id="1-1-修改主机名"><a href="#1-1-修改主机名" class="headerlink" title="1.1 修改主机名"></a>1.1 修改主机名</h5><p>​	RabbitMQ是通过主机名进行访问的，必须指定能访问的主机名。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/sysconfig/network</span><br></pre></td></tr></table></figure>
+<p>示例 1：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：strs = [&quot;flower&quot;,&quot;flow&quot;,&quot;flight&quot;]</span><br><span class="line">输出：&quot;fl&quot;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">NETWORKING</span>=<span class="string">yes</span></span><br><span class="line"><span class="attr">HOSTNAME</span>=<span class="string">ly</span></span><br></pre></td></tr></table></figure>
+<p>示例 2：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：strs = [&quot;dog&quot;,&quot;racecar&quot;,&quot;car&quot;]</span><br><span class="line">输出：&quot;&quot;</span><br><span class="line">解释：输入不存在公共前缀。</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/hosts</span><br></pre></td></tr></table></figure>
 
-<p>​	新添加了一行，前面为服务器ip，空格后面添加计算机主机名</p>
-<img src="/2022/06/25/software/rabbitMq/mq1.png" class="" title="mq1 image">
+<p>提示：</p>
+<ul>
+<li>1 &lt;&#x3D; strs.length &lt;&#x3D; 200</li>
+<li>0 &lt;&#x3D; strs[i].length &lt;&#x3D; 200</li>
+<li>strs[i] 仅由小写英文字母组成</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.question14;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Solution</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> liuyong</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> 1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span> com.question14</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022/7/18 16:25</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        String[] str1 = &#123;<span class="string">&quot;dog&quot;</span>, <span class="string">&quot;racecar&quot;</span>, <span class="string">&quot;car&quot;</span>&#125;;</span><br><span class="line">        System.out.println(<span class="keyword">new</span> <span class="title class_">Solution</span>().longestCommonPrefix(str1));</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">longestCommonPrefix</span><span class="params">(String[] strs)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">text</span> <span class="operator">=</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">        <span class="keyword">if</span> (strs != <span class="literal">null</span> &amp;&amp; strs.length != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (strs.length == <span class="number">1</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> strs[<span class="number">0</span>];</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">//先读取前两个字符串的公共前缀</span></span><br><span class="line">                <span class="type">String</span> <span class="variable">str1</span> <span class="operator">=</span> strs[<span class="number">0</span>];</span><br><span class="line">                <span class="type">String</span> <span class="variable">str2</span> <span class="operator">=</span> strs[<span class="number">1</span>];</span><br><span class="line">                <span class="type">int</span> <span class="variable">index</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">while</span> (index &lt; str1.length() &amp;&amp; index &lt; str2.length()) &#123;</span><br><span class="line">                    <span class="type">char</span> <span class="variable">s1</span> <span class="operator">=</span> str1.charAt(index);</span><br><span class="line">                    <span class="type">char</span> <span class="variable">s2</span> <span class="operator">=</span> str2.charAt(index);</span><br><span class="line">                    <span class="keyword">if</span> (s1 == s2) &#123;</span><br><span class="line">                        index++;</span><br><span class="line">                        text += s1;</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (text == <span class="literal">null</span> || <span class="string">&quot;&quot;</span>.equals(text)) &#123;</span><br><span class="line">                    <span class="keyword">return</span> text;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    index = <span class="number">2</span>;</span><br><span class="line">                    <span class="keyword">while</span> (index &lt; strs.length) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (strs[index].startsWith(text)) &#123;</span><br><span class="line">                            index++;</span><br><span class="line">                        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                            <span class="keyword">while</span> (text.length() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                                text = text.substring(<span class="number">0</span>, text.length() - <span class="number">1</span>);</span><br><span class="line">                                <span class="keyword">if</span> (strs[index].startsWith(text)) &#123;</span><br><span class="line">                                    <span class="keyword">break</span>;</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;</span><br><span class="line">                            <span class="keyword">if</span> (<span class="string">&quot;&quot;</span>.equals(text)) &#123;</span><br><span class="line">                                <span class="keyword">return</span> text;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">return</span> text;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> text;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h4 id="1-2-安装依赖"><a href="#1-2-安装依赖" class="headerlink" title="1.2 安装依赖"></a>1.2 安装依赖</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install make gcc gcc-c++ kernel-devel m4 ncurses-devel openssl-devel unixODBC unixODBC-devel</span><br></pre></td></tr></table></figure>
-
-<h4 id="1-3-上传并解压"><a href="#1-3-上传并解压" class="headerlink" title="1.3 上传并解压"></a>1.3 上传并解压</h4><p>​	上传otp_src_22.0.tar.gz到&#x2F;usr&#x2F;local&#x2F;tmp目录中，进入目录并解压</p>
-<p>​	解压时注意，此压缩包不具有gzip属性，解压参数没有z，只有xf</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/tmp</span><br><span class="line">tar xf otp_src_22.0.tar.gz</span><br></pre></td></tr></table></figure>
-
-<h4 id="1-4-配置参数"><a href="#1-4-配置参数" class="headerlink" title="1.4 配置参数"></a>1.4 配置参数</h4><p>​	先新建&#x2F;usr&#x2F;local&#x2F;erlang文件夹，作为安装文件夹</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /usr/local/erlang</span><br></pre></td></tr></table></figure>
-
-<p>​	进入文件夹</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd otp_src_22.0</span><br></pre></td></tr></table></figure>
-
-<p>​	配置参数</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=/usr/local/erlang --with-ssl --enable-threads --enable-smp-support --enable-kernel-poll --enable-hipe --without-javac</span><br></pre></td></tr></table></figure>
-
-<h4 id="1-5-编译并安装"><a href="#1-5-编译并安装" class="headerlink" title="1.5 编译并安装"></a>1.5 编译并安装</h4><p>​	编译</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make</span><br></pre></td></tr></table></figure>
-
-<p>​	安装</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make install</span><br></pre></td></tr></table></figure>
-
-<h4 id="1-6-修改环境变量"><a href="#1-6-修改环境变量" class="headerlink" title="1.6 修改环境变量"></a>1.6 修改环境变量</h4><p>​	修改&#x2F;etc&#x2F;profile文件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/profile</span><br></pre></td></tr></table></figure>
-
-<p>​	在文件中添加下面代码</p>
-<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">export</span> <span class="string">PATH=$PATH:/usr/local/erlang/bin</span></span><br></pre></td></tr></table></figure>
-
-<p>​	运行文件，让修改内容生效</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
-
-<h4 id="1-7-查看配置是否成功"><a href="#1-7-查看配置是否成功" class="headerlink" title="1.7 查看配置是否成功"></a>1.7 查看配置是否成功</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">erl -version</span><br></pre></td></tr></table></figure>
-
-<img src="/2022/06/25/software/rabbitMq/mq2.png" class="" title="mq2 image">
-
-<h3 id="2、安装RabbitMQ"><a href="#2、安装RabbitMQ" class="headerlink" title="2、安装RabbitMQ"></a>2、安装RabbitMQ</h3><h4 id="2-1-上传并解压"><a href="#2-1-上传并解压" class="headerlink" title="2.1 上传并解压"></a>2.1 上传并解压</h4><p>​	上传rabbitmq-server-generic-unix-3.7.18.tar.xz到&#x2F;usr&#x2F;loca&#x2F;tmp中</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/tmp</span><br><span class="line">tar xf rabbitmq-server-generic-unix-3.7.18.tar.xz</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-2-复制到local下"><a href="#2-2-复制到local下" class="headerlink" title="2.2 复制到local下"></a>2.2 复制到local下</h4><p>​	复制解压文件到&#x2F;usr&#x2F;local下，命名为rabbitmq</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp -r rabbitmq_server-3.7.18 /usr/local/rabbitmq</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-3-配置环境变量"><a href="#2-3-配置环境变量" class="headerlink" title="2.3 配置环境变量"></a>2.3 配置环境变量</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/profile</span><br></pre></td></tr></table></figure>
-
-<p>​	在文件中添加 </p>
-<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">export</span> <span class="string">PATH=$PATH:/usr/local/rabbitmq/sbin</span></span><br></pre></td></tr></table></figure>
-
-<p>​	解析文件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-4-开启web管理插件"><a href="#2-4-开启web管理插件" class="headerlink" title="2.4 开启web管理插件"></a>2.4 开启web管理插件</h4><p>​	进入rabbitmq&#x2F;sbin目录</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/rabbitmq/sbin</span><br></pre></td></tr></table></figure>
-
-<p>​	查看插件列表</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./rabbitmq-plugins list</span><br></pre></td></tr></table></figure>
-
-<p>​	生效管理插件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./rabbitmq-plugins enable rabbitmq_management</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-5-后台运行"><a href="#2-5-后台运行" class="headerlink" title="2.5 后台运行"></a>2.5 后台运行</h4><p>​	启动rabbitmq。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./rabbitmq-server -detached</span><br></pre></td></tr></table></figure>
-
-<p>​	停止命令，如果无法停止，使用kill -9 进程号进行关闭</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./rabbitmqctl stop_app</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-6-查看web管理界面"><a href="#2-6-查看web管理界面" class="headerlink" title="2.6 查看web管理界面"></a>2.6 查看web管理界面</h4><p>​	默认可以在安装rabbitmq的电脑上通过用户名：guest密码guest进行访问web管理界面</p>
-<p>​	端口号：15672（放行端口，或关闭防火墙）</p>
-<p>​	在虚拟机浏览器中输入：<a target="_blank" rel="noopener" href="http://localhost:15672/#/">http://localhost:15672/#/</a></p>
-<img src="/2022/06/25/software/rabbitMq/mq3.png" class="" title="mq3 image">
-
-<h3 id="3、RabbitMq账户管理"><a href="#3、RabbitMq账户管理" class="headerlink" title="3、RabbitMq账户管理"></a>3、RabbitMq账户管理</h3><h4 id="3-1-创建账户"><a href="#3-1-创建账户" class="headerlink" title="3.1 创建账户"></a>3.1 创建账户</h4><p>​	语法：.&#x2F;rabbitmqctl add_user username password</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/rabbitmq/sbin</span><br><span class="line">./rabbitmqctl add_user ly qwq</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-2-给用户授予管理员角色"><a href="#3-2-给用户授予管理员角色" class="headerlink" title="3.2 给用户授予管理员角色"></a>3.2 给用户授予管理员角色</h4><p>​	其中ly为新建用户的用户名</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./rabbitmqctl set_user_tags ly administrator</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-3-给用户授权"><a href="#3-3-给用户授权" class="headerlink" title="3.3 给用户授权"></a>3.3 给用户授权</h4><p>​	“&#x2F;” 表示虚拟机</p>
-<p>​	ly 表示用户名</p>
-<p>​	“.<em>“ “.</em>“ “.*” 表示完整权限</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./rabbitmqctl set_permissions -p &quot;/&quot; ly &quot;.*&quot; &quot;.*&quot; &quot;.*&quot;</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-4-登录"><a href="#3-4-登录" class="headerlink" title="3.4 登录"></a>3.4 登录</h4><p>​	使用新建账户和密码在windows中访问rabbitmq并登录</p>
-<p>​	在浏览器地址栏输入：<a target="_blank" rel="noopener" href="http://192.168.213.133:15672/#/">http://192.168.213.133:15672/#/</a></p>
-<p>​	用户名：ly</p>
-<p>​	密码：qwq</p>
-<img src="/2022/06/25/software/rabbitMq/mq4.png" class="" title="mq4 image">
 
         
             <div id="toc-article">
@@ -226,7 +146,7 @@
   <div class="widget-wrap" id="toc-wrap">
     <h3 class="widget-title"><i class="fa fa-toc"></i> 文章目录</h3>
     <div class="widget">
-      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%E3%80%81Erlang%E5%AE%89%E8%A3%85"><span class="toc-text">1、Erlang安装</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-1-%E4%BF%AE%E6%94%B9%E4%B8%BB%E6%9C%BA%E5%90%8D"><span class="toc-text">1.1 修改主机名</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96"><span class="toc-text">1.2 安装依赖</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-%E4%B8%8A%E4%BC%A0%E5%B9%B6%E8%A7%A3%E5%8E%8B"><span class="toc-text">1.3 上传并解压</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0"><span class="toc-text">1.4 配置参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-5-%E7%BC%96%E8%AF%91%E5%B9%B6%E5%AE%89%E8%A3%85"><span class="toc-text">1.5 编译并安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-6-%E4%BF%AE%E6%94%B9%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-text">1.6 修改环境变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-7-%E6%9F%A5%E7%9C%8B%E9%85%8D%E7%BD%AE%E6%98%AF%E5%90%A6%E6%88%90%E5%8A%9F"><span class="toc-text">1.7 查看配置是否成功</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E5%AE%89%E8%A3%85RabbitMQ"><span class="toc-text">2、安装RabbitMQ</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-%E4%B8%8A%E4%BC%A0%E5%B9%B6%E8%A7%A3%E5%8E%8B"><span class="toc-text">2.1 上传并解压</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-%E5%A4%8D%E5%88%B6%E5%88%B0local%E4%B8%8B"><span class="toc-text">2.2 复制到local下</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-text">2.3 配置环境变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-%E5%BC%80%E5%90%AFweb%E7%AE%A1%E7%90%86%E6%8F%92%E4%BB%B6"><span class="toc-text">2.4 开启web管理插件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-%E5%90%8E%E5%8F%B0%E8%BF%90%E8%A1%8C"><span class="toc-text">2.5 后台运行</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-6-%E6%9F%A5%E7%9C%8Bweb%E7%AE%A1%E7%90%86%E7%95%8C%E9%9D%A2"><span class="toc-text">2.6 查看web管理界面</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81RabbitMq%E8%B4%A6%E6%88%B7%E7%AE%A1%E7%90%86"><span class="toc-text">3、RabbitMq账户管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-%E5%88%9B%E5%BB%BA%E8%B4%A6%E6%88%B7"><span class="toc-text">3.1 创建账户</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-%E7%BB%99%E7%94%A8%E6%88%B7%E6%8E%88%E4%BA%88%E7%AE%A1%E7%90%86%E5%91%98%E8%A7%92%E8%89%B2"><span class="toc-text">3.2 给用户授予管理员角色</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-%E7%BB%99%E7%94%A8%E6%88%B7%E6%8E%88%E6%9D%83"><span class="toc-text">3.3 给用户授权</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-%E7%99%BB%E5%BD%95"><span class="toc-text">3.4 登录</span></a></li></ol>
+      
     </div>
   </div>
 
@@ -235,7 +155,7 @@
         
         
           <blockquote id="copyright">
-              <p>原文链接: <a href="https://lyblog2022.github.io/2022/06/25/software/rabbitMq/">https://lyblog2022.github.io/2022/06/25/software/rabbitMq/</a></p>
+              <p>原文链接: <a href="https://lyblog2022.github.io/2022/07/18/leetcode/easy/question14/">https://lyblog2022.github.io/2022/07/18/leetcode/easy/question14/</a></p>
               <p>版权声明: 转载请注明出处.</p>
           </blockquote>
         
@@ -247,7 +167,7 @@
           
 
           
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS-8/" rel="tag">CentOS 8</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RabbitMQ/" rel="tag">RabbitMQ</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/software/" rel="tag">software</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li></ul>
 
           
 
@@ -258,24 +178,15 @@
         
 <nav id="article-nav">
   
-    <a href="/2022/06/25/study/redis/redis4/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2022/07/16/leetcode/easy/question13/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">older</strong>
       <div class="article-nav-title">
         
-          springboot整合redis
+          13.罗马数字转整数
         
       </div>
     </a>
   
-  
-    <a href="/2022/06/26/study/rabbitMq/rabbitMQ1/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">newer</strong>
-      <div class="article-nav-title">
-        
-          RabbitMQ初步学习
-        
-      </div>
-    </a>
   
 </nav>
 
