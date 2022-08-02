@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/fastdfsproject
+    password: liuyong
+    username: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  mvc:
+    static-path-pattern: /**
+
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.fastdfs.bean
+  #驼峰格式转换
+  configuration:
+    map-underscore-to-camel-case: true

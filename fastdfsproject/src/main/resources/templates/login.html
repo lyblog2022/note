@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+        $(function(){
+            $("#btn_sub").click(function(){
+                $.ajax({
+                    type: "POST",
+                    url: "/user/logincheck",
+                    data: {
+                        "phone":$("#phone").val(),
+                        "password":$("#password").val()
+                    },
+                    dataType: 'json',
+                    error: function (request) {
+                        alert("发送请求失败！");
+                    },
+                    success: function (result) {
+                        console.log(result);
+                        if (result.code == "200") {
+                            location.href="/success";
+                        } else {
+                            alert(result.msg);
+                        }
+                    }
+                });
+            })
+        })
+    </script>
+</head>
+<body>
+    <form id="form" action="/loginCheck" method="post">
+    <table border="1" >
+        <tr>
+            <td>
+                <div>账号</div>
+            </td>
+            <td>
+                <div><input type="text" name="phone" id="phone"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div>密码</div>
+            </td>
+            <td>
+                <div>
+                    <input type="password" name="password" id="password">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="button" id="btn_sub" value="登录"><a href="/register">去注册</a>
+            </td>
+        </tr>
+    </table>
+    </form>
+</body>
+</html>

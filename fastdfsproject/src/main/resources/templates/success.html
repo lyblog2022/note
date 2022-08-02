@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("input").attr("disabled", "disabled");
+            $("#btn_sub").hide();
+            $.ajax({
+                type: "POST",
+                url: "/user/getInfo",
+                data: {
+                },
+                dataType: 'json',
+                error: function (request) {
+                    alert("发送请求失败！");
+                },
+                success: function (result) {
+                    console.log(result);
+                    if (result.code == "200") {
+                        $("#nickname").val(result.nickName);
+                        $("#trueName").val(result.trueName);
+                        $("input[name='sex']").val(result.sex);
+                        $("#birthday").val(result.birthday);
+                        $("#phone").val(result.phone);
+                        $("#photo").attr("src", result.photo);
+                    } else {
+                        alert(result.msg);
+                    }
+                }
+            });
+        })
+    </script>
+
+</head>
+<body>
+<form id="form" method="post" enctype="multipart/form-data">
+    <table border="1">
+        <tr>
+            <td>昵称</td>
+            <td><input type="text" name="nickName" id="nickname"></td>
+        </tr>
+        <tr>
+            <td>姓名</td>
+            <td><input type="text" name="trueName" id="trueName"></td>
+        </tr>
+        <tr>
+            <td>性别</td>
+            <td>
+                <input type="radio" name="sex" value="0"> 男
+                <input type="radio" name="sex" value="1"> 女
+            </td>
+        </tr>
+        <tr>
+            <td>生日</td>
+            <td><input type="text" name="birthday" id="birthday"></td>
+        </tr>
+        <tr>
+            <td>头像</td>
+            <td><img src="img/tree8.png" id="photo"></td>
+        </tr>
+        <tr>
+            <td>电话</td>
+            <td><input type="text" name="phone" id="phone"></td>
+        </tr>
+        <tr>
+            <td>密码</td>
+            <td><input type="password" name="password" id="password"></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="button" value="提交" id="btn_sub"></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

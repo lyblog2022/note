@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fastdfs.mapper.UserMapper">
+
+    <insert id="insert" parameterType="com.fastdfs.bean.User">
+        insert into user (id, nickname, truename, sex, birthday, phone, password, photo)
+        values (default, #{nickName}, #{trueName}, #{sex}, #{birthday}, #{phone}, #{password}, #{photo})
+    </insert>
+
+    <update id="update" parameterType="com.fastdfs.bean.User">
+        update user
+        set nickname=#{nickName},
+            phone=#{phone},
+            password=#{password},
+            photo=#{photo}
+        where id = #{id}
+    </update>
+
+    <select id="getInfoById" resultType="com.fastdfs.bean.User">
+        select *
+        from user
+        where id = #{id}
+    </select>
+
+    <select id="getInfoByPhone" resultType="com.fastdfs.bean.User">
+        select *
+        from user
+        where phone = #{phone}
+    </select>
+
+</mapper>
