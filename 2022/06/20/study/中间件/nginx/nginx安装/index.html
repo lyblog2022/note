@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>nginx安装 | My Note</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+    <meta name="description" content="654645564">
+  
+  
+  
+    <link rel="alternate" href="/atom.xml" title="My Note" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">My Note</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Welcome To My World</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/."><i class="fa fa-home"></i> 首页</a>
+        
+          <a class="main-nav-link" href="/archives/"><i class="fa fa-archive"></i> 归档</a>
+        
+      </nav>
+    </div>
+    <div id="search-form">
+      <div id="result-mask" class="hide"></div>
+      <label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label>
+      <div id="result-wrap" class="hide">
+        <div id="search-result"></div>
+      </div>
+      <div class="hide">
+        <template id="search-tpl">
+          <div class="item">
+            <a href="/{path}" title="{title}">
+              <div class="title">{title}</div>
+              <div class="time">{date}</div>
+              <div class="tags">{tags}</div>
+            </a>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-study/中间件/nginx/nginx安装" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      nginx安装
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+      <span class="article-date">
+  <i class="fa fa-date"></i>
+  <time class="dt-published" datetime="2022-06-20T08:31:29.000Z" itemprop="datePublished">2022-06-20</time>
+</span>
+      
+  <div class="article-category">
+    <i class="fa fa-classify"></i>
+    <a class="article-category-link" href="/categories/CentOs-8/">CentOs 8</a> > <a class="article-category-link" href="/categories/CentOs-8/nginx/">nginx</a>
+  </div>
+
+      
+        <span class="article-views">
+  <i class="fa fa-views"></i>
+  <i id="busuanzi_container_page_pv">
+      <i id="busuanzi_value_page_pv"></i>
+  </i>
+</span>
+
+      
+      
+
+    </div>
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>centos8安装nginx</p>
+<span id="more"></span>
+
+<h4 id="1、上传并安装fastdfs-nginx-module"><a href="#1、上传并安装fastdfs-nginx-module" class="headerlink" title="1、上传并安装fastdfs-nginx-module"></a>1、上传并安装fastdfs-nginx-module</h4><p>​	上传  &#x2F;fastdfs-nginx-model_v1.16.tar.gz  到 &#x2F;usr&#x2F;local&#x2F;tmp 中</p>
+<p>​	进入 tmp 目录</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/tmp</span><br></pre></td></tr></table></figure>
+
+<p>​	解压</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar zxf fastdfs-nginx-module_v1.16.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h4 id="2、修改配置文件"><a href="#2、修改配置文件" class="headerlink" title="2、修改配置文件"></a>2、修改配置文件</h4><p>​	进入解压目录中src目录</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd fastdfs-nginx-module/src</span><br></pre></td></tr></table></figure>
+
+<p>​	编辑config文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim config</span><br></pre></td></tr></table></figure>
+
+<p>​	修改配置文件中第四行，把路径中local去掉。参数是用于配置安装nginx中的FastDFS组件的时候，在什么位置查找FastDFS核心代码。</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">CORE_INCS</span>=<span class="string">&quot;$CORE_INCS /usr/include/fastdfs /usr/include/fastcommon/&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3、安装nginx的依赖"><a href="#3、安装nginx的依赖" class="headerlink" title="3、安装nginx的依赖"></a>3、安装nginx的依赖</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y gcc gcc-c++ make automake autoconf libtool pcre pcre-devel zlib zlib-devel openssl openssl-devel</span><br></pre></td></tr></table></figure>
+
+<h4 id="4、上传Nginx-并解压"><a href="#4、上传Nginx-并解压" class="headerlink" title="4、上传Nginx 并解压"></a>4、上传Nginx 并解压</h4><p>​	上传nginx-1.16.1.tar.gz 到&#x2F;usr&#x2F;local&#x2F;tmp中</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/tmp</span><br><span class="line">tar zxf nginx-1.16.1.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h4 id="5、修改Nginx配置"><a href="#5、修改Nginx配置" class="headerlink" title="5、修改Nginx配置"></a>5、修改Nginx配置</h4><h5 id="5-1-进入到Nginx文件夹"><a href="#5-1-进入到Nginx文件夹" class="headerlink" title="5.1 进入到Nginx文件夹"></a>5.1 进入到Nginx文件夹</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd nginx-1.16.1</span><br></pre></td></tr></table></figure>
+
+<h5 id="5-2-创建临时目录"><a href="#5-2-创建临时目录" class="headerlink" title="5.2 创建临时目录"></a>5.2 创建临时目录</h5><p>​	修改配置文件中好多位置都使用了&#x2F;var&#x2F;temp&#x2F;nginx目录，但是默认不会自动创建这个目录，需要手动创建。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /var/temp/nginx</span><br></pre></td></tr></table></figure>
+
+<h5 id="5-3-修改配置文件参数"><a href="#5-3-修改配置文件参数" class="headerlink" title="5.3 修改配置文件参数"></a>5.3 修改配置文件参数</h5><p>内容为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">./configure \</span><br><span class="line">--prefix=/usr/local/nginx \</span><br><span class="line">--pid-path=/var/run/nginx/nginx.pid \</span><br><span class="line">--lock-path=/var/lock/nginx.lock \</span><br><span class="line">--error-log-path=/var/log/nginx/error.log \</span><br><span class="line">--http-log-path=/var/log/nginx/access.log \</span><br><span class="line">--with-http_gzip_static_module \</span><br><span class="line">--http-client-body-temp-path=/var/temp/nginx/client \</span><br><span class="line">--http-proxy-temp-path=/var/temp/nginx/proxy \</span><br><span class="line">--http-fastcgi-temp-path=/var/temp/nginx/fastcgi \</span><br><span class="line">--http-uwsgi-temp-path=/var/temp/nginx/uwsgi \</span><br><span class="line">--http-scgi-temp-path=/var/temp/nginx/scgi \</span><br><span class="line">--add-module=/usr/local/tmp/fastdfs-nginx-module/src</span><br></pre></td></tr></table></figure>
+
+<p>​	–add-module 必须定义，此配置信息是用于指定安装Nginx时需要加载的模块，如果未指定，Nginx安装过程不会加载fastdfs-nginx-module模块，后续功能无法实现。</p>
+<p>【报错：执行文件无权限】</p>
+<p>先执行以下命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod +x configure</span><br></pre></td></tr></table></figure>
+
+<p>​	再继续执行后续代码</p>
+<h4 id="6、编译并安装"><a href="#6、编译并安装" class="headerlink" title="6、编译并安装"></a>6、编译并安装</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<h4 id="7、配置fastdfs-nginx-module模块配置文件"><a href="#7、配置fastdfs-nginx-module模块配置文件" class="headerlink" title="7、配置fastdfs-nginx-module模块配置文件"></a>7、配置fastdfs-nginx-module模块配置文件</h4><p>​	复制配置文件fastdfs-nginx-module&#x2F;src&#x2F;mod_fastdfs.conf 到 &#x2F;etc&#x2F;fdfs目录中</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /usr/local/tmp/fastdfs-nginx-module/src/mod_fastdfs.conf /etc/fdfs/</span><br></pre></td></tr></table></figure>
+
+<h4 id="8、修改-mod-fastdfs-conf"><a href="#8、修改-mod-fastdfs-conf" class="headerlink" title="8、修改 mod_fastdfs.conf"></a>8、修改 mod_fastdfs.conf</h4><h5 id="8-1-进入到-x2F-etc-x2F-fdfs"><a href="#8-1-进入到-x2F-etc-x2F-fdfs" class="headerlink" title="8.1 进入到 &#x2F;etc&#x2F;fdfs"></a>8.1 进入到 &#x2F;etc&#x2F;fdfs</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /etc/fdfs</span><br></pre></td></tr></table></figure>
+
+<h5 id="8-2-编辑配置文件"><a href="#8-2-编辑配置文件" class="headerlink" title="8.2 编辑配置文件"></a>8.2 编辑配置文件</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim mod_fastdfs.conf</span><br></pre></td></tr></table></figure>
+
+<h5 id="8-3-文件内容修改"><a href="#8-3-文件内容修改" class="headerlink" title="8.3 文件内容修改"></a>8.3 文件内容修改</h5><p>​	需要修改文件中四处内容， 这四处内容的含义：</p>
+<p>​	connect_timeout&#x3D;2 #连接超时时间，单位秒</p>
+<p>​	tracker_server&#x3D;tracker:22122 #tracker 服务结点</p>
+<p>​	url_have_group_name&#x3D;false #URL是否包含group名称</p>
+<p>​	store_path0&#x3D;&#x2F;home&#x2F;yuqing&#x2F;fastdfs #storage服务结点的存储位置，与配置storage结点一致</p>
+<p>​	修改为以下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">connect_timeout=10</span><br><span class="line">tracker_server=192.168.93.10:22122</span><br><span class="line">url_have_group_name=true</span><br><span class="line">store_path0=/usr/local/fastdfs/storage/store</span><br></pre></td></tr></table></figure>
+
+<h4 id="9、提供FastDFS需要的HTTP配置文件"><a href="#9、提供FastDFS需要的HTTP配置文件" class="headerlink" title="9、提供FastDFS需要的HTTP配置文件"></a>9、提供FastDFS需要的HTTP配置文件</h4><p>​	复制FastDFS安装包中的两个配置文件(http.conf 和 mine.types) 到 &#x2F;etc&#x2F;fdfs目录中</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp /usr/local/tmp/FastDFS/conf/http.conf /etc/fdfs/</span><br><span class="line">cp /usr/local/tmp/FastDFS/conf/mime.types /etc/fdfs/</span><br></pre></td></tr></table></figure>
+
+<h4 id="10、创建网络访问存储服务的软连接"><a href="#10、创建网络访问存储服务的软连接" class="headerlink" title="10、创建网络访问存储服务的软连接"></a>10、创建网络访问存储服务的软连接</h4><p>​	在上传文件到FastDFS后，FastDFS会返回group1&#x2F;M00&#x2F;00&#x2F;00&#x2F;xxxxxxxxx.xxx其中group1是卷名，在mod_fastdfs.conf配置文件中已配置了url_have_group_name， 以保证URL解析正确。其中的M00是FastDFS保存数据时使用的虚拟目录， 需要将这个虚拟目录定位到真实数据目录上。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s /usr/local/fastdfs/storage/store/data/ /usr/local/fastdfs/storage/store/data/M00</span><br></pre></td></tr></table></figure>
+
+<h4 id="11、修改nginx配置文件"><a href="#11、修改nginx配置文件" class="headerlink" title="11、修改nginx配置文件"></a>11、修改nginx配置文件</h4><h5 id="11-1-进入到安装后-nginx目录"><a href="#11-1-进入到安装后-nginx目录" class="headerlink" title="11.1 进入到安装后 nginx目录"></a>11.1 进入到安装后 nginx目录</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/nginx/conf</span><br></pre></td></tr></table></figure>
+
+<h5 id="11-2-编辑配置文件"><a href="#11-2-编辑配置文件" class="headerlink" title="11.2 编辑配置文件"></a>11.2 编辑配置文件</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim nginx.conf</span><br></pre></td></tr></table></figure>
+
+<h6 id="11-2-1-修改1"><a href="#11-2-1-修改1" class="headerlink" title="11.2.1 修改1"></a>11.2.1 修改1</h6><p>​	user root； #Nginx需要访问linux文件系统，必须有文件系统的权限。User root代表nginx文件系统的权限是root用户权限。如果不开启权限，可能有404反问错误。</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">user</span>  <span class="string">root;</span></span><br><span class="line"><span class="attr">worker_processes</span>  <span class="string">1;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="11-2-2-修改2"><a href="#11-2-2-修改2" class="headerlink" title="11.2.2 修改2"></a>11.2.2 修改2</h5><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server&#123;</span></span><br><span class="line">  <span class="attr">listen</span> <span class="string">8888; #storage 配置中， 有http.server_port=8888的配置信息，必须一致。配置文件是 /etc/fdfs/storaged.conf</span></span><br><span class="line">  	<span class="attr">server_name</span> <span class="string">localhost;</span></span><br><span class="line">  	<span class="attr">location</span> <span class="string">~/group([0-9])/M00&#123;</span></span><br><span class="line">      <span class="attr">ngx_fastdfs_module;</span></span><br><span class="line">  	<span class="attr">&#125;</span></span><br><span class="line"><span class="attr">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="12、启动nginx"><a href="#12、启动nginx" class="headerlink" title="12、启动nginx"></a>12、启动nginx</h4><p>进入到nginx安装目录的sbin文件夹</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/nginx/sbin/ </span><br></pre></td></tr></table></figure>
+
+<p>启动nginx</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./nginx</span><br></pre></td></tr></table></figure>
+
+<p>关闭nginx</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./nginx -s quit</span><br></pre></td></tr></table></figure>
+
+
+        
+            <div id="toc-article">
+                
+  <div class="widget-wrap" id="toc-wrap">
+    <h3 class="widget-title"><i class="fa fa-toc"></i> 文章目录</h3>
+    <div class="widget">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%E3%80%81%E4%B8%8A%E4%BC%A0%E5%B9%B6%E5%AE%89%E8%A3%85fastdfs-nginx-module"><span class="toc-text">1、上传并安装fastdfs-nginx-module</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%E3%80%81%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-text">2、修改配置文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3%E3%80%81%E5%AE%89%E8%A3%85nginx%E7%9A%84%E4%BE%9D%E8%B5%96"><span class="toc-text">3、安装nginx的依赖</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4%E3%80%81%E4%B8%8A%E4%BC%A0Nginx-%E5%B9%B6%E8%A7%A3%E5%8E%8B"><span class="toc-text">4、上传Nginx 并解压</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5%E3%80%81%E4%BF%AE%E6%94%B9Nginx%E9%85%8D%E7%BD%AE"><span class="toc-text">5、修改Nginx配置</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#5-1-%E8%BF%9B%E5%85%A5%E5%88%B0Nginx%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="toc-text">5.1 进入到Nginx文件夹</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5-2-%E5%88%9B%E5%BB%BA%E4%B8%B4%E6%97%B6%E7%9B%AE%E5%BD%95"><span class="toc-text">5.2 创建临时目录</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5-3-%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%8F%82%E6%95%B0"><span class="toc-text">5.3 修改配置文件参数</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6%E3%80%81%E7%BC%96%E8%AF%91%E5%B9%B6%E5%AE%89%E8%A3%85"><span class="toc-text">6、编译并安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7%E3%80%81%E9%85%8D%E7%BD%AEfastdfs-nginx-module%E6%A8%A1%E5%9D%97%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-text">7、配置fastdfs-nginx-module模块配置文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8%E3%80%81%E4%BF%AE%E6%94%B9-mod-fastdfs-conf"><span class="toc-text">8、修改 mod_fastdfs.conf</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#8-1-%E8%BF%9B%E5%85%A5%E5%88%B0-x2F-etc-x2F-fdfs"><span class="toc-text">8.1 进入到 &#x2F;etc&#x2F;fdfs</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#8-2-%E7%BC%96%E8%BE%91%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-text">8.2 编辑配置文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#8-3-%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E4%BF%AE%E6%94%B9"><span class="toc-text">8.3 文件内容修改</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9%E3%80%81%E6%8F%90%E4%BE%9BFastDFS%E9%9C%80%E8%A6%81%E7%9A%84HTTP%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-text">9、提供FastDFS需要的HTTP配置文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10%E3%80%81%E5%88%9B%E5%BB%BA%E7%BD%91%E7%BB%9C%E8%AE%BF%E9%97%AE%E5%AD%98%E5%82%A8%E6%9C%8D%E5%8A%A1%E7%9A%84%E8%BD%AF%E8%BF%9E%E6%8E%A5"><span class="toc-text">10、创建网络访问存储服务的软连接</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#11%E3%80%81%E4%BF%AE%E6%94%B9nginx%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-text">11、修改nginx配置文件</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#11-1-%E8%BF%9B%E5%85%A5%E5%88%B0%E5%AE%89%E8%A3%85%E5%90%8E-nginx%E7%9B%AE%E5%BD%95"><span class="toc-text">11.1 进入到安装后 nginx目录</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#11-2-%E7%BC%96%E8%BE%91%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-text">11.2 编辑配置文件</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#11-2-1-%E4%BF%AE%E6%94%B91"><span class="toc-text">11.2.1 修改1</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#11-2-2-%E4%BF%AE%E6%94%B92"><span class="toc-text">11.2.2 修改2</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#12%E3%80%81%E5%90%AF%E5%8A%A8nginx"><span class="toc-text">12、启动nginx</span></a></li></ol>
+    </div>
+  </div>
+
+
+            </div>
+        
+        
+          <blockquote id="copyright">
+              <p>原文链接: <a href="https://lyblog2022.github.io/2022/06/20/study/中间件/nginx/nginx安装/">https://lyblog2022.github.io/2022/06/20/study/中间件/nginx/nginx安装/</a></p>
+              <p>版权声明: 转载请注明出处.</p>
+          </blockquote>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div class="article-tag-wrap">
+          
+
+          
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS-8/" rel="tag">CentOS 8</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/" rel="tag">nginx</a></li></ul>
+
+          
+
+
+        </div>
+      
+      
+        
+<nav id="article-nav">
+  
+    <a href="/2022/06/20/study/%E4%B8%AD%E9%97%B4%E4%BB%B6/FastDFS/FastDFS%E6%A6%82%E8%BF%B0%E5%8F%8A%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E4%B8%8A%E4%BC%A0%E5%8F%8A%E4%B8%8B%E8%BD%BD/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">older</strong>
+      <div class="article-nav-title">
+        
+          FastDFS实现图片上传及下载
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/06/21/summary/High-concurrency/%E9%AB%98%E5%B9%B6%E5%8F%91%E5%9C%BA%E6%99%AF%E4%B8%8B%E7%9A%84httpClient%E4%BC%98%E5%8C%96%E4%BD%BF%E7%94%A8/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">newer</strong>
+      <div class="article-nav-title">
+        
+          高并发场景下的 httpClient 优化使用
+        
+      </div>
+    </a>
+  
+</nav>
+
+      
+      
+    </footer>
+  </div>
+</article>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-posts"></i> 最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/09/30/study/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL%E8%B0%83%E4%BC%98/">MySQL调优</a>
+          </li>
+        
+          <li>
+            <a href="/2022/09/20/study/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL%E4%B8%AD%E7%9A%84%E7%B4%A2%E5%BC%95/">MySQL中的索引</a>
+          </li>
+        
+          <li>
+            <a href="/2022/09/19/study/%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80/">数据库基础</a>
+          </li>
+        
+          <li>
+            <a href="/2022/08/23/leetcode/difficult/question4/">4. 寻找两个正序数组的中位数</a>
+          </li>
+        
+          <li>
+            <a href="/2022/08/15/study/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E7%A1%80/">线程的基础</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-tag"></i> 标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CentOS-8/" style="font-size: 18.33px;">CentOS 8</a> <a href="/tags/FastDFS/" style="font-size: 11.67px;">FastDFS</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/RPC/" style="font-size: 11.67px;">RPC</a> <a href="/tags/RabbitMQ/" style="font-size: 11.67px;">RabbitMQ</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringMVC/" style="font-size: 10px;">SpringMVC</a> <a href="/tags/centos8/" style="font-size: 11.67px;">centos8</a> <a href="/tags/dubbo/" style="font-size: 10px;">dubbo</a> <a href="/tags/httpClient/" style="font-size: 11.67px;">httpClient</a> <a href="/tags/jdk/" style="font-size: 10px;">jdk</a> <a href="/tags/leetcode/" style="font-size: 18.33px;">leetcode</a> <a href="/tags/nginx/" style="font-size: 18.33px;">nginx</a> <a href="/tags/redis/" style="font-size: 16.67px;">redis</a> <a href="/tags/software/" style="font-size: 15px;">software</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/tags/zookeeper/" style="font-size: 15px;">zookeeper</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 20px;">中间件</a> <a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 10px;">学习</a> <a href="/tags/%E5%B9%B3%E8%A1%A1%E6%A0%91/" style="font-size: 10px;">平衡树</a> <a href="/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" style="font-size: 10px;">并发编程</a> <a href="/tags/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/" style="font-size: 11.67px;">接口调用</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 13.33px;">数据库</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 11.67px;">数据结构</a> <a href="/tags/%E6%A0%91/" style="font-size: 10px;">树</a> <a href="/tags/%E6%A1%86%E6%9E%B6/" style="font-size: 13.33px;">框架</a> <a href="/tags/%E7%BA%A2%E9%BB%91%E6%A0%91/" style="font-size: 10px;">红黑树</a> <a href="/tags/%E9%82%A3%E4%BA%9B%E4%BB%A3%E7%A0%81%E9%82%A3%E4%BA%9B%E6%80%BB%E7%BB%93/" style="font-size: 11.67px;">那些代码那些总结</a> <a href="/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/" style="font-size: 10px;">高并发</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-classify"></i> 分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/">CentOs 8</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/FastDFS/">FastDFS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/RabbitMQ/">RabbitMQ</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/jdk/">jdk</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/nginx/">nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/redis/">redis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/zookeeper/">zookeeper</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/leetcode/">leetcode</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/leetcode/difficult/">difficult</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/leetcode/easy/">easy</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/leetcode/middle/">middle</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a><span class="category-list-count">16</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/FastDFS/">FastDFS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/RPC/">RPC</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/RabbitMQ/">RabbitMQ</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/dubbo/">dubbo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/nginx/">nginx</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/redis/">redis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/zookeeper/">zookeeper</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/">并发编程</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%A0%91/">树</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%86%E6%9E%B6/">框架</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%86%E6%9E%B6/MyBatis/">MyBatis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%86%E6%9E%B6/Spring/">Spring</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%86%E6%9E%B6/SpringMVC/">SpringMVC</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%82%A3%E4%BA%9B%E4%BB%A3%E7%A0%81%E9%82%A3%E4%BA%9B%E6%80%BB%E7%BB%93/">那些代码那些总结</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%82%A3%E4%BA%9B%E4%BB%A3%E7%A0%81%E9%82%A3%E4%BA%9B%E6%80%BB%E7%BB%93/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/">接口调用</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%82%A3%E4%BA%9B%E4%BB%A3%E7%A0%81%E9%82%A3%E4%BA%9B%E6%80%BB%E7%BB%93/%E9%AB%98%E5%B9%B6%E5%8F%91/">高并发</a><span class="category-list-count">1</span></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-archive"></i> 归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022年</a><span class="archive-list-count">39</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-tag"></i> 标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS-8/" rel="tag">CentOS 8</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FastDFS/" rel="tag">FastDFS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MyBatis/" rel="tag">MyBatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RPC/" rel="tag">RPC</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RabbitMQ/" rel="tag">RabbitMQ</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/" rel="tag">Spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringMVC/" rel="tag">SpringMVC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos8/" rel="tag">centos8</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/" rel="tag">dubbo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/httpClient/" rel="tag">httpClient</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jdk/" rel="tag">jdk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/" rel="tag">nginx</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/" rel="tag">redis</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/software/" rel="tag">software</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/" rel="tag">springboot</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zookeeper/" rel="tag">zookeeper</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B9%B3%E8%A1%A1%E6%A0%91/" rel="tag">平衡树</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" rel="tag">并发编程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/" rel="tag">接口调用</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%91/" rel="tag">树</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A1%86%E6%9E%B6/" rel="tag">框架</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%A2%E9%BB%91%E6%A0%91/" rel="tag">红黑树</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%82%A3%E4%BA%9B%E4%BB%A3%E7%A0%81%E9%82%A3%E4%BA%9B%E6%80%BB%E7%BB%93/" rel="tag">那些代码那些总结</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/" rel="tag">高并发</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <a id="totop" href="#top"></a>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <p>
+        <a href="/sitemap.xml">网站地图</a>
+        <span> | </span><a href="/atom.xml">订阅本站</a>
+        <span> | </span><a href="/about/">联系博主</a>
+      </p>
+      
+        <p>
+          <i class="fa fa-visitors"></i>
+          <i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>
+          ，
+          <i class="fa fa-views"></i>
+          <i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>
+        </p>
+      
+      <p>
+        <span>Copyright &copy; 2022 ly.</span>
+        <span>Theme by <a href="https://github.com/chaooo/hexo-theme-BlueLake/" target="_blank">BlueLake.</a></span>
+        <span>Powered by <a href="https://hexo.io/" target="_blank">Hexo.</a></span>
+      </p>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </div>
+  
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+<script src="/js/search.json.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+
+  
+<script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+  
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+
+
+
+
+</body>
+</html>

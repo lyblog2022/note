@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>数据库基础 | My Note</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+    <meta name="description" content="654645564">
+  
+  
+  
+    <link rel="alternate" href="/atom.xml" title="My Note" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">My Note</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Welcome To My World</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/."><i class="fa fa-home"></i> 首页</a>
+        
+          <a class="main-nav-link" href="/archives/"><i class="fa fa-archive"></i> 归档</a>
+        
+      </nav>
+    </div>
+    <div id="search-form">
+      <div id="result-mask" class="hide"></div>
+      <label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label>
+      <div id="result-wrap" class="hide">
+        <div id="search-result"></div>
+      </div>
+      <div class="hide">
+        <template id="search-tpl">
+          <div class="item">
+            <a href="/{path}" title="{title}">
+              <div class="title">{title}</div>
+              <div class="time">{date}</div>
+              <div class="tags">{tags}</div>
+            </a>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-study/数据库/数据库基础" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      数据库基础
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+      <span class="article-date">
+  <i class="fa fa-date"></i>
+  <time class="dt-published" datetime="2022-09-19T06:17:26.000Z" itemprop="datePublished">2022-09-19</time>
+</span>
+      
+  <div class="article-category">
+    <i class="fa fa-classify"></i>
+    <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+  </div>
+
+      
+        <span class="article-views">
+  <i class="fa fa-views"></i>
+  <i id="busuanzi_container_page_pv">
+      <i id="busuanzi_value_page_pv"></i>
+  </i>
+</span>
+
+      
+      
+
+    </div>
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>数据库的范式化、反范式化设计，字段数据类型优化，及B+树的简述</p>
+<span id="more"></span>
+
+<h3 id="1、范式化设计"><a href="#1、范式化设计" class="headerlink" title="1、范式化设计"></a>1、范式化设计</h3><h4 id="1-1-什么是范式"><a href="#1-1-什么是范式" class="headerlink" title="1.1 什么是范式"></a>1.1 什么是范式</h4><ul>
+<li>范式：来自英文Normal Form 简称NF</li>
+<li>可以理解为一张数据表的表结构所符合的某种设计标准的级别</li>
+<li>目前关系数据库有六种范式：第一范式（1NF）、第二范式（2NF）、第三范式（3NF）、巴斯-科德范式（BCNF）、第四范式（4NF）和第五范式（完美范式）</li>
+<li>满足最低要求的范式是第一范式（1NF），在第一范式的基础上进一步满足更多规范的要求为第二范式（2NF），其余范式以此类推，数据库一般只需要满足第三范式（3NF）就可以了</li>
+</ul>
+<h4 id="1-2-第一范式（1NF）"><a href="#1-2-第一范式（1NF）" class="headerlink" title="1.2 第一范式（1NF）"></a>1.2 第一范式（1NF）</h4><ul>
+<li>定义：属于第一范式关系的所有属性不可再分，即数据项不可分</li>
+<li>理解：第一范式属于强调表的原子性，是其他范式的基础</li>
+<li>示例：一张表有一个name-age列，这个列具有两个属性，一个name，一个age，所以不符合第一范式，当把name和age拆分，这张表就符合第一范式了</li>
+</ul>
+<p>​	<img src="/2022/09/19/study/%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80/ds1.png" class="" title="ds1 image"></p>
+<ul>
+<li>要求<ul>
+<li>每一列属性都是不可再分的属性值，确保每一列的原子性</li>
+<li>两列的属性相近或相似或一样，尽量合并属性一样的列，确保不产生冗余数据</li>
+<li>单一属性的列为基本数据类型构成</li>
+<li>设计出来的表都是简单的二维表</li>
+</ul>
+</li>
+</ul>
+<h4 id="1-3-第二范式（2NF）"><a href="#1-3-第二范式（2NF）" class="headerlink" title="1.3 第二范式（2NF）"></a>1.3 第二范式（2NF）</h4><p>第二范式（2NF）是在第一范式（1NF）的基础上建立起来的，即满足第二范式必须先满足第二范式</p>
+<p>第二范式要求实体的属性完全依赖于主关键字</p>
+<img src="/2022/09/19/study/%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80/ds2.png" class="" title="ds2 image">
+
+<h4 id="1-4-第三范式（3NF）"><a href="#1-4-第三范式（3NF）" class="headerlink" title="1.4 第三范式（3NF）"></a>1.4 第三范式（3NF）</h4><p>满足第三范式（3NF）必须先满足第二范式（2NF）</p>
+<p>第三范式（3NF）要求一个数据库表中不包含已在其他表中包含的非主关键字信息，即数据不能存在传递关系，每个属性都跟随主键有直接关系而不是间接关系</p>
+<img src="/2022/09/19/study/%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80/ds3.png" class="" title="ds3 image">
+
+<p>产品表：</p>
+<img src="/2022/09/19/study/%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80/ds4.png" class="" title="ds4 image">
+
+<p>这里当产品表内的产品名称发送变化时，订单表内的产品名称并不会发生变化，所以不符合第三范式，只有删除订单表的产品名称字段，才符合第三范式</p>
+<h3 id="2、反范式化设计"><a href="#2、反范式化设计" class="headerlink" title="2、反范式化设计"></a>2、反范式化设计</h3><p>完全符合范式化的设计并不是完美无瑕，在实际业务查询中会有大量存在着表的关联查询，而表设计都做成了范式化设计，大量的表关联很多时候非常影响查询的性能</p>
+<p><strong>反范式化就是违反范式化设计：</strong></p>
+<ol>
+<li>为了性能和读取效率而适当的违反对数据库设计范式的要求</li>
+<li>为了查询的性能，允许存在部分冗余数据</li>
+</ol>
+<p><strong>反范式化就是使用空间来换取时间</strong></p>
+<h3 id="3、范式化和范式化对比"><a href="#3、范式化和范式化对比" class="headerlink" title="3、范式化和范式化对比"></a>3、范式化和范式化对比</h3><table>
+<thead>
+<tr>
+<th></th>
+<th>范式设计</th>
+<th>反范式设计</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>更新操作</td>
+<td>快</td>
+<td>慢</td>
+</tr>
+<tr>
+<td>数据重复度</td>
+<td>低</td>
+<td>高</td>
+</tr>
+<tr>
+<td>内存占用</td>
+<td>小</td>
+<td>大</td>
+</tr>
+<tr>
+<td>查询表关联</td>
+<td>多</td>
+<td>少</td>
+</tr>
+<tr>
+<td>查询索引命中</td>
+<td>较少命中</td>
+<td>更多命中</td>
+</tr>
+</tbody></table>
+<ol>
+<li>范式化的更新操作通常比反范式化要快（字段少）</li>
+<li>当数据较好的范式化时，就只有很少或者没有重复数据，所以只需要修改更少的数据</li>
+<li>范式化的表通常更小，所以占据内存更少</li>
+<li>范式化设计的缺点是通常需要关联，稍微复杂一些的查询语句再符合范式的表上都可能需要至少一次关联</li>
+<li>复杂的查询语句也可能使一些索引策略无效，例如，范式化可能将列存放在不同的表中，而这些列如果再一个表中本可以属于同一个索引</li>
+</ol>
+<h3 id="4、常见的反范式实现"><a href="#4、常见的反范式实现" class="headerlink" title="4、常见的反范式实现"></a>4、常见的反范式实现</h3><h4 id="4-1-缓存与汇总数据"><a href="#4-1-缓存与汇总数据" class="headerlink" title="4.1 缓存与汇总数据"></a>4.1 缓存与汇总数据</h4><p><strong>“缓存”来表示存储那些可以比较简单的从其他表获取数据的表</strong></p>
+<p>比如：从父表冗余一些数据到字表的</p>
+<p><strong>“汇总”则保存的是使用 group by 语句聚合数据的表</strong></p>
+<p>如果需要显示每个用户发了多少消息，可以每次执行一个对用户发送消息进行 count 的子查询来计算并显示，也可以在 user 表中建一个消息发送数目的专门列，每当用户发新消息时更新这个值</p>
+<p>在使用缓存表和汇总表时，有个关键点是如何维护缓存表和汇总表中的数据，常用的有两种方式，实时维护数据和定期重建，这个取决于应用程序，不过一般来说，缓存表用实时维护数据更多点，往往一个事务中同时更新数据本表和缓存表，汇总表则用定期重建更多，使用定时任务对汇总表进行更新</p>
+<h4 id="4-2-计数器表设计"><a href="#4-2-计数器表设计" class="headerlink" title="4.2 计数器表设计"></a>4.2 计数器表设计</h4><p>计数器表在 web 应用中很常见，如网站点击数，用户的朋友数、文件下载次数等，对于高并发下的处理，首先可以创建一张独立的表存储计数器，这样可使计数器表小且快，并且可以使用一些更高级的技巧</p>
+<img src="/2022/09/19/study/%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80/ds5.png" class="" title="ds5 image">
+
+<p>如：有一个计数器表，只有一行数据，记录网站的点击次数，网站的每次点击都会导致对计数器进行更新，问题在于，对于任何想要更新这一行的事务来说，这条记录上都有一个全局的互斥锁（mutex），这会使得这些事务只能串行执行，会严重显示系统的并发能力</p>
+<p>改进：可以将计数器保存再多行中，每次随机选择一行进行更新。具体实现上，一个增加一个槽（slot）字段，然后预先在这张表增加100行或者更多数据，当对计数器更新时，选择一个随机的槽（slot）进行更新即可</p>
+<img src="/2022/09/19/study/%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80/ds6.png" class="" title="ds6 image">
+
+<h3 id="5、字段数据类型优化"><a href="#5、字段数据类型优化" class="headerlink" title="5、字段数据类型优化"></a>5、字段数据类型优化</h3><h4 id="5-1-字段优化基本原则"><a href="#5-1-字段优化基本原则" class="headerlink" title="5.1 字段优化基本原则"></a>5.1 字段优化基本原则</h4><ul>
+<li><strong>更小的通常更好</strong></li>
+</ul>
+<p>一般情况下，尽量使用可以正确存储数据的最小数据类型。更小的数据类型通常更快，因为它们占用更少的磁盘、内存和CPU缓存，并且处理时需要的CPU周期也更少</p>
+<p>如：一个类型既可以用字符串也可以使用整形，<strong>优先选择整型</strong>。因为字符串牵涉到了字符集及校对规则等</p>
+<ul>
+<li><strong>简单</strong></li>
+</ul>
+<p>简单数据类型的操作通常需要更少的CPU周期。如，整型比字符操作代价更低，因为字符集和校对规则使字符比较比整型比较更复杂。如应该使用MySQL内建的类型而不是字符串来存储日期和时间</p>
+<ul>
+<li><strong>尽量避免NULL</strong></li>
+</ul>
+<p>通常情况下最好指定列为NOT NULL，除非真的需要存储NULL值</p>
+<p>如果查询中包含可为NULL的列，对MySQL来说更难优化，因为可为NULL的列使得索引、索引统计和值比较都更复杂。可为NULL的列会使用更多的存储空间，在MySQL里也需要特殊处理。当可为NULL的列被索引时，每个索引记录都需要一个额外的字节</p>
+<p>通常把可为NULL的列改为NOT NULL带来的性能提升比较小，所以调优时没必要首先再现有的schema中查找并修改掉这种情况，除非确定这会导致问题。但是，如果计划在列上建索引，就应该尽量避免设计成可为NULL的列</p>
+<h4 id="5-2-Int-x2F-整数类型"><a href="#5-2-Int-x2F-整数类型" class="headerlink" title="5.2 Int&#x2F;整数类型"></a>5.2 Int&#x2F;整数类型</h4><p>存储整数，可以使用这几种整数类型：tinyint、smallint、mediumint、int、bigint。分别使用8、16、24、32、64位存储空间，即1、2、3、4、8个字节</p>
+<p>同时整数类型有可选的unsigned属性，表示不允许负值，这大致可以使正数的上限提高一倍。</p>
+<p>有符号和无符号类型使用相同的存储空间，并具有相同的性能，因此可以根据实际情况选择合适的类型</p>
+<p>另，integer和int存储及大小没有任何差别，只是为了业务上的区分</p>
+<p>MySQL可以为整数类型指定宽度，例如INT(11)，对大多数应用这是没有意义的，它不会限制值的合法范围，只是规定了MySQL的一些交互工具（如MySQL命令行客户端）用来显示字符的个数，对于存储和计算来说，INT(1)和INT(20)是相同的</p>
+<p>MySQL中没有long类型，对应的只有bigint</p>
+<h4 id="5-3-实数类型"><a href="#5-3-实数类型" class="headerlink" title="5.3 实数类型"></a>5.3 实数类型</h4><p>实数是带有小数部分的数字。MySQL既支持精确类型的存储Decimal类型，也支持不精确类型存储Float和Double类型（浮点类型）.</p>
+<p>Decimal类型用于存储精确的小数，本质上MySQL是以字符串形式存放的，所以CPU不支持对Decimal的直接计算，只是在MySQL中自身实现了Decimal的高精度计算。相对而言，CPU直接支持原生浮点计算，所以浮点运算明显更快</p>
+<p>浮点类型再存储同样范围的值时，通常比Decimal使用更少的空间，Float使用4个字节存储，Double占用8个字节，Decimal里面存储65位数字，Decimal对于列的空间消耗比较大，另外Double比Float有更高的精度和更大 的范围</p>
+<p>【选择】</p>
+<ol>
+<li>精度不敏感和需要快速运算的时候。选择Float和Double</li>
+<li>应该尽量只在对小数进行精确计算时才使用Decimal，例如存储金融数据</li>
+<li>在数据量比较大且运行精度要求较高，可考虑使用Bigint代替Decimal，将需要存储的货币单位根据小数的位数乘以相应的倍数即可。假设存储财务数据要精确到万分之一，则可以把所有金额乘以一百万，然后将结果存储在Bigint里 ，这样可避免浮点计算不精确和Decimal精确计算代价高的问题</li>
+</ol>
+<h4 id="5-4-字符串类型"><a href="#5-4-字符串类型" class="headerlink" title="5.4 字符串类型"></a>5.4 字符串类型</h4><p>MySQL支持多种字符串类型，包括varchar和char类型、blob和text类型、enum(枚举)和set类型</p>
+<h5 id="5-4-1-Varchar和Char"><a href="#5-4-1-Varchar和Char" class="headerlink" title="5.4.1 Varchar和Char"></a>5.4.1 Varchar和Char</h5><p><strong>Varchar</strong></p>
+<p>Varchar类型用于存储可变长字符串，是最常见的字符串数据类型。其比定长类型更节省空间，因为仅使用必要的空间。在内部实现上，Varchar需要使用1或2个额外字节记录字符串的长度，如果列的最大长度小于等于255字节，则使用用1个字节表示，否则使用2个字节</p>
+<p>Varchar节省了存储空间，所以对性能有帮助，但是，由于行是变长的，在update新值比旧数据长时，使行变得比原来长，就可能导致需要做额外的工作，如果一行占用的空间增长，并且在页内没有更多的空间可以存储，在这种情况下，MyISAM会将行拆成不同的片段存储</p>
+<p><strong>Char</strong></p>
+<p>Char类型是定长的，MySQL总是根据定义的字符串长度分配足够的空间。当存储Char值时，MySQL会删除所有的末尾空格，Char值会根据需要采用空格进行填充以方便比较</p>
+<p><strong>Char和VarChar的选择</strong></p>
+<p>在Char和VarChar的选择上，下列情况下使用Varchar是比较合适的</p>
+<ul>
+<li>字符串列的最大长度比平均长度大很多，列的更新很少</li>
+<li>使用了像UTF-8这样复杂的字符集，每个字符都使用不同的字节数进行存储</li>
+</ul>
+<p>下列情况，使用Char更合适：</p>
+<ul>
+<li><p>Char适合存储很短的字符串，或者所有值定长或都接近同一个长度。如char非常适合存储密码的MD5值，因为这是定长的值，对于经常变更的数据，Char也比Varchar更好，因为定长的Char类型不容易产生碎片</p>
+</li>
+<li><p>对于非常短的列，Char也比Varchar在存储空间上也更有效率，如用char(1)存储只有Y和N的值，如果采用单字节字符集只需要一个字节，但是Varchar却需要两个字节，因为还有一个记录长度的额外字节</p>
+</li>
+</ul>
+<h5 id="5-4-2-Blob和Text类型"><a href="#5-4-2-Blob和Text类型" class="headerlink" title="5.4.2 Blob和Text类型"></a>5.4.2 Blob和Text类型</h5><p>Blob和Text都是为存储很大的数据而设计的字符串类型，分别采用二进制和字符方式存储</p>
+<p>与其他类型不同，MySQL会把每个Blob和Text值当做一个独立的对象处理，存储引擎再存储时通常会做特殊处理。当Blob和Text值太大时，InnoDB会使用专门的“外部”存储区域来进行存储，此时每个值再行内需要1~4个字节存储一个指针，然后在外部存储区域存储实际的值</p>
+<p><strong>二者的区别</strong></p>
+<ul>
+<li>blob存储的是二进制数据，没有排序规则或字符集</li>
+<li>Text类型有字符集和排序规则</li>
+</ul>
+<p><strong>使用要慎重</strong></p>
+<ol>
+<li>Blob和Text值会引起一些性能问题，所以尽量避免使用</li>
+<li>一定要用的时候，建议把Blob或Text列分离到单独的表</li>
+<li>在不必要的时候避免检索大型的Blob或Text的值。如Select * 查询就不是很好的想法，除非能够确定作为约束条件的 where子句只会找到所需要的数据行；否则，很可能毫无目的的在网络上传输大量数据。建议可以搜索索引，决定需要的哪些数据行，然后从符合条件的数据行中检索Blob或Text值</li>
+<li>还可以使用合成的（Synthetic）索引来提高大文本字段（Blob或Text）的查询性能。简单说，合成索引是根据大文本字段的内容建立一个散列值，并把这个值存储在单独的数据列中，接下来就可以通过检索散列值找到数据。但是，这种技术只能用于精确匹配的查询（散列值对于类型&lt;或&gt;&#x3D;等范围搜索操作符是没有用处的）。可以使用MD5函数生成散列值，也可以使用SHA1（或CRC32），或者使用自己的应用程序逻辑来计算散列值</li>
+</ol>
+<h4 id="5-5-枚举类型"><a href="#5-5-枚举类型" class="headerlink" title="5.5 枚举类型"></a>5.5 枚举类型</h4><p>如果表中的字段的取值是固定几个字符串，可以使用枚举列代替常用的字符串类型。</p>
+<p>枚举列可以把一些不重复的字符串存储成一个预定义的集合。MySQL在存储枚举时非常紧凑，会根据列表值的数量压缩到一个或者两个字节中，MySQL在内部会将每个值在列表中的位置保存为整数，这样的话可以让表的大小大为缩小。</p>
+<p>具体枚举使用见官网地址：<a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/enum.html">https://dev.mysql.com/doc/refman/5.7/en/enum.html</a></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span></span><br><span class="line">enum_test(e ENUM(<span class="string">&#x27; fish&#x27;</span>, <span class="string">&#x27;apple&#x27;</span>, <span class="string">&#x27;dog&#x27;</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span></span><br><span class="line">enum_test(e) <span class="keyword">VALUES</span>(<span class="number">1</span>),(<span class="number">2</span>),(<span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong></p>
+<ol>
+<li>因为枚举列实际存储为整数，而不是字符串，所以不要使用数字作为ENUM枚举常量，这种双重性很容易导致混乱，例如ENUM( ‘1’,’2’,’3’)。</li>
+<li>枚举字段是按照内部存储的整数而不是定义的字符串进行排序的，所以尽量按照需要的顺序来定义枚举列。</li>
+</ol>
+<h4 id="5-6-日期和时间类型"><a href="#5-6-日期和时间类型" class="headerlink" title="5.6 日期和时间类型"></a>5.6 日期和时间类型</h4><p>MySQL可以使用许多类型来保存日期和时间值，例如YEAR和 DATE以及DATETIME和TIMESTAMP。MySQL能存储的最小时间粒度为秒。</p>
+<p>datetime 存储日期范围：1001年~9999年</p>
+<p>timestamp 存储日期范围：1970年~2038年,并且跟时区有关系。</p>
+<p>如果需要存储比秒更小粒度的日期和时间值怎么办？MySQL目前没有提供合适的数据类型，但是可以使用自己的存储格式：可以使用BIGINT类型存储微秒级别的时间截，或者使用DOUBLE存储秒之后的小数部分。</p>
+<h3 id="6、命名规范"><a href="#6、命名规范" class="headerlink" title="6、命名规范"></a>6、命名规范</h3><ul>
+<li><p>可读性原则：</p>
+<ul>
+<li>数据库、表、字段的命名要遵守可读性原则，尽可能少使用或者不使用缩写。</li>
+<li>对象的名字应该能够描述它所表示的对象。例如：表的名称应该能够体现表中存储的数据内容，最好是遵循“业务名称_表的作用”；对于存储过程存储过程应该能够体现存储过程的功能。库名与应用名称尽量一致。</li>
+<li>表达是与否概念的字段，应该使用is_xxx的方式命名，数据类型是unsigned tinyint（1表示是，0表示否）。</li>
+</ul>
+</li>
+<li><p>表名、字段名必须使用小写字母或数字，禁止出现数字开头，禁止两个下划线中间只出现数字。数据库字段名的修改代价很大，因为无法进行预发布，所以字段名称需要慎重考虑。</p>
+<ul>
+<li>说明：MySQL在Windows下不区分大小写，但在Linux下默认是区分大小写。因此，数据库名、表名、字段名，都不允许出现任何大写字母，避免节外生枝。</li>
+</ul>
+</li>
+<li><p>表名不使用复数名词</p>
+</li>
+<li><p>数据库、表、字段的命名禁用保留字，如desc、range、match之类</p>
+</li>
+<li><p><strong>主键索引名为pk_字段名；唯一索引名为uk_字段名；普通索引名则为idx_字段名。</strong></p>
+</li>
+</ul>
+<h3 id="7、MySQL中的索引"><a href="#7、MySQL中的索引" class="headerlink" title="7、MySQL中的索引"></a>7、MySQL中的索引</h3><p>MySQL官方对索引的定义为：索引（Index）是帮助MySQL高效获取数据的数据结构。可以得到索引的本质： <strong>索引是数据结构</strong> 。InnoDB存储引擎支持以下几种常见的索引：B+树索引、全文索引、哈希索引，其中比较关键的是B+树索引</p>
+<img src="/2022/09/19/study/%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80/ds7.png" class="" title="ds7 image">
+
+<p><strong>为什么HashMap不适合做数据库索引？</strong></p>
+<ol>
+<li>hash表只能匹配是否相等，不能实现范围查找；</li>
+<li>当需要按照索引进行order by时，hash值没办法支持排序；</li>
+<li>组合索引可以支持部分索引查询，如(a,b,c)的组合索引，查询中只用到了a和b也可以查询的，如果使用hash表，组合索引会将几个字段合并hash，没办法支持部分索引；</li>
+<li>当数据量很大时，hash冲突的概率也会非常大。</li>
+</ol>
+<h3 id="8、B-Tree"><a href="#8、B-Tree" class="headerlink" title="8、B+Tree"></a>8、B+Tree</h3><p>B+树索引就是传统意义上的索引，这是目前关系型数据库系统中查找最常用和最为有效的索引。B+树索引的构造类似于二叉树，根据键值（Key Value）快速找到数据。注意B+树中的B不是代表二叉(binary)，而是代表平衡(balance)，因为B+树是从最早的平衡二叉树演化而来，但是B+树不是一个二叉树。</p>
+<p>下图就是一颗平衡二叉查找树</p>
+<p>借助网页工具：<a target="_blank" rel="noopener" href="https://www.cs.usfca.edu/~galles/visualization/Algorithms.html">Data Structure Visualization (usfca.edu)</a></p>
+<img src="/2022/09/19/study/%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80/ds8.png" class="" title="ds8 image">
+
+<p>现将其改造成B+树</p>
+<p>树的阶数表示一个节点最多能有多少个子节点。</p>
+<p>每个叶子页（LeafPage）存储了实际的数据，如下图中有的叶子页就存放了3条数据记录，当然可以更多，叶子节点由小到大（有序）串联在一起，叶子页中的数据也是排好序的；</p>
+<img src="/2022/09/19/study/%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80/ds9.png" class="" title="ds9 image">
+
+<p>从AVL到B+树的变化可知，如果节点特别多的话，AVL树的高度远远高于B+树。</p>
+<p>可以归纳出B+树的几个特征：</p>
+<ol>
+<li>相同节点数量的情况下，B+树高度远低于平衡二叉树；</li>
+<li>非叶子节点只保存索引信息和下一层节点的指针信息，不保存实际数据记录；</li>
+<li>每个叶子页（LeafPage）存储了实际的数据，比如上图中每个叶子页就存放了3条数据记录，当然可以更多，叶子节点由小到大（有序）串联在一起，叶子页中的数据也是排好序的；</li>
+<li>相邻的叶子节点之间用指针相连</li>
+</ol>
+<p><strong>注意：叶子节点中的数据在物理存储上完全可以是无序的，仅仅是在逻辑上有序（通过指针串在一起）。</strong></p>
+<p>一棵m阶的B+树完整定义如下：</p>
+<ul>
+<li>每个节点最多可以有 m 个元素；</li>
+<li>除了根节点外，每个节点最少有 (m&#x2F;2) 个元素；</li>
+<li>如果根节点不是叶节点，那么它最少有 2 个孩子节点；</li>
+<li>所有的叶子节点都在同一层；</li>
+<li>非叶子节点只存放关键字和指向下一个孩子节点的索引，记录只存放在叶子节点中</li>
+<li>一个有 k 个孩子节点的非叶子节点有(k-1) 个元素，按升序排列；</li>
+<li>某个元素的左子树中的元素都比它小，右子树的元素都大于或等于它（二叉排序树的特征）；</li>
+<li>相邻的叶子节点之间用指针相连。</li>
+</ul>
+<h4 id="8-1-B-树与B树、B-树的区别"><a href="#8-1-B-树与B树、B-树的区别" class="headerlink" title="8.1 B+树与B树、B*树的区别"></a>8.1 B+树与B树、B*树的区别</h4><p>B树与B+树的差别是，B树的非叶子节点也需要存放数据，下图树B树</p>
+<img src="/2022/09/19/study/%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80/ds10.png" class="" title="ds10 image">
+
+<p>而B+树，数据只存放在叶子节点上，同时相邻的叶子节点有链表的结构</p>
+<img src="/2022/09/19/study/%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80/ds11.png" class="" title="ds11 image">
+
+<p>【注意】MySQL中实现的B+树，叶子节点之间的链表是双向链表，这是一个细微的差别</p>
+<p>B*树与B+树的差别就在非叶子节点之间，也有相互的指针指向，Oracle中使用的是B*树</p>
+<img src="/2022/09/19/study/%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80/ds12.png" class="" title="ds12 image">
+
+<h4 id="8-2-MySQL与B-树"><a href="#8-2-MySQL与B-树" class="headerlink" title="8.2 MySQL与B+树"></a>8.2 MySQL与B+树</h4><p><strong>为什么使用B+树而不使用B树</strong></p>
+<ul>
+<li>因为B数据每个节点都存储数据，每次查询的数据大小固定，就会造成每次查询返回的数据的条数变少，相同数据规模的情况下B树会增加io次数，而B+树，则数据量较小，一次可以返回多条记录，io次数较少</li>
+<li>范围查询B+树明显优于B树</li>
+</ul>
+<p><strong>为什么关系型数据库都选择了B+树</strong></p>
+<p>这个和磁盘的特性有着非常大的关系。</p>
+<p>为了提高效率，要尽量减少磁盘I&#x2F;O。为了达到这个目的，磁盘往往不是严格按需读取，而是每次都会预读，即使只需要一个字节，磁盘也会从这个位置开始，顺序向后读取一定长度的数据放入内存，这个称之为<strong>预读。</strong></p>
+<p>预读的长度一般为页（page）的整倍数。页是计算机管理存储器的逻辑块，硬件及操作系统往往将主存和磁盘存储区分割为连续的大小相等的块，每个存储块称为一页，页大小通常为4k。</p>
+<p>按照磁盘的这种性质，如果是一个页存放一个B+树的节点，自然是可以存放很多的数据的，比如InnoDB里，默认定义的B+树的节点大小是16KB，这就是说，假如一个Key是8个字节，那么一个节点可以存放大约1000个Key，意味着B+树可以有1000个分叉。同时InnoDB每一次磁盘I&#x2F;O，读取的都是 16KB的整数倍的数据。也就是说InnoDB在节点的读写上是可以充分利用磁盘顺序IO的高速读写特性。</p>
+<p>同时按照B+树逻辑结构来说，在叶子节点一层，所有记录的主键按照从小到大的顺序排列，并且形成了一个双向链表。同一层的非叶子节点也互相串联，形成了一个双向链表。那么在实际读写的时候，很大的概率相邻的节点会放在相邻的页上，又可以充分利用磁盘顺序IO的高速读写特性。</p>
+<p>所以对MySQL优化的一大方向就是 <strong>尽可能的多让数据顺序读写，少让数据随机读写</strong> 。</p>
+<p>磁盘顺序读取的效率很高（不需要寻道时间，只需很少的旋转时间），一般来说，磁盘的顺序读的效率是随机读的40到400倍都有可能，顺序写是随机写的10到100倍。</p>
+<img src="/2022/09/19/study/%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80/ds13.png" class="" title="ds13 image">
+
+<h4 id="8-3-B-树的作用总结"><a href="#8-3-B-树的作用总结" class="headerlink" title="8.3 B+树的作用总结"></a>8.3 B+树的作用总结</h4><ul>
+<li>在磁盘设备上，通过B+树可以有效的存储数据；</li>
+<li>所有记录都存储在叶子节点上，非叶子(non-leaf)存储索引(keys)信息；而且记录按照索引列的值由小到大排好了序。</li>
+<li>B+树含有非常高的扇出（fanout），通常超过100，在查找一个记录时，可以有效的减少IO操作；</li>
+</ul>
+<p><strong>扇出</strong>：是每个索引节点(Non-LeafPage)指向每个叶子节点(LeafPage)的指针；</p>
+<p><strong>扇出数</strong> &#x3D; 索引节点(Non-LeafPage)可存储的最大关键字个数 + 1</p>
+
+        
+            <div id="toc-article">
+                
+  <div class="widget-wrap" id="toc-wrap">
+    <h3 class="widget-title"><i class="fa fa-toc"></i> 文章目录</h3>
+    <div class="widget">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E8%8C%83%E5%BC%8F%E5%8C%96%E8%AE%BE%E8%AE%A1"><span class="toc-text">1、范式化设计</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-%E4%BB%80%E4%B9%88%E6%98%AF%E8%8C%83%E5%BC%8F"><span class="toc-text">1.1 什么是范式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-%E7%AC%AC%E4%B8%80%E8%8C%83%E5%BC%8F%EF%BC%881NF%EF%BC%89"><span class="toc-text">1.2 第一范式（1NF）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-%E7%AC%AC%E4%BA%8C%E8%8C%83%E5%BC%8F%EF%BC%882NF%EF%BC%89"><span class="toc-text">1.3 第二范式（2NF）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-%E7%AC%AC%E4%B8%89%E8%8C%83%E5%BC%8F%EF%BC%883NF%EF%BC%89"><span class="toc-text">1.4 第三范式（3NF）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E5%8F%8D%E8%8C%83%E5%BC%8F%E5%8C%96%E8%AE%BE%E8%AE%A1"><span class="toc-text">2、反范式化设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81%E8%8C%83%E5%BC%8F%E5%8C%96%E5%92%8C%E8%8C%83%E5%BC%8F%E5%8C%96%E5%AF%B9%E6%AF%94"><span class="toc-text">3、范式化和范式化对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81%E5%B8%B8%E8%A7%81%E7%9A%84%E5%8F%8D%E8%8C%83%E5%BC%8F%E5%AE%9E%E7%8E%B0"><span class="toc-text">4、常见的反范式实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-%E7%BC%93%E5%AD%98%E4%B8%8E%E6%B1%87%E6%80%BB%E6%95%B0%E6%8D%AE"><span class="toc-text">4.1 缓存与汇总数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-%E8%AE%A1%E6%95%B0%E5%99%A8%E8%A1%A8%E8%AE%BE%E8%AE%A1"><span class="toc-text">4.2 计数器表设计</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%E3%80%81%E5%AD%97%E6%AE%B5%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%BC%98%E5%8C%96"><span class="toc-text">5、字段数据类型优化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1-%E5%AD%97%E6%AE%B5%E4%BC%98%E5%8C%96%E5%9F%BA%E6%9C%AC%E5%8E%9F%E5%88%99"><span class="toc-text">5.1 字段优化基本原则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-2-Int-x2F-%E6%95%B4%E6%95%B0%E7%B1%BB%E5%9E%8B"><span class="toc-text">5.2 Int&#x2F;整数类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-%E5%AE%9E%E6%95%B0%E7%B1%BB%E5%9E%8B"><span class="toc-text">5.3 实数类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-4-%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B"><span class="toc-text">5.4 字符串类型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#5-4-1-Varchar%E5%92%8CChar"><span class="toc-text">5.4.1 Varchar和Char</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5-4-2-Blob%E5%92%8CText%E7%B1%BB%E5%9E%8B"><span class="toc-text">5.4.2 Blob和Text类型</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-5-%E6%9E%9A%E4%B8%BE%E7%B1%BB%E5%9E%8B"><span class="toc-text">5.5 枚举类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-6-%E6%97%A5%E6%9C%9F%E5%92%8C%E6%97%B6%E9%97%B4%E7%B1%BB%E5%9E%8B"><span class="toc-text">5.6 日期和时间类型</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6%E3%80%81%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83"><span class="toc-text">6、命名规范</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7%E3%80%81MySQL%E4%B8%AD%E7%9A%84%E7%B4%A2%E5%BC%95"><span class="toc-text">7、MySQL中的索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8%E3%80%81B-Tree"><span class="toc-text">8、B+Tree</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#8-1-B-%E6%A0%91%E4%B8%8EB%E6%A0%91%E3%80%81B-%E6%A0%91%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">8.1 B+树与B树、B*树的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-2-MySQL%E4%B8%8EB-%E6%A0%91"><span class="toc-text">8.2 MySQL与B+树</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-3-B-%E6%A0%91%E7%9A%84%E4%BD%9C%E7%94%A8%E6%80%BB%E7%BB%93"><span class="toc-text">8.3 B+树的作用总结</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+
+            </div>
+        
+        
+          <blockquote id="copyright">
+              <p>原文链接: <a href="https://lyblog2022.github.io/2022/09/19/study/数据库/数据库基础/">https://lyblog2022.github.io/2022/09/19/study/数据库/数据库基础/</a></p>
+              <p>版权声明: 转载请注明出处.</p>
+          </blockquote>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div class="article-tag-wrap">
+          
+
+          
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li></ul>
+
+          
+
+
+        </div>
+      
+      
+        
+<nav id="article-nav">
+  
+    <a href="/2022/08/23/leetcode/difficult/question4/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">older</strong>
+      <div class="article-nav-title">
+        
+          4. 寻找两个正序数组的中位数
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/09/20/study/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL%E4%B8%AD%E7%9A%84%E7%B4%A2%E5%BC%95/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">newer</strong>
+      <div class="article-nav-title">
+        
+          MySQL中的索引
+        
+      </div>
+    </a>
+  
+</nav>
+
+      
+      
+    </footer>
+  </div>
+</article>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-posts"></i> 最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/09/30/study/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL%E8%B0%83%E4%BC%98/">MySQL调优</a>
+          </li>
+        
+          <li>
+            <a href="/2022/09/20/study/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL%E4%B8%AD%E7%9A%84%E7%B4%A2%E5%BC%95/">MySQL中的索引</a>
+          </li>
+        
+          <li>
+            <a href="/2022/09/19/study/%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80/">数据库基础</a>
+          </li>
+        
+          <li>
+            <a href="/2022/08/23/leetcode/difficult/question4/">4. 寻找两个正序数组的中位数</a>
+          </li>
+        
+          <li>
+            <a href="/2022/08/15/study/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E7%A1%80/">线程的基础</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-tag"></i> 标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CentOS-8/" style="font-size: 18.33px;">CentOS 8</a> <a href="/tags/FastDFS/" style="font-size: 11.67px;">FastDFS</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/RPC/" style="font-size: 11.67px;">RPC</a> <a href="/tags/RabbitMQ/" style="font-size: 11.67px;">RabbitMQ</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringMVC/" style="font-size: 10px;">SpringMVC</a> <a href="/tags/centos8/" style="font-size: 11.67px;">centos8</a> <a href="/tags/dubbo/" style="font-size: 10px;">dubbo</a> <a href="/tags/httpClient/" style="font-size: 11.67px;">httpClient</a> <a href="/tags/jdk/" style="font-size: 10px;">jdk</a> <a href="/tags/leetcode/" style="font-size: 18.33px;">leetcode</a> <a href="/tags/nginx/" style="font-size: 18.33px;">nginx</a> <a href="/tags/redis/" style="font-size: 16.67px;">redis</a> <a href="/tags/software/" style="font-size: 15px;">software</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/tags/zookeeper/" style="font-size: 15px;">zookeeper</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 20px;">中间件</a> <a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 10px;">学习</a> <a href="/tags/%E5%B9%B3%E8%A1%A1%E6%A0%91/" style="font-size: 10px;">平衡树</a> <a href="/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" style="font-size: 10px;">并发编程</a> <a href="/tags/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/" style="font-size: 11.67px;">接口调用</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 13.33px;">数据库</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 11.67px;">数据结构</a> <a href="/tags/%E6%A0%91/" style="font-size: 10px;">树</a> <a href="/tags/%E6%A1%86%E6%9E%B6/" style="font-size: 13.33px;">框架</a> <a href="/tags/%E7%BA%A2%E9%BB%91%E6%A0%91/" style="font-size: 10px;">红黑树</a> <a href="/tags/%E9%82%A3%E4%BA%9B%E4%BB%A3%E7%A0%81%E9%82%A3%E4%BA%9B%E6%80%BB%E7%BB%93/" style="font-size: 11.67px;">那些代码那些总结</a> <a href="/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/" style="font-size: 10px;">高并发</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-classify"></i> 分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/">CentOs 8</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/FastDFS/">FastDFS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/RabbitMQ/">RabbitMQ</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/jdk/">jdk</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/nginx/">nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/redis/">redis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CentOs-8/zookeeper/">zookeeper</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/leetcode/">leetcode</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/leetcode/difficult/">difficult</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/leetcode/easy/">easy</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/leetcode/middle/">middle</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a><span class="category-list-count">16</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/FastDFS/">FastDFS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/RPC/">RPC</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/RabbitMQ/">RabbitMQ</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/dubbo/">dubbo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/nginx/">nginx</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/redis/">redis</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/zookeeper/">zookeeper</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/">并发编程</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%A0%91/">树</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%86%E6%9E%B6/">框架</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%86%E6%9E%B6/MyBatis/">MyBatis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%86%E6%9E%B6/Spring/">Spring</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%86%E6%9E%B6/SpringMVC/">SpringMVC</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%82%A3%E4%BA%9B%E4%BB%A3%E7%A0%81%E9%82%A3%E4%BA%9B%E6%80%BB%E7%BB%93/">那些代码那些总结</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%82%A3%E4%BA%9B%E4%BB%A3%E7%A0%81%E9%82%A3%E4%BA%9B%E6%80%BB%E7%BB%93/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/">接口调用</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%82%A3%E4%BA%9B%E4%BB%A3%E7%A0%81%E9%82%A3%E4%BA%9B%E6%80%BB%E7%BB%93/%E9%AB%98%E5%B9%B6%E5%8F%91/">高并发</a><span class="category-list-count">1</span></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-archive"></i> 归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022年</a><span class="archive-list-count">39</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-tag"></i> 标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS-8/" rel="tag">CentOS 8</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FastDFS/" rel="tag">FastDFS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MyBatis/" rel="tag">MyBatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RPC/" rel="tag">RPC</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RabbitMQ/" rel="tag">RabbitMQ</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/" rel="tag">Spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringMVC/" rel="tag">SpringMVC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos8/" rel="tag">centos8</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dubbo/" rel="tag">dubbo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/httpClient/" rel="tag">httpClient</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jdk/" rel="tag">jdk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/" rel="tag">nginx</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/" rel="tag">redis</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/software/" rel="tag">software</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/" rel="tag">springboot</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zookeeper/" rel="tag">zookeeper</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B9%B3%E8%A1%A1%E6%A0%91/" rel="tag">平衡树</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" rel="tag">并发编程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/" rel="tag">接口调用</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%91/" rel="tag">树</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A1%86%E6%9E%B6/" rel="tag">框架</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%A2%E9%BB%91%E6%A0%91/" rel="tag">红黑树</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%82%A3%E4%BA%9B%E4%BB%A3%E7%A0%81%E9%82%A3%E4%BA%9B%E6%80%BB%E7%BB%93/" rel="tag">那些代码那些总结</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/" rel="tag">高并发</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <a id="totop" href="#top"></a>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <p>
+        <a href="/sitemap.xml">网站地图</a>
+        <span> | </span><a href="/atom.xml">订阅本站</a>
+        <span> | </span><a href="/about/">联系博主</a>
+      </p>
+      
+        <p>
+          <i class="fa fa-visitors"></i>
+          <i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>
+          ，
+          <i class="fa fa-views"></i>
+          <i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>
+        </p>
+      
+      <p>
+        <span>Copyright &copy; 2022 ly.</span>
+        <span>Theme by <a href="https://github.com/chaooo/hexo-theme-BlueLake/" target="_blank">BlueLake.</a></span>
+        <span>Powered by <a href="https://hexo.io/" target="_blank">Hexo.</a></span>
+      </p>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </div>
+  
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+<script src="/js/search.json.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+
+  
+<script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+  
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+
+
+
+
+</body>
+</html>
