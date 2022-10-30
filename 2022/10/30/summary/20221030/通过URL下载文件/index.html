@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   
   
-  <title>CentOS8配置JDK环境 | My Note</title>
+  <title>通过URL下载文件 | My Note</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   
     <meta name="description" content="654645564">
@@ -80,7 +80,7 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-study/other/CentOS8配置jdk环境" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-summary/20221030/通过URL下载文件" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-inner">
     
     
@@ -88,7 +88,7 @@
         
   
     <h1 class="p-name article-title" itemprop="headline name">
-      CentOS8配置JDK环境
+      通过URL下载文件
     </h1>
   
 
@@ -99,12 +99,12 @@
       
       <span class="article-date">
   <i class="fa fa-date"></i>
-  <time class="dt-published" datetime="2022-06-06T13:41:00.000Z" itemprop="datePublished">2022-06-06</time>
+  <time class="dt-published" datetime="2022-10-30T04:27:27.000Z" itemprop="datePublished">2022-10-30</time>
 </span>
       
   <div class="article-category">
     <i class="fa fa-classify"></i>
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/">软件安装</a> > <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/JDK/">JDK</a>
+    <a class="article-category-link" href="/categories/%E6%80%BB%E7%BB%93/">总结</a>
   </div>
 
       
@@ -121,54 +121,10 @@
     </div>
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>CentOS8配置JDK环境</p>
-<span id="more"></span>
+        <!--java通过URL下载文件到本地-->
 
-<h3 id="1、使用Yum安装"><a href="#1、使用Yum安装" class="headerlink" title="1、使用Yum安装"></a>1、使用Yum安装</h3><p>安装OpenJDK的可以选择此方法，方便快捷</p>
-<h4 id="1-1-查看是否有JDK环境"><a href="#1-1-查看是否有JDK环境" class="headerlink" title="1.1 查看是否有JDK环境"></a>1.1 查看是否有JDK环境</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 从网络Url中下载文件</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> urlStr</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> fileName</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> savePath</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">downLoadFromUrl</span><span class="params">(String urlStr, String fileName, String savePath)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="type">URL</span> <span class="variable">url</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">URL</span>(urlStr);</span><br><span class="line">        <span class="type">HttpURLConnection</span> <span class="variable">conn</span> <span class="operator">=</span> (HttpURLConnection) url.openConnection();</span><br><span class="line">        <span class="comment">//设置超时间为3秒</span></span><br><span class="line">        conn.setConnectTimeout(<span class="number">3</span> * <span class="number">1000</span>);</span><br><span class="line">        <span class="comment">//防止屏蔽程序抓取而返回403错误</span></span><br><span class="line">        conn.setRequestProperty(<span class="string">&quot;User-Agent&quot;</span>, <span class="string">&quot;Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//得到输入流</span></span><br><span class="line">        <span class="type">InputStream</span> <span class="variable">inputStream</span> <span class="operator">=</span> conn.getInputStream();</span><br><span class="line">        <span class="comment">//获取自己数组</span></span><br><span class="line">        <span class="type">byte</span>[] getData = readInputStream(inputStream);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//文件保存位置</span></span><br><span class="line">        <span class="type">File</span> <span class="variable">saveDir</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(savePath);</span><br><span class="line">        <span class="keyword">if</span> (!saveDir.exists()) &#123;</span><br><span class="line">            saveDir.mkdir();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">File</span> <span class="variable">file</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(saveDir + File.separator + fileName);</span><br><span class="line">        <span class="type">FileOutputStream</span> <span class="variable">fos</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(file);</span><br><span class="line">        fos.write(getData);</span><br><span class="line">        <span class="keyword">if</span> (fos != <span class="literal">null</span>) &#123;</span><br><span class="line">            fos.close();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (inputStream != <span class="literal">null</span>) &#123;</span><br><span class="line">            inputStream.close();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;info:&quot;</span> + url + <span class="string">&quot; download success&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 从输入流中获取字节数组</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> inputStream</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">byte</span>[] readInputStream(InputStream inputStream) <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="type">byte</span>[] buffer = <span class="keyword">new</span> <span class="title class_">byte</span>[<span class="number">1024</span>];</span><br><span class="line">        <span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">ByteArrayOutputStream</span> <span class="variable">bos</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ByteArrayOutputStream</span>();</span><br><span class="line">        <span class="keyword">while</span> ((len = inputStream.read(buffer)) != -<span class="number">1</span>) &#123;</span><br><span class="line">            bos.write(buffer, <span class="number">0</span>, len);</span><br><span class="line">        &#125;</span><br><span class="line">        bos.close();</span><br><span class="line">        <span class="keyword">return</span> bos.toByteArray();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            downLoadFromUrl(<span class="string">&quot;https://dss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/topnav/newfanyi-da0cea8f7e.png&quot;</span>,</span><br><span class="line">                    <span class="string">&quot;百度.png&quot;</span>, <span class="string">&quot;E:\\&quot;</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
-<img src="/2022/06/06/study/other/CentOS8%E9%85%8D%E7%BD%AEjdk%E7%8E%AF%E5%A2%83/jdk1.png" class="" title="jdk1 image">
-
-<p>可以看到系统自带的 OpenJDK 版本信息，如果不满足，则卸载现有JDK</p>
-<h4 id="1-2-卸载现有JDK"><a href="#1-2-卸载现有JDK" class="headerlink" title="1.2 卸载现有JDK"></a>1.2 卸载现有JDK</h4><p>使用 rpm 命令查询 java</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep java</span><br></pre></td></tr></table></figure>
-
-<img src="/2022/06/06/study/other/CentOS8%E9%85%8D%E7%BD%AEjdk%E7%8E%AF%E5%A2%83/jdk2.png" class="" title="jdk2 image">
-
-<p>.noarch文件可以不用管，卸载其余条目</p>
-<p>执行一下命令卸载信息</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -e --nodeps java-1.8.0-openjdk-1.8.0.201.b09-2.el8.x86_64</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -e --nodeps java-1.8.0-openjdk-headless-1.8.0.201.b09-2.el8.x86_64</span><br></pre></td></tr></table></figure>
-
-<p>卸载完后查询版本信息</p>
-<img src="/2022/06/06/study/other/CentOS8%E9%85%8D%E7%BD%AEjdk%E7%8E%AF%E5%A2%83/jdk3.png" class="" title="jdk3 image">
-
-<h4 id="1-3-使用Yum安装OpenJDK"><a href="#1-3-使用Yum安装OpenJDK" class="headerlink" title="1.3 使用Yum安装OpenJDK"></a>1.3 使用Yum安装OpenJDK</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y java-1.8.0-openjdk</span><br></pre></td></tr></table></figure>
-
-<h5 id="1-3-1-报错"><a href="#1-3-1-报错" class="headerlink" title="1.3.1 报错"></a>1.3.1 报错</h5><img src="/2022/06/06/study/other/CentOS8%E9%85%8D%E7%BD%AEjdk%E7%8E%AF%E5%A2%83/jdk4.png" class="" title="jdk4 image">
-
-<p>报错信息为：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Failed to synchronize cache for repo &#x27;AppStream&#x27;, ignoring this repo.</span><br><span class="line">Failed to synchronize cache for repo &#x27;BaseOS&#x27;, ignoring this repo.</span><br></pre></td></tr></table></figure>
-
-<h5 id="1-3-2-解决方案"><a href="#1-3-2-解决方案" class="headerlink" title="1.3.2 解决方案"></a>1.3.2 <strong>解决方案</strong></h5><p><a target="_blank" rel="noopener" href="https://developer.aliyun.com/mirror/centos?spm=a2c6h.13651102.0.0.3e221b11CuEoi9">切换阿里源</a></p>
-<p>1、备份</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup</span><br></pre></td></tr></table></figure>
-
-<p>2、下载新的 CentOS-Base.repo 到 &#x2F;etc&#x2F;yum.repos.d&#x2F;</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-vault-8.5.2111.repo</span><br></pre></td></tr></table></figure>
-
-<p>3、生成缓存</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum makecache</span><br></pre></td></tr></table></figure>
-
-<img src="/2022/06/06/study/other/CentOS8%E9%85%8D%E7%BD%AEjdk%E7%8E%AF%E5%A2%83/jdk5.png" class="" title="jdk5 image">
-
-<h4 id="1-4-校验"><a href="#1-4-校验" class="headerlink" title="1.4 校验"></a>1.4 校验</h4><img src="/2022/06/06/study/other/CentOS8%E9%85%8D%E7%BD%AEjdk%E7%8E%AF%E5%A2%83/jdk6.png" class="" title="jdk6 image">
-
-<h3 id="2、使用rpm包安装"><a href="#2、使用rpm包安装" class="headerlink" title="2、使用rpm包安装"></a>2、使用rpm包安装</h3><p>适用于有提供RPM Package的情况，例如Oracle JDK有提供。</p>
-<p><a target="_blank" rel="noopener" href="https://www.oracle.com/java/technologies/downloads/archive/">Oracle JDK所有版本下载</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.oracle.com/java/technologies/javase/javase8u211-later-archive-downloads.html">OracleJDK8下载</a></p>
-<p>待定</p>
 
         
             <div id="toc-article">
@@ -176,7 +132,7 @@
   <div class="widget-wrap" id="toc-wrap">
     <h3 class="widget-title"><i class="fa fa-toc"></i> 文章目录</h3>
     <div class="widget">
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E4%BD%BF%E7%94%A8Yum%E5%AE%89%E8%A3%85"><span class="toc-text">1、使用Yum安装</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-%E6%9F%A5%E7%9C%8B%E6%98%AF%E5%90%A6%E6%9C%89JDK%E7%8E%AF%E5%A2%83"><span class="toc-text">1.1 查看是否有JDK环境</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-%E5%8D%B8%E8%BD%BD%E7%8E%B0%E6%9C%89JDK"><span class="toc-text">1.2 卸载现有JDK</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-%E4%BD%BF%E7%94%A8Yum%E5%AE%89%E8%A3%85OpenJDK"><span class="toc-text">1.3 使用Yum安装OpenJDK</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-3-1-%E6%8A%A5%E9%94%99"><span class="toc-text">1.3.1 报错</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-3-2-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-text">1.3.2 解决方案</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-%E6%A0%A1%E9%AA%8C"><span class="toc-text">1.4 校验</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E4%BD%BF%E7%94%A8rpm%E5%8C%85%E5%AE%89%E8%A3%85"><span class="toc-text">2、使用rpm包安装</span></a></li></ol>
+      
     </div>
   </div>
 
@@ -185,7 +141,7 @@
         
         
           <blockquote id="copyright">
-              <p>原文链接: <a href="https://lyblog2022.github.io/2022/06/06/study/other/CentOS8配置jdk环境/">https://lyblog2022.github.io/2022/06/06/study/other/CentOS8配置jdk环境/</a></p>
+              <p>原文链接: <a href="https://lyblog2022.github.io/2022/10/30/summary/20221030/通过URL下载文件/">https://lyblog2022.github.io/2022/10/30/summary/20221030/通过URL下载文件/</a></p>
               <p>版权声明: 转载请注明出处.</p>
           </blockquote>
         
@@ -197,8 +153,6 @@
           
 
           
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JDK/" rel="tag">JDK</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/" rel="tag">软件安装</a></li></ul>
-
           
 
 
@@ -208,24 +162,15 @@
         
 <nav id="article-nav">
   
-    <a href="/2022/05/18/summary/20220518/%E4%BD%BF%E7%94%A8post%E6%96%B9%E5%BC%8F%E8%B0%83%E7%94%A8%E6%8E%A5%E5%8F%A3%E5%B9%B6%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2022/10/24/study/framework/redis/redis%E5%9F%BA%E7%A1%80/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">older</strong>
       <div class="article-nav-title">
         
-          使用post方式调用接口并传递参数
+          redis基础
         
       </div>
     </a>
   
-  
-    <a href="/2022/10/05/study/database/CentOS8%E5%AE%89%E8%A3%85MySQL%E7%8E%AF%E5%A2%83/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">newer</strong>
-      <div class="article-nav-title">
-        
-          CentOS8安装MySQL环境
-        
-      </div>
-    </a>
   
 </nav>
 
