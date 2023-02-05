@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>centos配置mysql环境 | My Note</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+    <meta name="description" content="654645564">
+  
+  
+  
+    <link rel="alternate" href="/atom.xml" title="My Note" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">My Note</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Welcome To My World</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/."><i class="fa fa-home"></i> 首页</a>
+        
+          <a class="main-nav-link" href="/archives/"><i class="fa fa-archive"></i> 归档</a>
+        
+      </nav>
+    </div>
+    <div id="search-form">
+      <div id="result-mask" class="hide"></div>
+      <label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label>
+      <div id="result-wrap" class="hide">
+        <div id="search-result"></div>
+      </div>
+      <div class="hide">
+        <template id="search-tpl">
+          <div class="item">
+            <a href="/{path}" title="{title}">
+              <div class="title">{title}</div>
+              <div class="time">{date}</div>
+              <div class="tags">{tags}</div>
+            </a>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-study/database/centos安装mysql" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      centos配置mysql环境
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+      <span class="article-date">
+  <i class="fa fa-date"></i>
+  <time class="dt-published" datetime="2023-02-05T11:35:56.000Z" itemprop="datePublished">2023-02-05</time>
+</span>
+      
+  <div class="article-category">
+    <i class="fa fa-classify"></i>
+    <a class="article-category-link" href="/categories/mysql/">mysql</a>
+  </div>
+
+      
+        <span class="article-views">
+  <i class="fa fa-views"></i>
+  <i id="busuanzi_container_page_pv">
+      <i id="busuanzi_value_page_pv"></i>
+  </i>
+</span>
+
+      
+      
+
+    </div>
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>CentOS8安装MySQL环境，使用数据库软件远程链接，并配置主从连接</p>
+<span id="more"></span>
+
+<h4 id="1、删除环境自带MySQL"><a href="#1、删除环境自带MySQL" class="headerlink" title="1、删除环境自带MySQL"></a>1、删除环境自带MySQL</h4><p>使用yml命令删除已经安装的MySQL</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum remove -y mysql</span><br></pre></td></tr></table></figure>
+
+<p>使用find命令找到残留文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -name mysql</span><br></pre></td></tr></table></figure>
+
+<img src="/2023/02/05/study/database/centos%E5%AE%89%E8%A3%85mysql/1.png" class="" title="qw1 image">
+
+<h4 id="2、安装mysql"><a href="#2、安装mysql" class="headerlink" title="2、安装mysql"></a>2、安装mysql</h4><p>执行以下命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://dev.mysql.com/get/mysql80-community-release-el8-1.noarch.rpm</span><br><span class="line">yum install mysql80-community-release-el8-1.noarch.rpm</span><br></pre></td></tr></table></figure>
+
+<p>查看mysql数据源是否安装成功</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum repolist enabled | grep &quot;mysql.*-community.*&quot;</span><br></pre></td></tr></table></figure>
+
+<img src="/2023/02/05/study/database/centos%E5%AE%89%E8%A3%85mysql/2.png" class="" title="qw1 image">
+
+<p>执行以下命令安装mysql</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install mysql-community-server --nogpgcheck</span><br></pre></td></tr></table></figure>
+
+<p>如果出现No match for argument: mysql-community-server<br>可执行 yum module disable mysql命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum module disable mysql // 禁用命令</span><br></pre></td></tr></table></figure>
+
+<h4 id="3、启动"><a href="#3、启动" class="headerlink" title="3、启动"></a>3、启动</h4><p>启动mysql</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service mysqld start</span><br></pre></td></tr></table></figure>
+
+<p>报错：</p>
+<img src="/2023/02/05/study/database/centos%E5%AE%89%E8%A3%85mysql/3.png" class="" title="qw1 image">
+
+<p>正确启动命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/bin/systemctl start mysqld.service</span><br><span class="line">service mysqld status</span><br></pre></td></tr></table></figure>
+
+<img src="/2023/02/05/study/database/centos%E5%AE%89%E8%A3%85mysql/4.png" class="" title="qw1 image">
+
+<h4 id="4、登录并修改密码"><a href="#4、登录并修改密码" class="headerlink" title="4、登录并修改密码"></a>4、登录并修改密码</h4><h5 id="4-1-显示随机密码"><a href="#4-1-显示随机密码" class="headerlink" title="4.1 显示随机密码"></a>4.1 显示随机密码</h5><p>执行以下命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep &#x27;temporary password&#x27; /var/log/mysqld.log</span><br></pre></td></tr></table></figure>
+
+<img src="/2023/02/05/study/database/centos%E5%AE%89%E8%A3%85mysql/5.png" class="" title="qw1 image">
+
+<p>最后的字符串即为生成的随机密码</p>
+<h5 id="4-2-登录"><a href="#4-2-登录" class="headerlink" title="4.2 登录"></a>4.2 登录</h5><p>执行以下命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -p</span><br></pre></td></tr></table></figure>
+
+<img src="/2023/02/05/study/database/centos%E5%AE%89%E8%A3%85mysql/6.png" class="" title="qw1 image">
+
+<h5 id="4-3-修改密码"><a href="#4-3-修改密码" class="headerlink" title="4.3 修改密码"></a>4.3 修改密码</h5><p>【注意】密码先修改成”Root_2022”，因为我们随便修改密码时,一般都不满足它的策略，会报错误：<code>ERROR 1819 (HY000): Your password does not satisfy the current policy requirements</code></p>
+<p>【解决方案】一定要先修改默认密码为: Root_2022 满足它的策略,再进行下面的操作:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; ALTER USER &#x27;root&#x27;@&#x27;localhost&#x27; IDENTIFIED BY &#x27;Root_2023&#x27;;</span><br><span class="line">Query OK, 0 rows affected (0.01 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; SHOW VARIABLES LIKE &#x27;validate_password%&#x27;;</span><br><span class="line">+--------------------------------------+--------+</span><br><span class="line">| Variable_name                        | Value  |</span><br><span class="line">+--------------------------------------+--------+</span><br><span class="line">| validate_password.check_user_name    | ON     |</span><br><span class="line">| validate_password.dictionary_file    |        |</span><br><span class="line">| validate_password.length             | 8      |</span><br><span class="line">| validate_password.mixed_case_count   | 1      |</span><br><span class="line">| validate_password.number_count       | 1      |</span><br><span class="line">| validate_password.policy             | MEDIUM |</span><br><span class="line">| validate_password.special_char_count | 1      |</span><br><span class="line">+--------------------------------------+--------+</span><br><span class="line">7 rows in set (0.01 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; set global validate_password.length=1;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; set global validate_password.policy=0; </span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; ALTER USER &#x27;root&#x27;@&#x27;localhost&#x27; IDENTIFIED BY &#x27;db-password&#x27;;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="5、开放远程访问"><a href="#5、开放远程访问" class="headerlink" title="5、开放远程访问"></a>5、开放远程访问</h4><p>创建权限记录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; create user &#x27;root&#x27;@&#x27;%&#x27; identified by &#x27;password&#x27;;</span><br><span class="line">Query OK, 0 rows affected (0.01 sec)</span><br></pre></td></tr></table></figure>
+
+<p>授权</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; grant all privileges on *.* to &#x27;root&#x27;@&#x27;%&#x27; with grant option;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<p>关闭系统防火墙</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status firewalld.service	//查看防火墙状态</span><br></pre></td></tr></table></figure>
+
+<p>​	<img src="/2023/02/05/study/database/centos%E5%AE%89%E8%A3%85mysql/7.png" class="" title="qw7 image"></p>
+<ul>
+<li>systemctl stop firewalld.service （关闭防火墙）</li>
+<li>systemctl start firewalld.service （开启防火墙）</li>
+<li>systemctl disable firewalld.service （禁止防火墙自启动）</li>
+<li>systemctl enable firewalld.service （防火墙随系统开启启动）</li>
+</ul>
+<p>使用datagrip链接</p>
+<p>​	<img src="/2023/02/05/study/database/centos%E5%AE%89%E8%A3%85mysql/8.png" class="" title="qw7 image"></p>
+<h4 id="6、配置主从"><a href="#6、配置主从" class="headerlink" title="6、配置主从"></a>6、配置主从</h4><p>现有两台服务器 <strong>192.168.213.170 和 192.168.213.171</strong>，在这两台服务器之间搭建一主一从MySQL，配置170为主，165为从</p>
+<h5 id="6-1-主数据库修改"><a href="#6-1-主数据库修改" class="headerlink" title="6.1 主数据库修改"></a>6.1 主数据库修改</h5><p>修改&#x2F;etc&#x2F;my.cnf</p>
+<p>​	<img src="/2023/02/05/study/database/centos%E5%AE%89%E8%A3%85mysql/9.png" class="" title="qw9 image"></p>
+<ul>
+<li>server-id值要唯一不能与从数据库重复；</li>
+<li>log-bin 设置为 mysql-bin；</li>
+</ul>
+<p>关闭170的MySQL服务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@192 ~]# netstat -lnpt | grep mysql</span><br><span class="line">tcp6       0      0 :::33060                :::*                    LISTEN      38340/mysqld        </span><br><span class="line">tcp6       0      0 :::3306                 :::*                    LISTEN      38340/mysqld        </span><br><span class="line">[root@192 ~]# kill -9 38340</span><br></pre></td></tr></table></figure>
+
+<p>再次启动mysql</p>
+<h5 id="6-2-从数据库修改"><a href="#6-2-从数据库修改" class="headerlink" title="6.2 从数据库修改"></a>6.2 从数据库修改</h5><p>修改&#x2F;etc&#x2F;my.cnf</p>
+<p>​	<img src="/2023/02/05/study/database/centos%E5%AE%89%E8%A3%85mysql/10.png" class="" title="qw11 image"></p>
+<ul>
+<li>server-id值要唯一不能与主数据库重复；</li>
+<li>log-bin 设置为 mysql-bin；</li>
+</ul>
+<p>关闭171的MySQL服务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">^[[A[root@192 ~]# netstat -lnpt | grep mysql</span><br><span class="line">tcp6       0      0 :::33060                :::*                    LISTEN      38329/mysqld        </span><br><span class="line">tcp6       0      0 :::3306                 :::*                    LISTEN      38329/mysqld        </span><br><span class="line">[root@192 ~]# kill -9 38329</span><br></pre></td></tr></table></figure>
+
+<p>再次启动mysql</p>
+<h5 id="6-3-查看主服务器的状态"><a href="#6-3-查看主服务器的状态" class="headerlink" title="6.3 查看主服务器的状态"></a>6.3 查看主服务器的状态</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show master status;</span><br><span class="line">+------------------+----------+--------------+------------------+-------------------+</span><br><span class="line">| File             | Position | Binlog_Do_DB | Binlog_Ignore_DB | Executed_Gtid_Set |</span><br><span class="line">+------------------+----------+--------------+------------------+-------------------+</span><br><span class="line">| mysql-bin.000001 |      157 |              |                  |                   |</span><br><span class="line">+------------------+----------+--------------+------------------+-------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="6-4-从服务器执行"><a href="#6-4-从服务器执行" class="headerlink" title="6.4 从服务器执行"></a>6.4 从服务器执行</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; change master to master_host=&#x27;192.168.213.170&#x27;, master_port=3306, master_user=&#x27;root&#x27;, master_password=&#x27;password&#x27;, master_log_file=&#x27;mysql-bin.000001&#x27;, master_log_pos=157;</span><br><span class="line">Query OK, 0 rows affected, 9 warnings (0.03 sec)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>master_host 为主服务器的地址</li>
+<li>master_port 为MySQL端口号。</li>
+<li>master_user 为主服务器的用户名。</li>
+<li>master_password 为用户密码。</li>
+<li>master_log_file 为主数据库中File处的值。</li>
+<li>master_log_pos 为主数据库中Position处的值。</li>
+</ul>
+<h5 id="6-5-主从开启"><a href="#6-5-主从开启" class="headerlink" title="6.5 主从开启"></a>6.5 主从开启</h5><p>从：开启主从监控</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; start slave;</span><br><span class="line">Query OK, 0 rows affected (0.01 sec)</span><br></pre></td></tr></table></figure>
+
+<h5 id="6-6-重置"><a href="#6-6-重置" class="headerlink" title="6.6 重置"></a>6.6 重置</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt;  reset slave all;</span><br><span class="line">Query OK, 0 rows affected (0.02 sec)</span><br></pre></td></tr></table></figure>
+
+<h5 id="6-7-显示主从状态"><a href="#6-7-显示主从状态" class="headerlink" title="6.7 显示主从状态"></a>6.7 显示主从状态</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show slave status;</span><br><span class="line">Empty set</span><br></pre></td></tr></table></figure>
+
+
+        
+            <div id="toc-article">
+                
+  <div class="widget-wrap" id="toc-wrap">
+    <h3 class="widget-title"><i class="fa fa-toc"></i> 文章目录</h3>
+    <div class="widget">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%E3%80%81%E5%88%A0%E9%99%A4%E7%8E%AF%E5%A2%83%E8%87%AA%E5%B8%A6MySQL"><span class="toc-text">1、删除环境自带MySQL</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%E3%80%81%E5%AE%89%E8%A3%85mysql"><span class="toc-text">2、安装mysql</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3%E3%80%81%E5%90%AF%E5%8A%A8"><span class="toc-text">3、启动</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4%E3%80%81%E7%99%BB%E5%BD%95%E5%B9%B6%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81"><span class="toc-text">4、登录并修改密码</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#4-1-%E6%98%BE%E7%A4%BA%E9%9A%8F%E6%9C%BA%E5%AF%86%E7%A0%81"><span class="toc-text">4.1 显示随机密码</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-2-%E7%99%BB%E5%BD%95"><span class="toc-text">4.2 登录</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-3-%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81"><span class="toc-text">4.3 修改密码</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5%E3%80%81%E5%BC%80%E6%94%BE%E8%BF%9C%E7%A8%8B%E8%AE%BF%E9%97%AE"><span class="toc-text">5、开放远程访问</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6%E3%80%81%E9%85%8D%E7%BD%AE%E4%B8%BB%E4%BB%8E"><span class="toc-text">6、配置主从</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#6-1-%E4%B8%BB%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BF%AE%E6%94%B9"><span class="toc-text">6.1 主数据库修改</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#6-2-%E4%BB%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BF%AE%E6%94%B9"><span class="toc-text">6.2 从数据库修改</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#6-3-%E6%9F%A5%E7%9C%8B%E4%B8%BB%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E7%8A%B6%E6%80%81"><span class="toc-text">6.3 查看主服务器的状态</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#6-4-%E4%BB%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%89%A7%E8%A1%8C"><span class="toc-text">6.4 从服务器执行</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#6-5-%E4%B8%BB%E4%BB%8E%E5%BC%80%E5%90%AF"><span class="toc-text">6.5 主从开启</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#6-6-%E9%87%8D%E7%BD%AE"><span class="toc-text">6.6 重置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#6-7-%E6%98%BE%E7%A4%BA%E4%B8%BB%E4%BB%8E%E7%8A%B6%E6%80%81"><span class="toc-text">6.7 显示主从状态</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+
+            </div>
+        
+        
+          <blockquote id="copyright">
+              <p>原文链接: <a href="https://lyblog2022.github.io/2023/02/05/study/database/centos安装mysql/">https://lyblog2022.github.io/2023/02/05/study/database/centos安装mysql/</a></p>
+              <p>版权声明: 转载请注明出处.</p>
+          </blockquote>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div class="article-tag-wrap">
+          
+
+          
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/" rel="tag">mysql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/" rel="tag">软件安装</a></li></ul>
+
+          
+
+
+        </div>
+      
+      
+        
+<nav id="article-nav">
+  
+    <a href="/2023/01/29/study/java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E7%9A%84%E9%94%81/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">older</strong>
+      <div class="article-nav-title">
+        
+          java并发编程--锁
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+      
+      
+    </footer>
+  </div>
+</article>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-posts"></i> 最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/02/05/study/database/centos%E5%AE%89%E8%A3%85mysql/">centos配置mysql环境</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/29/study/java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E7%9A%84%E9%94%81/">java并发编程--锁</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/28/study/java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E7%9A%84%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7/">java并发编程--并发编程的三大特性</a>
+          </li>
+        
+          <li>
+            <a href="/2022/12/26/study/java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E7%BA%BF%E7%A8%8B/">java并发编程--线程</a>
+          </li>
+        
+          <li>
+            <a href="/2022/10/30/summary/20221030/%E9%80%9A%E8%BF%87URL%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6/">通过URL下载文件</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-tag"></i> 标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/httpClient/" style="font-size: 10px;">httpClient</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/%E5%B9%B6%E5%8F%91/" style="font-size: 20px;">并发</a> <a href="/tags/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/" style="font-size: 10px;">接口调用</a> <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/" style="font-size: 10px;">软件安装</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-classify"></i> 分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/%E5%B9%B6%E5%8F%91/">并发</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%80%BB%E7%BB%93/">总结</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%80%BB%E7%BB%93/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/">接口调用</a><span class="category-list-count">1</span></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-archive"></i> 归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/">2023年</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022年</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-tag"></i> 标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/httpClient/" rel="tag">httpClient</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/" rel="tag">mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B9%B6%E5%8F%91/" rel="tag">并发</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8/" rel="tag">接口调用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/" rel="tag">软件安装</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <a id="totop" href="#top"></a>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <p>
+        <a href="/sitemap.xml">网站地图</a>
+        <span> | </span><a href="/atom.xml">订阅本站</a>
+        <span> | </span><a href="/about/">联系博主</a>
+      </p>
+      
+        <p>
+          <i class="fa fa-visitors"></i>
+          <i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>
+          ，
+          <i class="fa fa-views"></i>
+          <i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>
+        </p>
+      
+      <p>
+        <span>Copyright &copy; 2023 ly.</span>
+        <span>Theme by <a href="https://github.com/chaooo/hexo-theme-BlueLake/" target="_blank">BlueLake.</a></span>
+        <span>Powered by <a href="https://hexo.io/" target="_blank">Hexo.</a></span>
+      </p>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </div>
+  
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+<script src="/js/search.json.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+
+  
+<script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+  
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+
+
+
+
+</body>
+</html>
